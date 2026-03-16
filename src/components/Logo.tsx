@@ -11,7 +11,7 @@ export function Logo() {
         duration: 0.5, 
         ease: [0.25, 0.46, 0.45, 0.94] 
       }}
-      className="fixed top-6 left-6 z-50"
+      className="absolute top-6 left-6 z-50"
     >
       <span className="text-sm font-bold tracking-tight text-foreground">
         // LB
