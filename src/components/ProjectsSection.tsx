@@ -5,6 +5,12 @@ import { ProjectCard } from './ProjectCard';
 
 const projects = [
   {
+    title: 'Port Warden',
+    description: 'Native macOS menu bar app for developers. Monitor TCP ports, kill rogue processes, and manage local dev services — all from a single lightweight interface.',
+    status: 'Active' as const,
+    link: 'https://lucabecker.gumroad.com/l/portwarden',
+  },
+  {
     title: 'GridVote F1',
     description: 'Social Formula 1 prediction game focused on competition, seasons, and friends.',
     status: 'In Development' as const,
