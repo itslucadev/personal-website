@@ -1,6 +1,7 @@
-'use client';
+"use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { Calendar, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -78,10 +79,10 @@ export function HeroSection() {
               className="border-border bg-transparent hover:bg-secondary rounded-md px-4 py-2 text-sm font-medium flex items-center gap-2"
               asChild
             >
-              <a href="mailto:luca.dev@outlook.de">
+              <Link href="/contact">
                 <Mail className="w-4 h-4" />
-                Send an email
-              </a>
+                Get in touch
+              </Link>
             </Button>
           </motion.div>
         </motion.div>

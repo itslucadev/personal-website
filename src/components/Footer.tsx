@@ -1,7 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Heart, ExternalLink } from 'lucide-react';
+import { Heart } from 'lucide-react';
+import Link from 'next/link';
 
 export function Footer() {
   return (
@@ -16,23 +17,35 @@ export function Footer() {
       className="py-6 px-4 sm:px-6 border-t border-border"
     >
       <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
-        {/* Copyright */}
-        <p className="text-xs text-muted-foreground flex items-center gap-1">
-          © {new Date().getFullYear()} Built with{' '}
-          <Heart className="w-3 h-3 text-red-500 fill-red-500" /> by Luca
-        </p>
+        <div className="flex flex-col items-center sm:items-start gap-1">
+          <p className="text-xs text-muted-foreground flex items-center gap-1">
+            © {new Date().getFullYear()} Built with{' '}
+            <Heart className="w-3 h-3 text-red-500 fill-red-500" /> by Luca
+          </p>
+          <a
+            href="https://github.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-muted-foreground hover:text-foreground transition-colors duration-200"
+          >
+            This website is open source
+          </a>
+        </div>
 
-        {/* Open Source Link */}
-        <a
-          href="https://github.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-xs text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center gap-1 group"
-        >
-          This website is{' '}
-          <span className="link-underline">open source</span>
-          <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-        </a>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/contact"
+            className="text-xs text-muted-foreground hover:text-foreground transition-colors duration-200"
+          >
+            Contact
+          </Link>
+          <Link
+            href="/support"
+            className="text-xs text-muted-foreground hover:text-foreground transition-colors duration-200"
+          >
+            Support
+          </Link>
+        </div>
       </div>
     </motion.footer>
   );

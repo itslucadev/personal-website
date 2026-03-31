@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Fira_Code } from 'next/font/google';
+import { ToastProvider } from '@/components/ToastProvider';
 import './globals.css';
 
 const firaCode = Fira_Code({
@@ -98,8 +99,9 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${firaCode.variable} font-mono antialiased`}>
+      <body className={`${firaCode.variable} font-mono antialiased`} suppressHydrationWarning>
         {children}
+        <ToastProvider />
       </body>
     </html>
   );
