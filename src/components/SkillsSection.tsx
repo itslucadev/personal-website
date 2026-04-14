@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const skills = [
   { name: 'TypeScript', icon: '/tech/logo-typescript.svg', url: 'https://www.typescriptlang.org' },
@@ -75,9 +76,11 @@ export function SkillsSection() {
             const content = (
               <>
                 <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-lg border border-border bg-card p-2 transition-colors group-hover:bg-accent/50 group-hover:border-foreground/20">
-                  <img
+                  <Image
                     src={skill.icon}
                     alt={skill.name}
+                    width={48}
+                    height={48}
                     className="w-full h-full object-contain"
                   />
                 </div>

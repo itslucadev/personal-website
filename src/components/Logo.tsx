@@ -15,7 +15,7 @@ export function Logo() {
       className="absolute top-6 left-6 z-50"
     >
       <Link href="/" className="text-sm font-bold tracking-tight text-foreground hover:opacity-80 transition-opacity">
-        <span className="text-amber-500">//</span> LB
+        <span className="text-amber-600">//</span> LB
       </Link>
     </motion.div>
   );

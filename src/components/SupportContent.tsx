@@ -57,7 +57,7 @@ export function SupportContent() {
               transition={{ duration: 0.5, delay: 0.2, ease }}
               className="text-2xl sm:text-[28px] font-bold text-center mb-4 leading-tight tracking-tight"
             >
-              How can I <span className="text-amber-500">help</span>?
+              How can I <span className="text-amber-600">help</span>?
             </motion.h1>
 
             <motion.p

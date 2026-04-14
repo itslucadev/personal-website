@@ -22,7 +22,7 @@ export function ContactContent() {
               transition={{ duration: 0.5, delay: 0.2, ease }}
               className="text-2xl sm:text-[28px] font-bold text-center mb-4 leading-tight tracking-tight"
             >
-              Let's <span className="text-amber-500">connect</span>
+              Let's <span className="text-amber-600">connect</span>
             </motion.h1>
 
             <motion.p

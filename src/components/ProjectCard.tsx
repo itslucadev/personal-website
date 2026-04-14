@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { Folder, ExternalLink } from 'lucide-react';
 
 interface ProjectCardProps {
@@ -52,9 +53,11 @@ export function ProjectCard({ title, description, status, link, logo, index }: P
     >
       <div className="flex items-start gap-3 mb-2">
         {logo ? (
-          <img
+          <Image
             src={logo}
             alt={title}
+            width={20}
+            height={20}
             className="w-5 h-5 object-contain flex-shrink-0 mt-0.5 rounded-md"
           />
         ) : (

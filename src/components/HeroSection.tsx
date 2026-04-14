@@ -20,7 +20,7 @@ export function HeroSection() {
           }}
           className="text-2xl sm:text-[28px] font-bold text-center mb-4 leading-tight tracking-tight"
         >
-          Hey, I'm <span className="text-amber-500">Luca Becker</span>!
+          Hey, I'm <span className="text-amber-600">Luca Becker</span>!
         </motion.h1>
 
         {/* Tagline */}

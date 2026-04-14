@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { Briefcase, MapPin, Calendar, ExternalLink, GraduationCap } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
@@ -76,9 +77,11 @@ export function ExperienceSection() {
               <div className="flex items-start gap-3">
                 <div className="mt-0.5">
                   {experience.logo ? (
-                    <img
+                    <Image
                       src={experience.logo}
                       alt={experience.company}
+                      width={16}
+                      height={16}
                       className="w-4 h-4 object-contain rounded-sm"
                     />
                   ) : (
@@ -104,10 +107,10 @@ export function ExperienceSection() {
                       experience.company
                     )}
                     {experience.type && (
-                      <span className="text-muted-foreground/70"> · {experience.type}</span>
+                      <span className="text-muted-foreground"> · {experience.type}</span>
                     )}
                   </p>
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5 text-xs text-muted-foreground/80">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5 text-xs text-muted-foreground">
                     <span className="flex items-center gap-1">
                       <Calendar className="w-3 h-3" />
                       {experience.period} · {experience.duration}
@@ -159,9 +162,11 @@ export function ExperienceSection() {
             className="border border-border rounded-lg p-4 bg-card hover:bg-accent/50 transition-colors"
           >
             <div className="flex items-start gap-3">
-              <img
+              <Image
                 src="/experience/logo-fau.jpeg"
                 alt="FAU"
+                width={16}
+                height={16}
                 className="w-4 h-4 object-contain mt-0.5 rounded-sm"
               />
               <div className="flex-1 min-w-0">
@@ -179,7 +184,7 @@ export function ExperienceSection() {
                 <p className="text-sm text-muted-foreground">
                   Bachelor of Science - BS, Computer Science
                 </p>
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5 text-xs text-muted-foreground/80">
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5 text-xs text-muted-foreground">
                   <span className="flex items-center gap-1">
                     <GraduationCap className="w-3 h-3" />
                     Graduated February 2026

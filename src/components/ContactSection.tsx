@@ -33,7 +33,7 @@ export function ContactSection() {
             You can reach me <strong>anytime</strong> at{' '}
             <a
               href="mailto:luca.dev@outlook.de"
-              className="text-amber-500 link-underline-static hover:text-amber-600 transition-colors"
+              className="text-amber-600 link-underline-static hover:text-amber-700 transition-colors"
             >
               luca.dev@outlook.de
             </a>
@@ -44,7 +44,7 @@ export function ContactSection() {
               href="https://cal.eu/lucabecker"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-amber-500 link-underline-static hover:text-amber-600 transition-colors"
+              className="text-amber-600 link-underline-static hover:text-amber-700 transition-colors"
             >
               Cal.com
             </a>
