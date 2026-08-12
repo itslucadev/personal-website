@@ -19,7 +19,7 @@ export function SocialSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{
             duration: 0.5,
-            delay: 0.8,
+            delay: 0.95,
             ease: [0.25, 0.46, 0.45, 0.94],
           }}
           className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2"
@@ -33,7 +33,7 @@ export function SocialSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{
             duration: 0.5,
-            delay: 0.83,
+            delay: 0.98,
             ease: [0.25, 0.46, 0.45, 0.94],
           }}
           className="text-sm text-foreground mb-5"

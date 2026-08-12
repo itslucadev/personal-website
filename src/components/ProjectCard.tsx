@@ -2,15 +2,18 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { Folder, ExternalLink } from 'lucide-react';
+import Link from 'next/link';
+import { Folder, ExternalLink, ArrowRight } from 'lucide-react';
 
 interface ProjectCardProps {
   title: string;
   description: string;
-  status: 'In Development' | 'Active' | 'Ongoing' | 'Sold';
+  status: 'In Development' | 'Active' | 'Ongoing' | 'Sold' | 'Live';
   link?: string;
   logo?: string;
   index: number;
+  /** Stagger offset so cards can slot into the page's animation cascade. */
+  baseDelay?: number;
 }
 
 const statusStyles = {
@@ -34,10 +37,25 @@ const statusStyles = {
     text: 'text-amber-700 dark:text-amber-300',
     border: 'border-amber-400/30',
   },
+  'Live': {
+    bg: 'bg-gradient-to-r from-emerald-500/20 to-green-400/20',
+    text: 'text-emerald-700 dark:text-emerald-300',
+    border: 'border-emerald-400/30',
+  },
 };
 
-export function ProjectCard({ title, description, status, link, logo, index }: ProjectCardProps) {
+export function ProjectCard({
+  title,
+  description,
+  status,
+  link,
+  logo,
+  index,
+  baseDelay = 0.6,
+}: ProjectCardProps) {
   const statusStyle = statusStyles[status];
+  const hasLink = Boolean(link && link !== '#');
+  const isInternal = hasLink && link!.startsWith('/');
 
   const CardContent = (
     <motion.div
@@ -45,17 +63,18 @@ export function ProjectCard({ title, description, status, link, logo, index }: P
       animate={{ opacity: 1, y: 0 }}
       transition={{
         duration: 0.5,
-        delay: 0.6 + index * 0.05,
+        delay: baseDelay + index * 0.05,
         ease: [0.25, 0.46, 0.45, 0.94],
       }}
       whileHover={{ y: -2 }}
-      className={`group relative p-5 border border-border rounded-lg bg-card hover:border-foreground/20 transition-colors duration-200 ${link && link !== '#' ? 'cursor-pointer' : 'cursor-default'}`}
+      className={`group relative h-full p-5 border border-border rounded-lg bg-card hover:border-foreground/20 transition-colors duration-200 ${hasLink ? 'cursor-pointer' : 'cursor-default'}`}
     >
       <div className="flex items-start gap-3 mb-2">
         {logo ? (
           <Image
             src={logo}
-            alt={title}
+            /* Decorative: the title next to it already names the project. */
+            alt=""
             width={20}
             height={20}
             className="w-5 h-5 object-contain flex-shrink-0 mt-0.5 rounded-md"
@@ -71,9 +90,12 @@ export function ProjectCard({ title, description, status, link, logo, index }: P
             >
               <span className="flex items-center gap-0 group-hover:gap-1 transition-all duration-200">
                 {status.toLowerCase()}
-                {link && link !== '#' && (
-                  <ExternalLink className="w-0 h-3 group-hover:w-3 opacity-0 group-hover:opacity-100 transition-all duration-200 overflow-hidden" />
-                )}
+                {hasLink &&
+                  (isInternal ? (
+                    <ArrowRight className="w-0 h-3 group-hover:w-3 opacity-0 group-hover:opacity-100 transition-all duration-200 overflow-hidden" />
+                  ) : (
+                    <ExternalLink className="w-0 h-3 group-hover:w-3 opacity-0 group-hover:opacity-100 transition-all duration-200 overflow-hidden" />
+                  ))}
               </span>
             </span>
           </div>
@@ -86,13 +108,21 @@ export function ProjectCard({ title, description, status, link, logo, index }: P
     </motion.div>
   );
 
-  if (link && link !== '#') {
+  if (!hasLink) {
+    return CardContent;
+  }
+
+  if (isInternal) {
     return (
-      <a href={link} target="_blank" rel="noopener noreferrer" className="block">
+      <Link href={link!} className="block h-full">
         {CardContent}
-      </a>
+      </Link>
     );
   }
 
-  return CardContent;
+  return (
+    <a href={link} target="_blank" rel="noopener noreferrer" className="block h-full">
+      {CardContent}
+    </a>
+  );
 }

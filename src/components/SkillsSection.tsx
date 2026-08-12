@@ -39,7 +39,7 @@ export function SkillsSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{
             duration: 0.5,
-            delay: 0.6,
+            delay: 0.78,
             ease: [0.25, 0.46, 0.45, 0.94],
           }}
           className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2"
@@ -53,7 +53,7 @@ export function SkillsSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{
             duration: 0.5,
-            delay: 0.63,
+            delay: 0.81,
             ease: [0.25, 0.46, 0.45, 0.94],
           }}
           className="text-sm text-foreground mb-5"
@@ -67,7 +67,7 @@ export function SkillsSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{
             duration: 0.5,
-            delay: 0.66,
+            delay: 0.84,
             ease: [0.25, 0.46, 0.45, 0.94],
           }}
           className="grid grid-cols-5 sm:grid-cols-6 gap-3"
@@ -97,7 +97,7 @@ export function SkillsSection() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{
                   duration: 0.4,
-                  delay: 0.7 + index * 0.03,
+                  delay: 0.88 + index * 0.03,
                   ease: [0.25, 0.46, 0.45, 0.94],
                 }}
                 whileHover={{ scale: 1.1, y: -2 }}
