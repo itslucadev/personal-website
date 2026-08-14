@@ -1,7 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { homeCascade } from '@/lib/home-cascade';
 import { SocialBadge } from './SocialBadge';
+
+const cascade = homeCascade('social');
 
 const socialLinks = [
   { platform: 'GitHub', url: 'https://github.com/phoenix-error' },
@@ -19,7 +22,7 @@ export function SocialSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{
             duration: 0.5,
-            delay: 0.95,
+            delay: cascade.header,
             ease: [0.25, 0.46, 0.45, 0.94],
           }}
           className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2"
@@ -33,7 +36,7 @@ export function SocialSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{
             duration: 0.5,
-            delay: 0.98,
+            delay: cascade.description,
             ease: [0.25, 0.46, 0.45, 0.94],
           }}
           className="text-sm text-foreground mb-5"

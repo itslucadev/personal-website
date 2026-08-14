@@ -19,9 +19,10 @@ export const metadata: Metadata = {
     description,
     images: [
       {
-        url: '/clients/bv-q-club-hero.webp',
+        url: '/clients/bv-q-club-hero-og.jpg',
         width: 1440,
         height: 900,
+        type: 'image/jpeg',
         alt: 'Homepage of bv-q-club.de',
       },
     ],
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title,
     description,
-    images: ['/clients/bv-q-club-hero.webp'],
+    images: ['/clients/bv-q-club-hero-og.jpg'],
   },
 };
 
@@ -38,7 +39,8 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'CreativeWork',
   name: 'BV Q-Club e.V. Website',
-  url: 'https://lucabecker.dev/work/bv-q-club',
+  url: 'https://bv-q-club.de',
+  mainEntityOfPage: 'https://lucabecker.dev/work/bv-q-club',
   description,
   inLanguage: 'en',
   creator: {

@@ -1,7 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { homeCascade } from '@/lib/home-cascade';
 import { ProjectCard } from './ProjectCard';
+
+const cascade = homeCascade('projects');
 
 const projects = [
   {
@@ -36,7 +39,7 @@ export function ProjectsSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{
             duration: 0.5,
-            delay: 0.55,
+            delay: cascade.header,
             ease: [0.25, 0.46, 0.45, 0.94],
           }}
           className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2"
@@ -50,7 +53,7 @@ export function ProjectsSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{
             duration: 0.5,
-            delay: 0.58,
+            delay: cascade.description,
             ease: [0.25, 0.46, 0.45, 0.94],
           }}
           className="text-sm text-foreground mb-5"
@@ -69,6 +72,7 @@ export function ProjectsSection() {
               link={project.link}
               logo={project.logo}
               index={index}
+              baseDelay={cascade.body}
             />
           ))}
         </div>
