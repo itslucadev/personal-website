@@ -6,6 +6,8 @@ interface SocialBadgeProps {
   platform: string;
   url: string;
   index: number;
+  /** Stagger offset so badges slot into the section's place in the page cascade. */
+  baseDelay: number;
 }
 
 const iconMap: Record<string, string> = {
@@ -14,7 +16,7 @@ const iconMap: Record<string, string> = {
   'LinkedIn': '/socials/logo-linkedin.svg',
 };
 
-export function SocialBadge({ platform, url, index }: SocialBadgeProps) {
+export function SocialBadge({ platform, url, index, baseDelay }: SocialBadgeProps) {
   const iconSrc = iconMap[platform];
 
   return (
@@ -26,7 +28,7 @@ export function SocialBadge({ platform, url, index }: SocialBadgeProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{
         duration: 0.5,
-        delay: 0.85 + index * 0.05,
+        delay: baseDelay + index * 0.05,
         ease: [0.25, 0.46, 0.45, 0.94],
       }}
       whileHover={{ scale: 1.05 }}

@@ -52,6 +52,7 @@ export function SocialSection() {
               platform={link.platform}
               url={link.url}
               index={index}
+              baseDelay={cascade.body}
             />
           ))}
         </div>

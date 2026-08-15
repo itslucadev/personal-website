@@ -42,7 +42,7 @@ const jsonLd = {
   url: 'https://bv-q-club.de',
   mainEntityOfPage: 'https://lucabecker.dev/work/bv-q-club',
   description,
-  inLanguage: 'en',
+  inLanguage: 'de',
   creator: {
     '@type': 'Person',
     name: 'Luca Becker',

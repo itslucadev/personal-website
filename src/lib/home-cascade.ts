@@ -15,7 +15,7 @@ const SECTIONS = [
 
 export type HomeSection = (typeof SECTIONS)[number]['key'];
 
-/** When the first stacked section starts, after the hero and experience cascades. */
+/** When the first stacked section starts: after the hero, while the experience list is still fanning in. */
 const FIRST_SECTION_DELAY = 0.55;
 
 /** Gap between two consecutive elements inside the same section. */
