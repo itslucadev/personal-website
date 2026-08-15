@@ -1,11 +1,20 @@
+"use strict";
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
-  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
+  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
       fontFamily: {
-        mono: ['"SF Mono"', '"Monaco"', '"Inconsolata"', '"Fira Code"', '"Fira Mono"', '"Droid Sans Mono"', 'monospace'],
+        mono: [
+          '"SF Mono"',
+          '"Monaco"',
+          '"Inconsolata"',
+          '"Fira Code"',
+          '"Fira Mono"',
+          '"Droid Sans Mono"',
+          "monospace",
+        ],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -54,21 +63,21 @@ module.exports = {
         // Custom badge colors
         badge: {
           blue: {
-            bg: '#DBEAFE',
-            text: '#1E40AF',
+            bg: "#DBEAFE",
+            text: "#1E40AF",
           },
           green: {
-            bg: '#DCFCE7',
-            text: '#166534',
+            bg: "#DCFCE7",
+            text: "#166534",
           },
           orange: {
-            bg: '#FFEDD5',
-            text: '#9A3412',
+            bg: "#FFEDD5",
+            text: "#9A3412",
           },
         },
         // Custom accent (amber)
         amber: {
-          500: '#F59E0B',
+          500: "#F59E0B",
         },
       },
       borderRadius: {
@@ -113,4 +122,4 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};

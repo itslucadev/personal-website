@@ -1,80 +1,81 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { ProjectCard } from './ProjectCard';
+import { motion } from "framer-motion";
+import { homeCascade } from "@/lib/home-cascade";
+import { ProjectCard } from "./ProjectCard";
+
+const cascade = homeCascade("projects");
 
 const projects = [
   {
-    title: 'GridVote F1',
-    description: 'Social Formula 1 prediction game focused on competition, seasons, and friends.',
-    status: 'In Development' as const,
-    link: '#',
+    title: "GridVote F1",
+    description:
+      "Social Formula 1 prediction game focused on competition, seasons, and friends.",
+    status: "In Development" as const,
+    link: "#",
   },
   {
-    title: 'BilliardRank',
-    description: 'Ranking and competition management system for billiard players and clubs.',
-    status: 'In Development' as const,
-    link: '#',
-    logo: '/projects/logo-billiardrank.png',
+    title: "BilliardRank",
+    description:
+      "Ranking and competition management system for billiard players and clubs.",
+    status: "In Development" as const,
+    link: "#",
+    logo: "/projects/logo-billiardrank.png",
   },
   {
-    title: 'MinimaFinance',
-    description: 'Monitor your finances with ease. Track daily spending with intuitive grid charts, custom categories, and bill reminders — all with privacy-first local storage.',
-    status: 'Active' as const,
-    link: 'https://minimafinance.app',
-    logo: '/projects/logo-minimafinance.svg',
-  },
-  {
-    title: 'Client Projects',
-    description: 'Multiple commercial projects including websites, internal tools, and automations.',
-    status: 'Ongoing' as const,
-    link: '#',
+    title: "MinimaFinance",
+    description:
+      "Monitor your finances with ease. Track daily spending with intuitive grid charts, custom categories, and bill reminders — all with privacy-first local storage.",
+    status: "Active" as const,
+    link: "https://minimafinance.app",
+    logo: "/projects/logo-minimafinance.svg",
   },
 ];
 
 export function ProjectsSection() {
   return (
-    <section className="py-10 px-4 sm:px-6">
-      <div className="max-w-3xl mx-auto">
+    <section className="px-4 py-10 sm:px-6">
+      <div className="mx-auto max-w-3xl">
         {/* Section Header */}
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
+          className="mb-2 font-medium text-muted-foreground text-xs uppercase tracking-wider"
+          initial={{ opacity: 0, y: 20 }}
           transition={{
             duration: 0.5,
-            delay: 0.55,
+            delay: cascade.header,
             ease: [0.25, 0.46, 0.45, 0.94],
           }}
-          className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2"
         >
           Projects
         </motion.h2>
 
         {/* Description */}
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
+          className="mb-5 text-foreground text-sm"
+          initial={{ opacity: 0, y: 20 }}
           transition={{
             duration: 0.5,
-            delay: 0.58,
+            delay: cascade.description,
             ease: [0.25, 0.46, 0.45, 0.94],
           }}
-          className="text-sm text-foreground mb-5"
         >
           These are my personal projects, both past and ongoing:
         </motion.p>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {projects.map((project, index) => (
             <ProjectCard
-              key={project.title}
-              title={project.title}
+              baseDelay={cascade.body}
               description={project.description}
-              status={project.status}
+              index={index}
+              key={project.title}
               link={project.link}
               logo={project.logo}
-              index={index}
+              status={project.status}
+              title={project.title}
             />
           ))}
         </div>

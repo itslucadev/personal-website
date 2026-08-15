@@ -1,14 +1,14 @@
 "use client";
 
 import { useForm } from "@tanstack/react-form";
-import { z } from "zod";
 import { motion } from "framer-motion";
-import { Send, Loader2 } from "lucide-react";
 import { gooeyToast } from "goey-toast";
+import { Loader2, Send } from "lucide-react";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
@@ -70,138 +70,126 @@ export function ContactForm({ animationDelay = 0.2 }: ContactFormProps) {
 
   return (
     <motion.form
+      animate={{ opacity: 1, y: 0 }}
+      className="space-y-4 rounded-lg border border-border bg-card p-4"
+      initial={{ opacity: 0, y: 20 }}
       onSubmit={(e) => {
         e.preventDefault();
         form.handleSubmit();
       }}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: animationDelay, ease }}
-      className="border border-border rounded-lg p-4 bg-card space-y-4"
     >
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <form.Field
-          name="name"
-          children={(field) => {
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <form.Field name="name">
+          {(field) => {
             const isInvalid =
               field.state.meta.isTouched && !field.state.meta.isValid;
             return (
               <Field data-invalid={isInvalid}>
                 <FieldLabel htmlFor={field.name}>Name</FieldLabel>
                 <Input
+                  aria-invalid={isInvalid}
+                  autoComplete="name"
                   id={field.name}
                   name={field.name}
-                  value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  aria-invalid={isInvalid}
                   placeholder="Your name"
-                  autoComplete="name"
+                  value={field.state.value}
                 />
-                {isInvalid && (
-                  <FieldError errors={field.state.meta.errors} />
-                )}
+                {isInvalid && <FieldError errors={field.state.meta.errors} />}
               </Field>
             );
           }}
-        />
+        </form.Field>
 
-        <form.Field
-          name="email"
-          children={(field) => {
+        <form.Field name="email">
+          {(field) => {
             const isInvalid =
               field.state.meta.isTouched && !field.state.meta.isValid;
             return (
               <Field data-invalid={isInvalid}>
                 <FieldLabel htmlFor={field.name}>Email</FieldLabel>
                 <Input
+                  aria-invalid={isInvalid}
+                  autoComplete="email"
                   id={field.name}
                   name={field.name}
-                  type="email"
-                  value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  aria-invalid={isInvalid}
                   placeholder="you@example.com"
-                  autoComplete="email"
+                  type="email"
+                  value={field.state.value}
                 />
-                {isInvalid && (
-                  <FieldError errors={field.state.meta.errors} />
-                )}
+                {isInvalid && <FieldError errors={field.state.meta.errors} />}
               </Field>
             );
           }}
-        />
+        </form.Field>
       </div>
 
-      <form.Field
-        name="subject"
-        children={(field) => {
+      <form.Field name="subject">
+        {(field) => {
           const isInvalid =
             field.state.meta.isTouched && !field.state.meta.isValid;
           return (
             <Field data-invalid={isInvalid}>
               <FieldLabel htmlFor={field.name}>Subject</FieldLabel>
               <Input
+                aria-invalid={isInvalid}
+                autoComplete="off"
                 id={field.name}
                 name={field.name}
-                value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
-                aria-invalid={isInvalid}
                 placeholder="What's this about?"
-                autoComplete="off"
+                value={field.state.value}
               />
-              {isInvalid && (
-                <FieldError errors={field.state.meta.errors} />
-              )}
+              {isInvalid && <FieldError errors={field.state.meta.errors} />}
             </Field>
           );
         }}
-      />
+      </form.Field>
 
-      <form.Field
-        name="message"
-        children={(field) => {
+      <form.Field name="message">
+        {(field) => {
           const isInvalid =
             field.state.meta.isTouched && !field.state.meta.isValid;
           return (
             <Field data-invalid={isInvalid}>
               <FieldLabel htmlFor={field.name}>Message</FieldLabel>
               <Textarea
+                aria-invalid={isInvalid}
+                className="resize-none"
                 id={field.name}
                 name={field.name}
-                value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
-                aria-invalid={isInvalid}
-                rows={4}
                 placeholder="Describe how I can help you..."
-                className="resize-none"
+                rows={4}
+                value={field.state.value}
               />
-              {isInvalid && (
-                <FieldError errors={field.state.meta.errors} />
-              )}
+              {isInvalid && <FieldError errors={field.state.meta.errors} />}
             </Field>
           );
         }}
-      />
+      </form.Field>
 
       <motion.div
+        className="w-fit"
+        transition={{ duration: 0.2 }}
         whileHover={{ scale: 1.02, y: -1 }}
         whileTap={{ scale: 0.98 }}
-        transition={{ duration: 0.2 }}
-        className="w-fit"
       >
         <Button
-          type="submit"
+          className="flex items-center gap-2 rounded-md bg-foreground px-4 py-2 font-medium text-background text-sm hover:bg-foreground/90 disabled:opacity-50"
           disabled={isSubmitting}
-          className="bg-foreground text-background hover:bg-foreground/90 rounded-md px-4 py-2 text-sm font-medium flex items-center gap-2 disabled:opacity-50"
+          type="submit"
         >
           {isSubmitting ? (
-            <Loader2 className="w-4 h-4 animate-spin" />
+            <Loader2 className="h-4 w-4 animate-spin" />
           ) : (
-            <Send className="w-4 h-4" />
+            <Send className="h-4 w-4" />
           )}
           {isSubmitting ? "Sending..." : "Send message"}
         </Button>
