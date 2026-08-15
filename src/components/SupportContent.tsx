@@ -101,7 +101,7 @@ export function SupportContent() {
             >
               <Accordion collapsible type="single">
                 {faqs.map((faq, index) => (
-                  <AccordionItem key={index} value={`faq-${index}`}>
+                  <AccordionItem key={faq.question} value={`faq-${index}`}>
                     <AccordionTrigger className="text-foreground">
                       <span className="flex items-center gap-2">
                         <HelpCircle className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />

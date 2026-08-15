@@ -1,7 +1,7 @@
-import { readFile } from "fs/promises";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { join } from "path";
 import ReactMarkdown from "react-markdown";
 
 export const metadata: Metadata = {

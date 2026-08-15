@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { CaseStudyBVQClub } from "@/components/CaseStudyBVQClub";
+import { CaseStudyBvqClub } from "@/components/CaseStudyBvqClub";
 
 const title = "BV Q-Club e.V. - Case Study | Luca Becker";
 const description =
@@ -74,10 +74,11 @@ export default function BVQClubCaseStudyPage() {
   return (
     <>
       <script
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD is emitted this way by convention; the payload is a JSON.stringify of a static object, not user input.
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         type="application/ld+json"
       />
-      <CaseStudyBVQClub />
+      <CaseStudyBvqClub />
     </>
   );
 }

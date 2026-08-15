@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // biome-ignore lint/suspicious/useAwait: Next's headers() must return a Promise, so async is required even with nothing to await.
   async headers() {
     return [
       {

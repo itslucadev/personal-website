@@ -70,7 +70,7 @@ const shots = [
   },
 ];
 
-export function CaseStudyBVQClub() {
+export function CaseStudyBvqClub() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Logo />

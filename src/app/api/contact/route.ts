@@ -47,9 +47,18 @@ export async function POST(request: Request) {
 
     const { name, email, subject, message } = result.data;
 
+    const emailTo = process.env.EMAIL_TO;
+    if (!emailTo) {
+      console.error("EMAIL_TO is not configured.");
+      return NextResponse.json(
+        { error: "Failed to send message. Please try again." },
+        { status: 500 }
+      );
+    }
+
     await resend.emails.send({
       from: "Support Form <noreply@lucabecker.dev>",
-      to: process.env.EMAIL_TO!,
+      to: emailTo,
       replyTo: email,
       subject: `[Support] ${subject}`,
       text: `Name: ${name}\nEmail: ${email}\n\n${message}`,

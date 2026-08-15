@@ -80,8 +80,8 @@ export function ContactForm({ animationDelay = 0.2 }: ContactFormProps) {
       transition={{ duration: 0.5, delay: animationDelay, ease }}
     >
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <form.Field
-          children={(field) => {
+        <form.Field name="name">
+          {(field) => {
             const isInvalid =
               field.state.meta.isTouched && !field.state.meta.isValid;
             return (
@@ -101,11 +101,10 @@ export function ContactForm({ animationDelay = 0.2 }: ContactFormProps) {
               </Field>
             );
           }}
-          name="name"
-        />
+        </form.Field>
 
-        <form.Field
-          children={(field) => {
+        <form.Field name="email">
+          {(field) => {
             const isInvalid =
               field.state.meta.isTouched && !field.state.meta.isValid;
             return (
@@ -126,12 +125,11 @@ export function ContactForm({ animationDelay = 0.2 }: ContactFormProps) {
               </Field>
             );
           }}
-          name="email"
-        />
+        </form.Field>
       </div>
 
-      <form.Field
-        children={(field) => {
+      <form.Field name="subject">
+        {(field) => {
           const isInvalid =
             field.state.meta.isTouched && !field.state.meta.isValid;
           return (
@@ -151,11 +149,10 @@ export function ContactForm({ animationDelay = 0.2 }: ContactFormProps) {
             </Field>
           );
         }}
-        name="subject"
-      />
+      </form.Field>
 
-      <form.Field
-        children={(field) => {
+      <form.Field name="message">
+        {(field) => {
           const isInvalid =
             field.state.meta.isTouched && !field.state.meta.isValid;
           return (
@@ -176,8 +173,7 @@ export function ContactForm({ animationDelay = 0.2 }: ContactFormProps) {
             </Field>
           );
         }}
-        name="message"
-      />
+      </form.Field>
 
       <motion.div
         className="w-fit"

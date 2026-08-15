@@ -41,7 +41,14 @@ export function SocialBadge({
       whileTap={{ scale: 0.95 }}
     >
       {iconSrc && (
-        <img alt={platform} className="h-4 w-4 object-contain" src={iconSrc} />
+        // biome-ignore lint/performance/noImgElement: next/image refuses to optimize SVG without dangerouslyAllowSVG, so these local icons stay plain <img>.
+        <img
+          alt={platform}
+          className="h-4 w-4 object-contain"
+          height={16}
+          src={iconSrc}
+          width={16}
+        />
       )}
       <span>{platform}</span>
     </motion.a>
