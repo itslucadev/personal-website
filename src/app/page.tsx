@@ -1,15 +1,15 @@
-import { Logo } from '@/components/Logo';
-import { HeroSection } from '@/components/HeroSection';
-import { ExperienceSection } from '@/components/ExperienceSection';
-import { ProjectsSection } from '@/components/ProjectsSection';
-import { ClientWorkSection } from '@/components/ClientWorkSection';
-import { SkillsSection } from '@/components/SkillsSection';
-import { SocialSection } from '@/components/SocialSection';
-import { Footer } from '@/components/Footer';
+import { ClientWorkSection } from "@/components/ClientWorkSection";
+import { ExperienceSection } from "@/components/ExperienceSection";
+import { Footer } from "@/components/Footer";
+import { HeroSection } from "@/components/HeroSection";
+import { Logo } from "@/components/Logo";
+import { ProjectsSection } from "@/components/ProjectsSection";
+import { SkillsSection } from "@/components/SkillsSection";
+import { SocialSection } from "@/components/SocialSection";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="flex min-h-screen flex-col bg-background">
       <Logo />
 
       <main className="flex-1">

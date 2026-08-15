@@ -10,14 +10,14 @@
  * delays, so changing FIRST_SECTION_DELAY or a span here can collide with them.
  */
 const SECTIONS = [
-  { key: 'projects', span: 0.11 },
-  { key: 'clientWork', span: 0.12 },
+  { key: "projects", span: 0.11 },
+  { key: "clientWork", span: 0.12 },
   /** Wider span: the skill badges keep fanning in well past the grid itself. */
-  { key: 'skills', span: 0.17 },
-  { key: 'social', span: 0.15 },
+  { key: "skills", span: 0.17 },
+  { key: "social", span: 0.15 },
 ] as const;
 
-export type HomeSection = (typeof SECTIONS)[number]['key'];
+export type HomeSection = (typeof SECTIONS)[number]["key"];
 
 /** When the first stacked section starts: after the hero, while the experience list is still fanning in. */
 const FIRST_SECTION_DELAY = 0.55;
@@ -31,7 +31,7 @@ export function homeCascade(section: HomeSection) {
   const index = SECTIONS.findIndex((entry) => entry.key === section);
   const start = SECTIONS.slice(0, index).reduce(
     (delay, entry) => delay + entry.span,
-    FIRST_SECTION_DELAY,
+    FIRST_SECTION_DELAY
   );
 
   return {

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { type MotionProps, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
@@ -6,8 +6,8 @@ import { cn } from "@/lib/utils";
 
 interface AnimatedSpanProps extends MotionProps {
   children: React.ReactNode;
-  delay?: number;
   className?: string;
+  delay?: number;
 }
 
 export const AnimatedSpan = ({
@@ -18,7 +18,7 @@ export const AnimatedSpan = ({
 }: AnimatedSpanProps) => (
   <motion.div
     animate={{ opacity: 1, y: 0 }}
-    className={cn("grid text-sm font-normal tracking-tight", className)}
+    className={cn("grid font-normal text-sm tracking-tight", className)}
     initial={{ opacity: 0, y: -5 }}
     transition={{ duration: 0.6, delay: delay / 1000 }}
     {...(props as any)}
@@ -28,11 +28,11 @@ export const AnimatedSpan = ({
 );
 
 interface TypingAnimationProps extends MotionProps {
+  as?: React.ElementType;
   children: string;
   className?: string;
-  duration?: number;
   delay?: number;
-  as?: React.ElementType;
+  duration?: number;
 }
 
 export const TypingAnimation = ({
@@ -84,7 +84,7 @@ export const TypingAnimation = ({
 
   return (
     <MotionComponent
-      className={cn("text-sm font-normal tracking-tight", className)}
+      className={cn("font-normal text-sm tracking-tight", className)}
       ref={elementRef}
       {...(props as any)}
     >
@@ -103,10 +103,10 @@ export const Terminal = ({ children, className }: TerminalProps) => {
     <div
       className={cn(
         "z-0 h-full max-h-[500px] w-full max-w-2xl rounded-xl border border-border bg-background",
-        className,
+        className
       )}
     >
-      <div className="flex flex-col gap-y-2 border-b border-border p-4">
+      <div className="flex flex-col gap-y-2 border-border border-b p-4">
         <div className="flex flex-row gap-x-2">
           <div className="h-3 w-3 rounded-full bg-red-500" />
           <div className="h-3 w-3 rounded-full bg-yellow-500" />

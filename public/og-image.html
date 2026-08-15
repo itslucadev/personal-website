@@ -1,77 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OG Image - Luca Becker</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OG Image - Luca Becker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    >
+    <style>
     * {
-      margin: 0;
-      padding: 0;
       box-sizing: border-box;
+      padding: 0;
+      margin: 0;
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #09090b;
-      color: #fafafa;
       display: flex;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
+      font-family:
+        "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        sans-serif;
+      color: #fafafa;
+      background: #09090b;
     }
 
     .og-container {
-      width: 1200px;
-      height: 630px;
-      background: #09090b;
+      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      width: 1200px;
+      height: 630px;
       padding: 60px;
-      position: relative;
       overflow: hidden;
+      background: #09090b;
     }
 
     /* Subtle gradient background */
     .og-container::before {
-      content: '';
       position: absolute;
       top: 0;
-      left: 0;
       right: 0;
       bottom: 0;
-      background: radial-gradient(ellipse at 50% 0%, rgba(245, 158, 11, 0.08) 0%, transparent 60%);
+      left: 0;
       pointer-events: none;
+      content: "";
+      background: radial-gradient(
+        ellipse at 50% 0%,
+        rgba(245, 158, 11, 0.08) 0%,
+        transparent 60%
+      );
     }
 
     .content {
       position: relative;
       z-index: 1;
-      text-align: center;
       display: flex;
       flex-direction: column;
-      align-items: center;
       gap: 24px;
+      align-items: center;
+      text-align: center;
     }
 
     .avatar {
       width: 120px;
       height: 120px;
-      border-radius: 50%;
-      border: 3px solid rgba(245, 158, 11, 0.3);
       object-fit: cover;
+      border: 3px solid rgba(245, 158, 11, 0.3);
+      border-radius: 50%;
     }
 
     h1 {
       font-size: 56px;
       font-weight: 700;
-      letter-spacing: -0.02em;
       line-height: 1.1;
+      letter-spacing: -0.02em;
     }
 
     .name {
@@ -79,16 +88,16 @@
     }
 
     .tagline {
-      font-size: 24px;
-      color: #a1a1aa;
       max-width: 700px;
+      font-size: 24px;
       line-height: 1.5;
+      color: #a1a1aa;
     }
 
     .availability {
       display: flex;
-      align-items: center;
       gap: 10px;
+      align-items: center;
       margin-top: 8px;
     }
 
@@ -101,8 +110,8 @@
     .dot-glow {
       position: absolute;
       inset: -4px;
-      border-radius: 50%;
       background: rgba(34, 197, 94, 0.3);
+      border-radius: 50%;
       filter: blur(4px);
     }
 
@@ -110,8 +119,8 @@
       position: relative;
       width: 12px;
       height: 12px;
-      border-radius: 50%;
       background: #22c55e;
+      border-radius: 50%;
     }
 
     .availability-text {
@@ -126,29 +135,32 @@
       color: #52525b;
       letter-spacing: 0.05em;
     }
-  </style>
-</head>
-<body>
-  <div class="og-container">
-    <div class="content">
-      <img src="avatar.png" alt="Luca Becker" class="avatar">
+    </style>
+  </head>
+  <body>
+    <div class="og-container">
+      <div class="content">
+        <img src="avatar.png" alt="Luca Becker" class="avatar">
 
-      <h1>Hey, I'm <span class="name">Luca Becker</span>!</h1>
+        <h1>Hey, I'm <span class="name">Luca Becker</span>!</h1>
 
-      <p class="tagline">
-        React Native developer from Germany building modern mobile and web apps with a focus on clean design.
-      </p>
+        <p class="tagline">
+          React Native developer from Germany building modern mobile and web
+          apps with a focus on clean design.
+        </p>
 
-      <div class="availability">
-        <div class="dot-container">
-          <div class="dot-glow"></div>
-          <div class="dot"></div>
+        <div class="availability">
+          <div class="dot-container">
+            <div class="dot-glow"></div>
+            <div class="dot"></div>
+          </div>
+          <span class="availability-text"
+            >Available for freelance projects</span
+          >
         </div>
-        <span class="availability-text">Available for freelance projects</span>
       </div>
-    </div>
 
-    <span class="domain">lucabecker.dev</span>
-  </div>
-</body>
+      <span class="domain">lucabecker.dev</span>
+    </div>
+  </body>
 </html>
