@@ -16,32 +16,29 @@ interface ProjectCardProps {
   title: string;
 }
 
+// Shared between statuses that are meant to read identically - keep them in sync.
+const emeraldStatus = {
+  bg: "bg-gradient-to-r from-emerald-500/20 to-green-400/20",
+  text: "text-emerald-700 dark:text-emerald-300",
+  border: "border-emerald-400/30",
+};
+
+const amberStatus = {
+  bg: "bg-gradient-to-r from-amber-500/20 to-orange-400/20",
+  text: "text-amber-700 dark:text-amber-300",
+  border: "border-amber-400/30",
+};
+
 const statusStyles = {
   "In Development": {
     bg: "bg-gradient-to-r from-blue-500/20 to-cyan-400/20",
     text: "text-blue-700 dark:text-blue-300",
     border: "border-blue-400/30",
   },
-  Active: {
-    bg: "bg-gradient-to-r from-emerald-500/20 to-green-400/20",
-    text: "text-emerald-700 dark:text-emerald-300",
-    border: "border-emerald-400/30",
-  },
-  Ongoing: {
-    bg: "bg-gradient-to-r from-amber-500/20 to-orange-400/20",
-    text: "text-amber-700 dark:text-amber-300",
-    border: "border-amber-400/30",
-  },
-  Sold: {
-    bg: "bg-gradient-to-r from-amber-500/20 to-orange-400/20",
-    text: "text-amber-700 dark:text-amber-300",
-    border: "border-amber-400/30",
-  },
-  Live: {
-    bg: "bg-gradient-to-r from-emerald-500/20 to-green-400/20",
-    text: "text-emerald-700 dark:text-emerald-300",
-    border: "border-emerald-400/30",
-  },
+  Active: emeraldStatus,
+  Ongoing: amberStatus,
+  Sold: amberStatus,
+  Live: emeraldStatus,
 };
 
 export function ProjectCard({

@@ -2,9 +2,12 @@
  * Entrance timing for the homepage sections below the experience list, in the order they
  * appear on the page.
  *
- * Every section listed here reads its delays from here instead of hardcoding them, and each
- * start is derived from the spans of the sections above it. Inserting or reordering a section
- * is a single edit to this list, and the sections below shift with it automatically.
+ * Every section listed here reads its start, description, and body delays from here instead
+ * of hardcoding them, and each start is derived from the spans of the sections above it.
+ * Inserting or reordering a section is a single edit to this list, and the sections below
+ * shift with it automatically.
+ * Per-item staggering within a section body still lives in the component that renders those
+ * items, such as ProjectCard and SocialBadge, and is not controlled by this module.
  *
  * The hero, experience, and footer are not part of this cascade and still hardcode their own
  * delays, so changing FIRST_SECTION_DELAY or a span here can collide with them.
@@ -40,7 +43,7 @@ export function homeCascade(section: HomeSection) {
     /** The grid, list, or card row that makes up the section body. */
     body: round(start + 2 * ELEMENT_STEP),
     /** The nth item staggering in inside the section body. */
-    item: (itemIndex: number, step: number = ELEMENT_STEP) =>
-      round(start + 3 * ELEMENT_STEP + itemIndex * step),
+    item: (itemIndex: number) =>
+      round(start + 3 * ELEMENT_STEP + itemIndex * ELEMENT_STEP),
   };
 }

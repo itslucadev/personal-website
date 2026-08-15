@@ -17,6 +17,8 @@ export const metadata: Metadata = {
     url: "https://lucabecker.dev/work/bv-q-club",
     title,
     description,
+    siteName: "Luca Becker",
+    locale: "en_US",
     images: [
       {
         url: "/clients/bv-q-club-hero-og.jpg",
