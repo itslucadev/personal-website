@@ -1,9 +1,13 @@
 /**
- * Entrance timing for the stacked homepage sections, in the order they appear on the page.
+ * Entrance timing for the homepage sections below the experience list, in the order they
+ * appear on the page.
  *
- * Every section reads its delays from here instead of hardcoding them, and each start is
- * derived from the spans of the sections above it. Inserting or reordering a section is a
- * single edit to this list, and the sections below shift with it automatically.
+ * Every section listed here reads its delays from here instead of hardcoding them, and each
+ * start is derived from the spans of the sections above it. Inserting or reordering a section
+ * is a single edit to this list, and the sections below shift with it automatically.
+ *
+ * The hero, experience, and footer are not part of this cascade and still hardcode their own
+ * delays, so changing FIRST_SECTION_DELAY or a span here can collide with them.
  */
 const SECTIONS = [
   { key: 'projects', span: 0.11 },
