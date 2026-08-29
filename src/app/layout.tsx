@@ -59,8 +59,8 @@ const jsonLd = {
     "Freelance React Native developer from Germany specializing in mobile and web applications",
   email: "luca.dev@outlook.de",
   sameAs: [
-    "https://github.com/phoenix-error",
-    "https://twitter.com/phoenixdevluca",
+    "https://github.com/itslucadev",
+    "https://x.com/itslucadev",
     "https://www.linkedin.com/in/luca-becker-10a736231/",
   ],
   knowsAbout: [

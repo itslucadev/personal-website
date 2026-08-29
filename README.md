@@ -1,7 +1,7 @@
 # lucabecker.dev
 
 Personal site and portfolio of Luca Becker, freelance React Native developer.
-It presents the work history, side projects, client case studies, and skills shown on the homepage, and hosts the contact form plus the legal and support pages for the apps.
+It presents the work history, side projects, client work, and skills shown on the homepage, and hosts the contact form plus the legal and support pages for the apps.
 
 Built with Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS, Radix UI primitives, and Framer Motion.
 Deployed on Vercel.
@@ -43,7 +43,7 @@ Without them the site still builds and renders; only form submissions fail.
 | Route | Contents |
 | --- | --- |
 | `/` | Homepage: hero, experience, projects, client work, skills, socials. |
-| `/work/bv-q-club` | Case study for the BV Q-Club e.V. client project. |
+| `/work/bv-q-club` | Lightweight visual page for the BV Q-Club e.V. client project. |
 | `/contact` | Contact form, posting to `/api/contact`. |
 | `/support` | Support hub and FAQ for the apps. |
 | `/zeiterfassung` | Legal hub for the Zeiterfassung app, with its privacy policy and terms. |

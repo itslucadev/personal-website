@@ -16,29 +16,20 @@ interface ProjectCardProps {
   title: string;
 }
 
-// Shared between statuses that are meant to read identically - keep them in sync.
-const emeraldStatus = {
-  bg: "bg-gradient-to-r from-emerald-500/20 to-green-400/20",
-  text: "text-emerald-700 dark:text-emerald-300",
-  border: "border-emerald-400/30",
-};
+/** Status pill classes shared with ClientWorkSection's "live" pill. */
+export const emeraldStatusPill =
+  "bg-gradient-to-r from-emerald-500/20 to-green-400/20 text-emerald-700 dark:text-emerald-300 border-emerald-400/30";
 
-const amberStatus = {
-  bg: "bg-gradient-to-r from-amber-500/20 to-orange-400/20",
-  text: "text-amber-700 dark:text-amber-300",
-  border: "border-amber-400/30",
-};
+const amberStatusPill =
+  "bg-gradient-to-r from-amber-500/20 to-orange-400/20 text-amber-700 dark:text-amber-300 border-amber-400/30";
 
 const statusStyles = {
-  "In Development": {
-    bg: "bg-gradient-to-r from-blue-500/20 to-cyan-400/20",
-    text: "text-blue-700 dark:text-blue-300",
-    border: "border-blue-400/30",
-  },
-  Active: emeraldStatus,
-  Ongoing: amberStatus,
-  Sold: amberStatus,
-  Live: emeraldStatus,
+  "In Development":
+    "bg-gradient-to-r from-blue-500/20 to-cyan-400/20 text-blue-700 dark:text-blue-300 border-blue-400/30",
+  Active: emeraldStatusPill,
+  Ongoing: amberStatusPill,
+  Sold: amberStatusPill,
+  Live: emeraldStatusPill,
 };
 
 export function ProjectCard({
@@ -83,7 +74,7 @@ export function ProjectCard({
           <div className="flex items-center justify-between gap-2">
             <h3 className="font-medium text-foreground text-sm">{title}</h3>
             <span
-              className={`inline-flex items-center rounded border px-2 py-0.5 font-medium text-[11px] ${statusStyle.bg} ${statusStyle.text} ${statusStyle.border}`}
+              className={`inline-flex items-center rounded border px-2 py-0.5 font-medium text-[11px] ${statusStyle}`}
             >
               <span className="flex items-center gap-0 transition-all duration-200 group-hover:gap-1">
                 {status.toLowerCase()}

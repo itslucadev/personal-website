@@ -7,8 +7,8 @@ import { SocialBadge } from "./SocialBadge";
 const cascade = homeCascade("social");
 
 const socialLinks = [
-  { platform: "GitHub", url: "https://github.com/phoenix-error" },
-  { platform: "X/Twitter", url: "https://twitter.com/phoenixdevluca" },
+  { platform: "GitHub", url: "https://github.com/itslucadev" },
+  { platform: "X/Twitter", url: "https://x.com/itslucadev" },
   {
     platform: "LinkedIn",
     url: "https://www.linkedin.com/in/luca-becker-10a736231/",
