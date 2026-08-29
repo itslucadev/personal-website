@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { homeCascade } from "@/lib/home-cascade";
+import { emeraldStatusPill } from "./ProjectCard";
 
 const cascade = homeCascade("clientWork");
 
@@ -42,10 +43,6 @@ const clientWork: ClientProject[] = [
     stack: ["React Native", "Expo", "TypeScript"],
   },
 ];
-
-// Mirrors the "Live" status style in ProjectCard - keep them in sync.
-const livePill =
-  "bg-gradient-to-r from-emerald-500/20 to-green-400/20 text-emerald-700 dark:text-emerald-300 border-emerald-400/30";
 
 function ClientCard({
   project,
@@ -86,7 +83,7 @@ function ClientCard({
                 {project.title}
               </h3>
               <span
-                className={`inline-flex items-center rounded border px-2 py-0.5 font-medium text-[11px] ${livePill}`}
+                className={`inline-flex items-center rounded border px-2 py-0.5 font-medium text-[11px] ${emeraldStatusPill}`}
               >
                 <span className="flex items-center gap-0 transition-all duration-200 group-hover:gap-1">
                   live
