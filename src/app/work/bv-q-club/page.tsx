@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { CaseStudyBvqClub } from "@/components/CaseStudyBvqClub";
+import { ClientPageBvqClub } from "@/components/ClientPageBvqClub";
 
-const title = "BV Q-Club e.V. - Case Study | Luca Becker";
+const title = "BV Q-Club e.V. - Client Work | Luca Becker";
 const description =
   "Website and Sanity CMS for Fürth's pool billiard club: an editorial Next.js site the board maintains itself, with tournament results syncing automatically from Cuescore.";
 
@@ -72,7 +72,7 @@ const jsonLd = {
   ],
 };
 
-export default function BVQClubCaseStudyPage() {
+export default function BVQClubPage() {
   return (
     <>
       <script
@@ -80,7 +80,7 @@ export default function BVQClubCaseStudyPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         type="application/ld+json"
       />
-      <CaseStudyBvqClub />
+      <ClientPageBvqClub />
     </>
   );
 }
