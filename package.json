@@ -49,7 +49,7 @@
     "goey-toast": "^0.4.0",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.562.0",
-    "next": "^15.5.12",
+    "next": "^15.5.24",
     "next-themes": "^0.4.6",
     "react": "^19.2.0",
     "react-day-picker": "^9.13.0",
@@ -70,10 +70,17 @@
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.4.23",
-    "postcss": "^8.5.6",
+    "postcss": "^8.5.26",
     "tailwindcss": "^3.4.19",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "~5.9.3",
     "ultracite": "7.2.3"
+  },
+  "overrides": {
+    "lodash": "4.18.1",
+    "nanoid": "3.3.18",
+    "brace-expansion": "5.0.9",
+    "postcss": "$postcss",
+    "sharp": "0.35.4"
   }
 }
