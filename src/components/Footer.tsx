@@ -8,7 +8,7 @@ export function Footer() {
   return (
     <motion.footer
       animate={{ opacity: 1 }}
-      className="border-border border-t px-4 py-6 sm:px-6"
+      className="mx-auto max-w-[1200px] px-6 py-8"
       initial={{ opacity: 0 }}
       transition={{
         duration: 0.5,
@@ -16,15 +16,15 @@ export function Footer() {
         ease: [0.25, 0.46, 0.45, 0.94],
       }}
     >
-      <div className="flex flex-col items-center justify-between gap-2 sm:flex-row">
-        <div className="flex flex-col items-center gap-1 sm:items-start">
+      <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
+        <div className="flex flex-col gap-1">
           <p className="flex items-center gap-1 text-muted-foreground text-xs">
             © {new Date().getFullYear()} Built with{" "}
             <Heart className="h-3 w-3 fill-red-500 text-red-500" /> by Luca
           </p>
           <a
             className="text-muted-foreground text-xs transition-colors duration-200 hover:text-foreground"
-            href="https://github.com"
+            href="https://github.com/itslucadev/personal-website"
             rel="noopener noreferrer"
             target="_blank"
           >
@@ -47,6 +47,9 @@ export function Footer() {
           </Link>
         </div>
       </div>
+      <p className="mt-4 text-[11px] text-muted-foreground/80">
+        Apple, the Apple logo and App Store are trademarks of Apple Inc.
+      </p>
     </motion.footer>
   );
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fira_Code, Inter, Newsreader } from "next/font/google";
+import { Fira_Code, Inter, Kalam, Newsreader } from "next/font/google";
 import { ToastProvider } from "@/components/ToastProvider";
 import "./globals.css";
 
@@ -19,6 +19,12 @@ const newsreader = Newsreader({
   style: ["normal", "italic"],
   axes: ["opsz"],
   variable: "--font-newsreader",
+});
+
+const kalam = Kalam({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-kalam",
 });
 
 export const metadata: Metadata = {
@@ -118,7 +124,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${firaCode.variable} ${inter.variable} ${newsreader.variable} font-sans antialiased`}
+        className={`${firaCode.variable} ${inter.variable} ${newsreader.variable} ${kalam.variable} font-sans antialiased`}
         suppressHydrationWarning
       >
         {children}

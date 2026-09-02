@@ -17,6 +17,7 @@ module.exports = {
           '"Noto Color Emoji"',
         ],
         serif: ["var(--font-newsreader)", "Georgia", "serif"],
+        hand: ["var(--font-kalam)", "cursive"],
         mono: [
           "var(--font-fira-code)",
           '"SF Mono"',

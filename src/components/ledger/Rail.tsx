@@ -1,21 +1,23 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
+import { stack } from "@/lib/stack";
 import { cn } from "@/lib/utils";
 
 const SECTIONS = [
+  { id: "about", label: "About" },
   { id: "projects", label: "Projects" },
   { id: "client-work", label: "Client work" },
-  { id: "about", label: "About" },
   { id: "experience", label: "Experience" },
   { id: "contact", label: "Contact" },
 ] as const;
 
 const RAIL_INTRO_KEY = "lb:rail-intro";
-const ONE_LINER = "Native Mac tools and web apps for small teams.";
+const ONE_LINER =
+  "Apps in React Native and Swift, with the backend and web to go with them.";
 
 const FOCUS =
   "rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2";
@@ -24,8 +26,7 @@ let railIntroChecked = false;
 let railIntroShouldEnable = false;
 
 export function Rail() {
-  const reduceMotion = useReducedMotion();
-  const [activeId, setActiveId] = useState<string>("projects");
+  const [activeId, setActiveId] = useState<string>("about");
   const [introEnabled, setIntroEnabled] = useState(false);
   const visibleIds = useRef(new Set<string>());
 
@@ -73,36 +74,55 @@ export function Rail() {
     <aside className="flex flex-col py-10 lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
       <Link
         className={cn(
-          "font-mono text-muted-foreground text-xs transition-colors hover:text-foreground",
+          "w-fit font-bold font-mono text-foreground text-sm tracking-tight transition-opacity hover:opacity-80",
           FOCUS
         )}
         href="/"
       >
-        {"// LB"}
+        <span className="text-amber-600">{"//"}</span> LB
       </Link>
 
-      <h1 className="mt-6 font-serif text-[40px] text-foreground leading-none">
+      <h1 className="mt-6 font-hand text-[46px] text-foreground leading-none">
         Luca Becker
       </h1>
 
       <p className="mt-4 font-medium font-sans text-foreground">
-        Fullstack developer, Fürth
+        Mobile developer, Nuremberg
       </p>
 
-      <p className="mt-3 max-w-[28ch] font-sans text-muted-foreground">
+      <p className="mt-3 max-w-[30ch] font-sans text-muted-foreground">
         <TextGenerateEffect enabled={introEnabled} words={ONE_LINER} />
       </p>
 
-      <div className="mt-5 flex items-center gap-2">
-        <span className="relative flex h-2 w-2">
-          <span className="absolute -inset-2 animate-pulse-glow rounded-full bg-green-400/20 blur-sm" />
-          <span className="absolute -inset-1 animate-pulse-glow rounded-full bg-green-400/30 blur-[2px] delay-75" />
-          <span className="absolute inline-flex h-full w-full animate-pulse-dot rounded-full bg-green-500 opacity-75" />
-          <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
-        </span>
-        <span className="font-sans text-muted-foreground text-xs">
-          Available for freelance and projects
-        </span>
+      <div className="mt-8">
+        <p className="mb-3 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.12em]">
+          Stack
+        </p>
+        <ul className="flex max-w-[22rem] flex-wrap gap-2">
+          {stack.map((item) => (
+            <li key={item.name}>
+              <a
+                className={cn(
+                  "group flex size-8 items-center justify-center rounded-[6px] border border-[#DCE2EA] bg-white transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-amber-600",
+                  FOCUS
+                )}
+                href={item.url}
+                rel="noopener noreferrer"
+                target="_blank"
+                title={item.name}
+              >
+                <Image
+                  alt=""
+                  className="size-4 object-contain"
+                  height={16}
+                  src={item.icon}
+                  width={16}
+                />
+                <span className="sr-only">{item.name}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
 
       <nav aria-label="Sections" className="mt-8 lg:mt-10">
@@ -114,7 +134,7 @@ export function Rail() {
                 <a
                   aria-current={isActive ? "true" : undefined}
                   className={cn(
-                    "flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.12em] transition-colors",
+                    "group flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.12em] transition-colors duration-200",
                     isActive
                       ? "text-foreground"
                       : "text-muted-foreground hover:text-foreground",
@@ -122,21 +142,18 @@ export function Rail() {
                   )}
                   href={`#${section.id}`}
                 >
-                  <motion.span
-                    animate={{ width: isActive ? 44 : 18 }}
+                  <span
                     aria-hidden
                     className={cn(
-                      "hidden h-px shrink-0 lg:block",
-                      isActive ? "bg-amber-600" : "bg-[#5F6B7A]"
+                      "hidden h-px shrink-0 transition-[width,background-color] duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] motion-reduce:transition-none lg:block",
+                      isActive
+                        ? "w-11 bg-amber-600"
+                        : "w-[18px] bg-[#5F6B7A] group-hover:w-8 group-hover:bg-amber-600"
                     )}
-                    initial={false}
-                    transition={
-                      reduceMotion
-                        ? { duration: 0 }
-                        : { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
-                    }
                   />
-                  {section.label}
+                  <span className="transition-transform duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0">
+                    {section.label}
+                  </span>
                 </a>
               </li>
             );
