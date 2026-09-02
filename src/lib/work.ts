@@ -23,7 +23,7 @@ export interface WorkEntry {
   year?: string;
 }
 
-export const workEntries: WorkEntry[] = [
+export const projects: WorkEntry[] = [
   {
     slug: "agent-notch",
     title: "Agent Notch",
@@ -49,6 +49,43 @@ export const workEntries: WorkEntry[] = [
     ],
   },
   {
+    slug: "minimafinance",
+    title: "MinimaFinance",
+    kind: "product",
+    stack: ["React Native", "Expo"],
+    dek: "Track daily spending in a grid, with custom categories and bill reminders. Everything stays on the device.",
+    highlight: "Everything stays on the device",
+    logo: "/projects/logo-minimafinance.svg",
+    actions: [
+      {
+        label: "Visit minimafinance.app",
+        href: "https://minimafinance.app",
+        primary: true,
+        external: true,
+      },
+    ],
+  },
+  {
+    slug: "billiardrank",
+    title: "BilliardRank",
+    kind: "in-development",
+    stack: [],
+    dek: "Ranking and competition management for billiard players and clubs.",
+    logo: "/projects/logo-billiardrank.png",
+    actions: [],
+  },
+  {
+    slug: "gridvote-f1",
+    title: "GridVote F1",
+    kind: "in-development",
+    stack: [],
+    dek: "Social Formula 1 prediction game built around seasons and friends.",
+    actions: [],
+  },
+];
+
+export const clientWork: WorkEntry[] = [
+  {
     slug: "bv-q-club",
     title: "BV Q-Club e.V.",
     kind: "client",
@@ -73,45 +110,11 @@ export const workEntries: WorkEntry[] = [
     ],
   },
   {
-    slug: "minimafinance",
-    title: "MinimaFinance",
-    kind: "product",
-    stack: ["React Native", "Expo"],
-    dek: "Track daily spending in a grid, with custom categories and bill reminders. Everything stays on the device.",
-    highlight: "Everything stays on the device",
-    logo: "/projects/logo-minimafinance.svg",
-    actions: [
-      {
-        label: "Visit minimafinance.app",
-        href: "https://minimafinance.app",
-        primary: true,
-        external: true,
-      },
-    ],
-  },
-  {
     slug: "zeiterfassung",
     title: "Zeiterfassung",
     kind: "private",
     stack: ["React Native", "Expo", "TypeScript"],
     dek: "Internal time-tracking app for the on-site teams of a local cleaning business.",
-    actions: [],
-  },
-  {
-    slug: "billiardrank",
-    title: "BilliardRank",
-    kind: "in-development",
-    stack: [],
-    dek: "Ranking and competition management for billiard players and clubs.",
-    logo: "/projects/logo-billiardrank.png",
-    actions: [],
-  },
-  {
-    slug: "gridvote-f1",
-    title: "GridVote F1",
-    kind: "in-development",
-    stack: [],
-    dek: "Social Formula 1 prediction game built around seasons and friends.",
     actions: [],
   },
 ];

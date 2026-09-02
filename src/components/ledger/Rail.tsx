@@ -7,7 +7,8 @@ import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { cn } from "@/lib/utils";
 
 const SECTIONS = [
-  { id: "work", label: "Work" },
+  { id: "projects", label: "Projects" },
+  { id: "client-work", label: "Client work" },
   { id: "about", label: "About" },
   { id: "experience", label: "Experience" },
   { id: "contact", label: "Contact" },
@@ -24,7 +25,7 @@ let railIntroShouldEnable = false;
 
 export function Rail() {
   const reduceMotion = useReducedMotion();
-  const [activeId, setActiveId] = useState<string>("work");
+  const [activeId, setActiveId] = useState<string>("projects");
   const [introEnabled, setIntroEnabled] = useState(false);
   const visibleIds = useRef(new Set<string>());
 
