@@ -8,6 +8,13 @@ const cascade = homeCascade("projects");
 
 const projects = [
   {
+    title: "Agent Notch",
+    description:
+      "Native macOS side notch that shows your Claude, Cursor and Codex usage limits as rings, with reset times and live sessions on hover.",
+    status: "Active" as const,
+    link: "/agent-notch",
+  },
+  {
     title: "GridVote F1",
     description:
       "Social Formula 1 prediction game focused on competition, seasons, and friends.",
@@ -34,7 +41,7 @@ const projects = [
 
 export function ProjectsSection() {
   return (
-    <section className="px-4 py-10 sm:px-6">
+    <section className="scroll-mt-6 px-4 py-10 sm:px-6" id="projects">
       <div className="mx-auto max-w-3xl">
         {/* Section Header */}
         <motion.h2
