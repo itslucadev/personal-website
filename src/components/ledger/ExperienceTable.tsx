@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { ResumePanel } from "./ResumePanel";
 
 const FOCUS =
   "rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2";
@@ -86,6 +87,7 @@ export function ExperienceTable() {
           ))}
         </tbody>
       </table>
+      <ResumePanel />
     </section>
   );
 }

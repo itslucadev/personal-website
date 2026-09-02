@@ -1,11 +1,19 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { stack } from "@/lib/stack";
 import { cn } from "@/lib/utils";
+
+const STACK_ITEMS = stack.map((item) => ({
+  id: item.name.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+  name: item.name,
+  designation: item.description,
+  image: item.icon,
+  href: item.url,
+}));
 
 const SECTIONS = [
   { id: "about", label: "About" },
@@ -98,31 +106,7 @@ export function Rail() {
         <p className="mb-3 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.12em]">
           Stack
         </p>
-        <ul className="flex max-w-[22rem] flex-wrap gap-2">
-          {stack.map((item) => (
-            <li key={item.name}>
-              <a
-                className={cn(
-                  "group flex size-8 items-center justify-center rounded-[6px] border border-[#DCE2EA] bg-white transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-amber-600",
-                  FOCUS
-                )}
-                href={item.url}
-                rel="noopener noreferrer"
-                target="_blank"
-                title={item.name}
-              >
-                <Image
-                  alt=""
-                  className="size-4 object-contain"
-                  height={16}
-                  src={item.icon}
-                  width={16}
-                />
-                <span className="sr-only">{item.name}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
+        <AnimatedTooltip className="max-w-[22rem]" items={STACK_ITEMS} />
       </div>
 
       <nav aria-label="Sections" className="mt-8 lg:mt-10">
