@@ -9,9 +9,11 @@ import {
   useTransform,
 } from "framer-motion";
 import Image from "next/image";
-import { type MouseEvent, useState } from "react";
+import { type MouseEvent, useLayoutEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
+/** Minimum gap between the card and the list's edges, in px. */
+const EDGE_PAD = 12;
 export interface AnimatedTooltipItem {
   /** What it is and what it is used for, one line. */
   designation: string;
@@ -34,14 +36,39 @@ export function AnimatedTooltip({
   className?: string;
 }) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [placement, setPlacement] = useState({ left: 0, maxWidth: 256 });
+  const listRef = useRef<HTMLUListElement>(null);
+  const tipRef = useRef<HTMLDivElement>(null);
   const reducedMotion = Boolean(useReducedMotion());
   const springConfig = { stiffness: 100, damping: 15 };
   const x = useMotionValue(0);
-  const rotate = useSpring(useTransform(x, [-16, 16], [-12, 12]), springConfig);
+  const rotate = useSpring(useTransform(x, [-16, 16], [-8, 8]), springConfig);
   const translateX = useSpring(
-    useTransform(x, [-16, 16], [-20, 20]),
+    useTransform(x, [-16, 16], [-EDGE_PAD / 2, EDGE_PAD / 2]),
     springConfig
   );
+
+  // Keep the card inside the list's box: the rail is a scroll container and
+  // would clip a card centred on an edge tile.
+  useLayoutEffect(() => {
+    const tip = tipRef.current;
+    const list = listRef.current;
+    const tile = tip?.parentElement;
+    if (!(tip && list && tile)) {
+      return;
+    }
+    const listRect = list.getBoundingClientRect();
+    const tileRect = tile.getBoundingClientRect();
+    const maxWidth = Math.min(256, listRect.width - EDGE_PAD * 2);
+    const width = Math.min(tip.offsetWidth, maxWidth);
+    const tileLeft = tileRect.left - listRect.left;
+    const centred = tileLeft + tileRect.width / 2 - width / 2;
+    const clamped = Math.min(
+      Math.max(centred, EDGE_PAD),
+      listRect.width - width - EDGE_PAD
+    );
+    setPlacement({ left: clamped - tileLeft, maxWidth });
+  }, [hoveredId]);
 
   const handleMouseMove = (event: MouseEvent<HTMLAnchorElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -49,7 +76,7 @@ export function AnimatedTooltip({
   };
 
   return (
-    <ul className={cn("flex flex-wrap gap-2", className)}>
+    <ul className={cn("flex flex-wrap gap-2", className)} ref={listRef}>
       {items.map((item) => {
         const tooltipId = `tooltip-${item.id}`;
         const open = hoveredId === item.id;
@@ -71,7 +98,7 @@ export function AnimatedTooltip({
                       ? { duration: 0 }
                       : { type: "spring", stiffness: 260, damping: 14 },
                   }}
-                  className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 flex w-max max-w-[16rem] -translate-x-1/2 flex-col items-start rounded-md bg-[#14181F] px-3 py-2 text-left shadow-xl"
+                  className="pointer-events-none absolute bottom-full z-50 mb-2 flex w-max flex-col items-start rounded-md bg-[#14181F] px-3 py-2 text-left shadow-xl"
                   exit={
                     reducedMotion
                       ? { opacity: 0 }
@@ -83,12 +110,14 @@ export function AnimatedTooltip({
                       ? { opacity: 0 }
                       : { opacity: 0, y: 12, scale: 0.7 }
                   }
+                  ref={tipRef}
                   role="tooltip"
-                  style={
-                    reducedMotion
-                      ? undefined
-                      : { translateX, rotate, transformOrigin: "bottom center" }
-                  }
+                  style={{
+                    left: placement.left,
+                    maxWidth: placement.maxWidth,
+                    transformOrigin: "bottom center",
+                    ...(reducedMotion ? {} : { translateX, rotate }),
+                  }}
                 >
                   <div className="absolute inset-x-8 -bottom-px z-30 h-px bg-gradient-to-r from-transparent via-amber-500 to-transparent" />
                   <div className="relative z-30 font-sans font-semibold text-sm text-white">
