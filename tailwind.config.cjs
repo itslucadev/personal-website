@@ -6,7 +6,19 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        sans: [
+          "var(--font-inter)",
+          "ui-sans-serif",
+          "system-ui",
+          "sans-serif",
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
+          '"Segoe UI Symbol"',
+          '"Noto Color Emoji"',
+        ],
+        serif: ["var(--font-newsreader)", "Georgia", "serif"],
         mono: [
+          "var(--font-fira-code)",
           '"SF Mono"',
           '"Monaco"',
           '"Inconsolata"',

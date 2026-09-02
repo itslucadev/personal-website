@@ -1,11 +1,24 @@
 import type { Metadata } from "next";
-import { Fira_Code } from "next/font/google";
+import { Fira_Code, Inter, Newsreader } from "next/font/google";
 import { ToastProvider } from "@/components/ToastProvider";
 import "./globals.css";
 
 const firaCode = Fira_Code({
   subsets: ["latin"],
   variable: "--font-fira-code",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
+
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  weight: "variable",
+  style: ["normal", "italic"],
+  axes: ["opsz"],
+  variable: "--font-newsreader",
 });
 
 export const metadata: Metadata = {
@@ -96,7 +109,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
+    <html data-scroll-behavior="smooth" lang="en" suppressHydrationWarning>
       <head>
         <script
           // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD is emitted this way by convention; the payload is a JSON.stringify of a static object, not user input.
@@ -105,7 +118,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${firaCode.variable} font-mono antialiased`}
+        className={`${firaCode.variable} ${inter.variable} ${newsreader.variable} font-sans antialiased`}
         suppressHydrationWarning
       >
         {children}

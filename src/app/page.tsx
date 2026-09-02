@@ -1,27 +1,27 @@
-import { ClientWorkSection } from "@/components/ClientWorkSection";
-import { ExperienceSection } from "@/components/ExperienceSection";
 import { Footer } from "@/components/Footer";
-import { HeroSection } from "@/components/HeroSection";
-import { Logo } from "@/components/Logo";
-import { ProjectsSection } from "@/components/ProjectsSection";
-import { SkillsSection } from "@/components/SkillsSection";
-import { SocialSection } from "@/components/SocialSection";
+import { About } from "@/components/ledger/About";
+import { Contact } from "@/components/ledger/Contact";
+import { DotField } from "@/components/ledger/DotField";
+import { ExperienceTable } from "@/components/ledger/ExperienceTable";
+import { Rail } from "@/components/ledger/Rail";
+import { WorkStream } from "@/components/ledger/WorkStream";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col bg-background">
-      <Logo />
-
-      <main className="flex-1">
-        <HeroSection />
-        <ExperienceSection />
-        <ProjectsSection />
-        <ClientWorkSection />
-        <SkillsSection />
-        <SocialSection />
-      </main>
-
-      <Footer />
+    <div className="relative min-h-screen bg-background">
+      <DotField />
+      <div className="relative z-10 mx-auto grid max-w-[1200px] px-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-12">
+        <Rail />
+        <main className="flex min-w-0 flex-col gap-20 pb-24 lg:pt-10">
+          <WorkStream />
+          <About />
+          <ExperienceTable />
+          <Contact />
+        </main>
+      </div>
+      <div className="relative z-10">
+        <Footer />
+      </div>
     </div>
   );
 }
