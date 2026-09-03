@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { GitHubActivity } from "./GitHubActivity";
 
 const FOCUS =
   "rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2";
@@ -72,6 +73,7 @@ export function About() {
           <Ext href="https://cal.eu/lucabecker">book a call</Ext>.
         </p>
       </div>
+      <GitHubActivity />
     </section>
   );
 }

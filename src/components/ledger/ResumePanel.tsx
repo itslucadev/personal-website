@@ -2,16 +2,27 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronDown, Download } from "lucide-react";
+import Image from "next/image";
 import { useId, useState } from "react";
 import { Tabs } from "@/components/ui/tabs";
+import pages from "@/lib/resume-pages.json";
 import { cn } from "@/lib/utils";
 
 type Lang = "en" | "de";
 
-const RESUMES: Record<Lang, { file: string; label: string }> = {
-  en: { file: "/resume/luca-becker-en.pdf", label: "English" },
-  de: { file: "/resume/luca-becker-de.pdf", label: "German" },
-};
+const RESUMES: Record<Lang, { file: string; label: string; download: string }> =
+  {
+    en: {
+      file: "/main_en.pdf",
+      label: "English",
+      download: "Luca Becker - Resume.pdf",
+    },
+    de: {
+      file: "/main_de.pdf",
+      label: "German",
+      download: "Luca Becker - Lebenslauf.pdf",
+    },
+  };
 
 const FOCUS =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2";
@@ -21,22 +32,26 @@ const EASE = [0.25, 0.46, 0.45, 0.94] as const;
 function ResumeSheet({ lang }: { lang: Lang }) {
   const resume = RESUMES[lang];
   return (
-    <object
+    <div
       aria-label={`Resume, ${resume.label}`}
-      className="h-full w-full overflow-hidden rounded-[8px] border border-[#DCE2EA] bg-white shadow-[0_18px_40px_-24px_rgba(20,24,31,0.35)]"
-      data={`${resume.file}#toolbar=0&view=FitH`}
-      type="application/pdf"
+      className="h-full w-full overflow-y-auto overscroll-contain rounded-[8px] border border-[#DCE2EA] bg-white shadow-[0_18px_40px_-24px_rgba(20,24,31,0.35)]"
+      role="document"
     >
-      <div className="flex h-full flex-col items-center justify-center gap-3 p-8 text-center font-sans text-muted-foreground text-sm">
-        <p>The PDF could not be shown inline.</p>
-        <a
-          className={cn("font-medium text-amber-600 hover:underline", FOCUS)}
-          href={resume.file}
-        >
-          Open the {resume.label} resume
-        </a>
-      </div>
-    </object>
+      {pages[lang].map((page, index) => (
+        <Image
+          alt={`${resume.label} resume, page ${index + 1}`}
+          className={cn(
+            "block h-auto w-full",
+            index > 0 && "border-[#DCE2EA] border-t"
+          )}
+          height={page.height}
+          key={page.src}
+          sizes="(min-width: 1024px) 700px, 100vw"
+          src={page.src}
+          width={page.width}
+        />
+      ))}
+    </div>
   );
 }
 
@@ -79,7 +94,7 @@ export function ResumePanel() {
             "inline-flex items-center gap-1.5 rounded-sm font-mono text-[11px] text-amber-600 uppercase tracking-[0.1em] transition-colors hover:text-amber-700",
             FOCUS
           )}
-          download
+          download={RESUMES[lang].download}
           href={RESUMES[lang].file}
         >
           <Download aria-hidden className="size-3.5" />
