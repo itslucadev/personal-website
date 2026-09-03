@@ -15,11 +15,12 @@ const FILL: Record<
   ContributionCalendar["weeks"][number][number]["level"],
   string
 > = {
-  0: "#EEF1F5",
-  1: "#FDE68A",
-  2: "#FBBF24",
-  3: "#D97706",
-  4: "#92400E",
+  // GitHub's light-theme contribution colours.
+  0: "#EBEDF0",
+  1: "#9BE9A8",
+  2: "#40C463",
+  3: "#30A14E",
+  4: "#216E39",
 };
 
 const DAY_LABELS: Record<number, string> = { 1: "Mon", 3: "Wed", 5: "Fri" };
@@ -52,14 +53,16 @@ function monthLabels(weeks: ContributionCalendar["weeks"]) {
     }
     const month = parse(first.date).getUTCMonth();
     if (month !== previous) {
-      // Skip a label that would collide with the one before it.
+      // A label that would collide with the previous one replaces it: the
+      // earlier month only had a week or two in view, like GitHub does it.
       const last = labels.at(-1);
-      if (!last || index * STEP - last.x >= STEP * 3) {
-        labels.push({
-          x: index * STEP,
-          text: monthOf.format(parse(first.date)),
-        });
+      if (last && index * STEP - last.x < STEP * 3) {
+        labels.pop();
       }
+      labels.push({
+        x: index * STEP,
+        text: monthOf.format(parse(first.date)),
+      });
       previous = month;
     }
   });
