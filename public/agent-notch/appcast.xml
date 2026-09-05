@@ -1,0 +1,22 @@
+<?xml version="1.0" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>AgentNotch</title>
+        <item>
+            <title>1.0</title>
+            <pubDate>Fri, 04 Sep 2026 09:17:50 +0200</pubDate>
+            <link>https://lucabecker.dev/agent-notch</link>
+            <sparkle:version>1</sparkle:version>
+            <sparkle:shortVersionString>1.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<h2>Agent Notch 1.0</h2>
+<ul>
+  <li>Initial public release.</li>
+  <li>Live notch companion for Claude, Cursor, and Codex usage limits.</li>
+  <li>Peek clips, limit and reset notifications, and a settings panel for notch position, visibility, and app presence.</li>
+</ul>
+]]></description>
+            <enclosure url="https://github.com/itslucadev/AgentNotch/releases/download/v1.0/AgentNotch.zip" length="3856382" type="application/octet-stream" sparkle:edSignature="LlSChT57JxvGJZCy0JuiRA6bUKL0D7h8YxmmW3c32oIcXzJla9+WYXD3UEhB6y/M+lqCfyUCJxma7EIzNSgsDA=="/>
+        </item>
+    </channel>
+</rss>
