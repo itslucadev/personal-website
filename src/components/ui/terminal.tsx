@@ -4,29 +4,6 @@ import { type MotionProps, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
-interface AnimatedSpanProps extends MotionProps {
-  children: React.ReactNode;
-  className?: string;
-  delay?: number;
-}
-
-export const AnimatedSpan = ({
-  children,
-  delay = 0,
-  className,
-  ...props
-}: AnimatedSpanProps) => (
-  <motion.div
-    animate={{ opacity: 1, y: 0 }}
-    className={cn("grid font-normal text-sm tracking-tight", className)}
-    initial={{ opacity: 0, y: -5 }}
-    transition={{ duration: 0.6, delay: delay / 1000 }}
-    {...(props as any)}
-  >
-    {children}
-  </motion.div>
-);
-
 interface TypingAnimationProps extends MotionProps {
   as?: React.ElementType;
   children: string;
