@@ -1,3 +1,7 @@
+import "server-only";
+
+import { z } from "zod";
+
 export const GITHUB_LOGIN = "itslucadev";
 
 export interface ContributionDay {
@@ -13,13 +17,48 @@ export interface ContributionCalendar {
   weeks: ContributionDay[][];
 }
 
-const LEVELS: Record<string, ContributionDay["level"]> = {
-  NONE: 0,
+const contributionLevelSchema = z.enum([
+  "NONE",
+  "FIRST_QUARTILE",
+  "SECOND_QUARTILE",
+  "THIRD_QUARTILE",
+  "FOURTH_QUARTILE",
+]);
+
+type ContributionLevel = z.infer<typeof contributionLevelSchema>;
+
+const LEVELS: Record<ContributionLevel, 0 | 1 | 2 | 3 | 4> = {
   FIRST_QUARTILE: 1,
+  FOURTH_QUARTILE: 4,
+  NONE: 0,
   SECOND_QUARTILE: 2,
   THIRD_QUARTILE: 3,
-  FOURTH_QUARTILE: 4,
 };
+
+const calendarResponseSchema = z.object({
+  data: z.object({
+    user: z.object({
+      contributionsCollection: z.object({
+        contributionCalendar: z.object({
+          totalContributions: z.number().int().nonnegative(),
+          weeks: z.array(
+            z.object({
+              contributionDays: z.array(
+                z.object({
+                  contributionCount: z.number().int().nonnegative(),
+                  contributionLevel: contributionLevelSchema,
+                  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+                })
+              ),
+            })
+          ),
+        }),
+      }),
+    }),
+  }),
+});
+
+type CalendarResponse = z.infer<typeof calendarResponseSchema>;
 
 const QUERY = `
   query($login: String!) {
@@ -36,22 +75,18 @@ const QUERY = `
   }
 `;
 
-interface CalendarResponse {
-  data?: {
-    user?: {
-      contributionsCollection: {
-        contributionCalendar: {
-          totalContributions: number;
-          weeks: {
-            contributionDays: {
-              date: string;
-              contributionCount: number;
-              contributionLevel: string;
-            }[];
-          }[];
-        };
-      };
-    };
+function mapCalendar(payload: CalendarResponse): ContributionCalendar {
+  const calendar =
+    payload.data.user.contributionsCollection.contributionCalendar;
+  return {
+    total: calendar.totalContributions,
+    weeks: calendar.weeks.map((week) =>
+      week.contributionDays.map((day) => ({
+        count: day.contributionCount,
+        date: day.date,
+        level: LEVELS[day.contributionLevel],
+      }))
+    ),
   };
 }
 
@@ -79,25 +114,28 @@ export async function fetchContributionCalendar(): Promise<ContributionCalendar 
       next: { revalidate: 60 * 60 * 6 },
     });
     if (!response.ok) {
+      console.error("GitHub contributions request failed", response.status);
       return null;
     }
-    const json = (await response.json()) as CalendarResponse;
-    const calendar =
-      json.data?.user?.contributionsCollection.contributionCalendar;
-    if (!calendar) {
+    const json: unknown = await response.json();
+    if (
+      typeof json === "object" &&
+      json !== null &&
+      "errors" in json &&
+      Array.isArray(json.errors) &&
+      json.errors.length > 0
+    ) {
+      console.error("GitHub contributions GraphQL errors", json.errors.length);
       return null;
     }
-    return {
-      total: calendar.totalContributions,
-      weeks: calendar.weeks.map((week) =>
-        week.contributionDays.map((day) => ({
-          count: day.contributionCount,
-          date: day.date,
-          level: LEVELS[day.contributionLevel] ?? 0,
-        }))
-      ),
-    };
-  } catch {
+    const parsed = calendarResponseSchema.safeParse(json);
+    if (!parsed.success) {
+      console.error("GitHub contributions payload invalid");
+      return null;
+    }
+    return mapCalendar(parsed.data);
+  } catch (error) {
+    console.error("GitHub contributions request failed", error);
     return null;
   }
 }

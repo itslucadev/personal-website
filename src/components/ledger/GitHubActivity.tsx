@@ -40,7 +40,11 @@ const longDate = new Intl.DateTimeFormat("en-US", {
 });
 
 function parse(date: string) {
-  return new Date(`${date}T00:00:00Z`);
+  const parsed = new Date(`${date}T00:00:00Z`);
+  if (Number.isNaN(parsed.getTime())) {
+    return null;
+  }
+  return parsed;
 }
 
 function monthLabels(weeks: ContributionCalendar["weeks"]) {
@@ -51,7 +55,11 @@ function monthLabels(weeks: ContributionCalendar["weeks"]) {
     if (!first) {
       return;
     }
-    const month = parse(first.date).getUTCMonth();
+    const date = parse(first.date);
+    if (!date) {
+      return;
+    }
+    const month = date.getUTCMonth();
     if (month !== previous) {
       // A label that would collide with the previous one replaces it: the
       // earlier month only had a week or two in view, like GitHub does it.
@@ -61,7 +69,7 @@ function monthLabels(weeks: ContributionCalendar["weeks"]) {
       }
       labels.push({
         x: index * STEP,
-        text: monthOf.format(parse(first.date)),
+        text: monthOf.format(date),
       });
       previous = month;
     }
@@ -101,7 +109,13 @@ function Calendar({ weeks }: { weeks: ContributionCalendar["weeks"] }) {
       ))}
       {weeks.map((week, w) =>
         week.map((day) => {
-          const weekday = parse(day.date).getUTCDay();
+          const date = parse(day.date);
+          const weekday = date ? date.getUTCDay() : 0;
+          const suffix = day.count === 1 ? "" : "s";
+          const countLabel = `${day.count} contribution${suffix}`;
+          const title = date
+            ? `${countLabel} on ${longDate.format(date)}`
+            : countLabel;
           return (
             <rect
               fill={FILL[day.level]}
@@ -112,9 +126,7 @@ function Calendar({ weeks }: { weeks: ContributionCalendar["weeks"] }) {
               x={LABEL_W + w * STEP}
               y={LABEL_H + weekday * STEP}
             >
-              <title>
-                {`${day.count} contribution${day.count === 1 ? "" : "s"} on ${longDate.format(parse(day.date))}`}
-              </title>
+              <title>{title}</title>
             </rect>
           );
         })
