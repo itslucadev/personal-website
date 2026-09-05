@@ -30,6 +30,15 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  // biome-ignore lint/suspicious/useAwait: Next's rewrites() must return a Promise, so async is required even with nothing to await.
+  async rewrites() {
+    return [
+      {
+        source: "/agent-notch/appcast.xml",
+        destination: "/api/agent-notch/appcast",
+      },
+    ];
+  },
 };
 
 export default nextConfig;
