@@ -14,7 +14,6 @@ const LAYOUTS: { label: string; value: Layout }[] = [
 
 const FOCUS =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2";
-const LINK_FOCUS = `rounded-sm ${FOCUS}`;
 
 function LayoutSwitch({
   value,
@@ -96,10 +95,8 @@ function CalendarLegend({ total }: { total: number }) {
  */
 export function ContributionGraph({
   calendar,
-  login,
 }: {
   calendar: ContributionCalendar | null;
-  login: string;
 }) {
   const [layout, setLayout] = useState<Layout>("flat");
 
@@ -109,22 +106,7 @@ export function ContributionGraph({
         <p className="font-mono text-[11px] text-muted-foreground uppercase tracking-[0.12em]">
           GitHub activity
         </p>
-        <div className="flex items-center gap-3">
-          {calendar ? (
-            <LayoutSwitch onChange={setLayout} value={layout} />
-          ) : null}
-          <a
-            className={cn(
-              "font-mono text-[11px] text-amber-600 tracking-[0.04em] transition-colors hover:text-amber-700",
-              LINK_FOCUS
-            )}
-            href={`https://github.com/${login}`}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            @{login}
-          </a>
-        </div>
+        {calendar ? <LayoutSwitch onChange={setLayout} value={layout} /> : null}
       </div>
       {calendar ? (
         <div className="rounded-[8px] border border-[#DCE2EA] bg-white p-4">
