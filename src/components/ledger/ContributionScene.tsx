@@ -53,6 +53,12 @@ const CORNER = 2 / STEP;
  */
 const HALF_W = 10;
 const HALF_H = 4;
+/**
+ * A day with nothing on it still stands proud of the plane, so the year reads
+ * as one block of material the activity is carved out of rather than bars
+ * scattered on a floor.
+ */
+const BASE_LIFT = 2;
 /** The quietest active day starts here; the busiest day of the year is tallest. */
 const MIN_LIFT = 7;
 const MAX_LIFT = 52;
@@ -149,6 +155,9 @@ const RIGHT_FILL = sideFills(0.68);
  * year into the baseline.
  */
 function liftOf(count: number, peak: number) {
+  if (count === 0) {
+    return BASE_LIFT;
+  }
   return Math.round(MIN_LIFT + (MAX_LIFT - MIN_LIFT) * Math.sqrt(count / peak));
 }
 
@@ -170,21 +179,18 @@ function buildScene(weeks: ContributionCalendar["weeks"]) {
   );
   const peak = Math.max(1, ...days.map((entry) => entry.day.count));
   const depthMax = Math.max(1, cols - 1 + ROWS - 1);
+  // Every day gets a bar, empty ones included: they rise to a thin slab, so
+  // the whole field lifts off the plane together and the year reads as one
+  // block of material rather than bars standing on a floor.
   const bars: Bar[] = days
-    // Empty days stay part of the ground: the year's activity grows out of
-    // the plane, and the quiet days are the plane.
-    .flatMap((entry) =>
-      entry.day.count > 0
-        ? {
-            ...entry,
-            // The sweep rolls along the depth axis, oldest corner first, so
-            // the wave of bars breaks toward the viewer in painting order.
-            delay: ((entry.col + entry.row) / depthMax) * (1 - RISE_WINDOW),
-            level: entry.day.level,
-            lift: liftOf(entry.day.count, peak),
-          }
-        : []
-    )
+    .map((entry) => ({
+      ...entry,
+      // The sweep rolls along the depth axis, oldest corner first, so the
+      // wave of bars breaks toward the viewer in painting order.
+      delay: ((entry.col + entry.row) / depthMax) * (1 - RISE_WINDOW),
+      level: entry.day.level,
+      lift: liftOf(entry.day.count, peak),
+    }))
     // Painter's algorithm: the far corner of the grid is drawn first, so a
     // bar in front covers whatever stands behind it.
     .sort((a, b) => a.col + a.row - (b.col + b.row));
@@ -579,7 +585,7 @@ export function ContributionScene({
   const t = tilt.get();
   const ariaLabel =
     layout === "iso"
-      ? "Contribution calendar as an isometric grid, one bar per active day, taller on busier days"
+      ? "Contribution calendar as an isometric grid, one bar per day, taller on busier days"
       : "Contribution calendar, one square per day";
   const frame = frameOf(scene, t);
 
