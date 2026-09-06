@@ -89,11 +89,11 @@ function CalendarLegend({ total }: { total: number }) {
 }
 
 /**
- * The GitHub activity block: heading, calendar and legend. Held client-side so
- * the same year can be drawn flat, as GitHub does it, or extruded into an
- * isometric grid where a day's height reads its contribution count.
+ * The whole GitHub activity block: heading, calendar and legend. The calendar
+ * is fetched by the server component that renders this one, because the switch
+ * has to hold client state for both the header and the card below it.
  */
-export function ContributionGraph({
+export function GitHubContribution({
   calendar,
 }: {
   calendar: ContributionCalendar | null;
@@ -101,7 +101,7 @@ export function ContributionGraph({
   const [layout, setLayout] = useState<Layout>("flat");
 
   return (
-    <>
+    <div className="mt-10 max-w-[720px]">
       <div className="mb-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
         <p className="font-mono text-[11px] text-muted-foreground uppercase tracking-[0.12em]">
           GitHub activity
@@ -118,6 +118,6 @@ export function ContributionGraph({
           Contribution graph unavailable right now. See the profile on GitHub.
         </p>
       )}
-    </>
+    </div>
   );
 }

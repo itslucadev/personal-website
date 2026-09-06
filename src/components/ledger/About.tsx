@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
+import { fetchContributionCalendar } from "@/lib/github";
 import { cn } from "@/lib/utils";
-import { GitHubActivity } from "./GitHubActivity";
+import { GitHubContribution } from "./GitHubContribution";
 
 const FOCUS =
   "rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2";
@@ -22,7 +23,9 @@ function Strong({ children }: { children: ReactNode }) {
   return <span className="font-medium text-foreground">{children}</span>;
 }
 
-export function About() {
+export async function About() {
+  const calendar = await fetchContributionCalendar();
+
   return (
     <section
       aria-labelledby="about-heading"
@@ -73,7 +76,7 @@ export function About() {
           <Ext href="https://cal.eu/lucabecker">book a call</Ext>.
         </p>
       </div>
-      <GitHubActivity />
+      <GitHubContribution calendar={calendar} />
     </section>
   );
 }
