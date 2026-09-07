@@ -21,7 +21,7 @@ import { Button } from "@/components/ui/button";
 const ease = [0.25, 0.46, 0.45, 0.94] as const;
 
 export const agentNotchDownloadUrl =
-  "https://github.com/itslucadev/AgentNotch/releases/latest/download/AgentNotch.zip";
+  "https://lucabecker.dev/agent-notch/AgentNotch.zip";
 export const agentNotchRepoUrl = "https://github.com/itslucadev/AgentNotch";
 
 const meta = [

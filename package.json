@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "biome check .",
-    "lint:fix": "biome check --write ."
+    "lint:fix": "biome check --write .",
+    "resume:render": "node scripts/render-resume.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -39,7 +40,8 @@
     "@radix-ui/react-toggle-group": "^1.1.11",
     "@radix-ui/react-tooltip": "^1.2.8",
     "@tanstack/react-form": "^1.28.6",
-    "@vercel/firewall": "^1.1.2",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.38.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
@@ -59,6 +61,7 @@
     "react-resizable-panels": "^4.2.2",
     "recharts": "^2.15.4",
     "resend": "^6.25.0",
+    "server-only": "^0.0.1",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
     "vaul": "^1.1.2",
@@ -66,11 +69,14 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.0",
+    "@napi-rs/canvas": "^1.0.8",
     "@types/node": "^24.10.1",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.5",
     "autoprefixer": "^10.4.23",
+    "pdfjs-dist": "^6.3.289",
     "postcss": "^8.5.26",
+    "sharp": "^0.35.4",
     "tailwindcss": "^3.4.19",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "~5.9.3",

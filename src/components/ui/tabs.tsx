@@ -1,66 +1,114 @@
 "use client";
 
-import * as TabsPrimitive from "@radix-ui/react-tabs";
-import type * as React from "react";
-
+import { motion, useReducedMotion } from "framer-motion";
+import { type ReactNode, useId, useState } from "react";
 import { cn } from "@/lib/utils";
 
-function Tabs({
-  className,
-  ...props
-}: React.ComponentProps<typeof TabsPrimitive.Root>) {
-  return (
-    <TabsPrimitive.Root
-      className={cn("flex flex-col gap-2", className)}
-      data-slot="tabs"
-      {...props}
-    />
-  );
+export interface TabItem {
+  content: ReactNode;
+  title: string;
+  value: string;
 }
 
-function TabsList({
-  className,
-  ...props
-}: React.ComponentProps<typeof TabsPrimitive.List>) {
+/**
+ * Aceternity tabs: a spring-animated pill that slides between tab labels,
+ * and the tab contents stacked as cards behind each other. Hovering the tab
+ * bar fans the stack out; selecting a tab brings its card to the front with a
+ * bounce. Ported to framer-motion, controlled via `value` + `onChange`.
+ */
+export function Tabs({
+  tabs,
+  value,
+  onChange,
+  label,
+  containerClassName,
+  activeTabClassName,
+  tabClassName,
+  contentClassName,
+}: {
+  tabs: TabItem[];
+  value: string;
+  onChange: (value: string) => void;
+  label: string;
+  containerClassName?: string;
+  activeTabClassName?: string;
+  tabClassName?: string;
+  contentClassName?: string;
+}) {
+  const [hovering, setHovering] = useState(false);
+  const reducedMotion = Boolean(useReducedMotion());
+  const pillId = useId();
+  const active = tabs.find((tab) => tab.value === value) ?? tabs[0];
+  const ordered = [active, ...tabs.filter((tab) => tab !== active)];
+
   return (
-    <TabsPrimitive.List
-      className={cn(
-        "inline-flex h-9 w-fit items-center justify-center rounded-lg bg-muted p-[3px] text-muted-foreground",
-        className
-      )}
-      data-slot="tabs-list"
-      {...props}
-    />
+    <>
+      <div
+        aria-label={label}
+        className={cn(
+          "relative flex flex-row items-center [perspective:1000px]",
+          containerClassName
+        )}
+        onMouseEnter={() => setHovering(true)}
+        onMouseLeave={() => setHovering(false)}
+        role="tablist"
+      >
+        {tabs.map((tab) => {
+          const selected = tab.value === active.value;
+          return (
+            <button
+              aria-selected={selected}
+              className={cn(
+                "relative rounded-full px-4 py-2 [transform-style:preserve-3d]",
+                tabClassName
+              )}
+              key={tab.value}
+              onClick={() => onChange(tab.value)}
+              role="tab"
+              type="button"
+            >
+              {selected ? (
+                <motion.div
+                  className={cn(
+                    "absolute inset-0 rounded-full bg-gray-200",
+                    activeTabClassName
+                  )}
+                  layoutId={pillId}
+                  transition={
+                    reducedMotion
+                      ? { duration: 0 }
+                      : { type: "spring", bounce: 0.3, duration: 0.6 }
+                  }
+                />
+              ) : null}
+              <span className="relative block">{tab.title}</span>
+            </button>
+          );
+        })}
+      </div>
+      <div className={cn("relative h-full w-full", contentClassName)}>
+        {ordered.map((tab, idx) => {
+          const front = idx === 0;
+          return (
+            <motion.div
+              animate={{
+                y: front && !reducedMotion ? [0, 40, 0] : 0,
+                scale: 1 - idx * 0.1,
+                top: hovering && !reducedMotion ? idx * -50 : 0,
+                opacity: 1 - idx * 0.1,
+              }}
+              aria-hidden={!front}
+              className="absolute top-0 left-0 h-full w-full"
+              key={tab.value}
+              layoutId={`${pillId}-${tab.value}`}
+              style={{ zIndex: tabs.length - idx }}
+              transition={reducedMotion ? { duration: 0 } : undefined}
+            >
+              {tab.content}
+            </motion.div>
+          );
+        })}
+      </div>
+    </>
   );
 }
-
-function TabsTrigger({
-  className,
-  ...props
-}: React.ComponentProps<typeof TabsPrimitive.Trigger>) {
-  return (
-    <TabsPrimitive.Trigger
-      className={cn(
-        "inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-md border border-transparent px-2 py-1 font-medium text-foreground text-sm transition-[color,box-shadow] focus-visible:border-ring focus-visible:outline-1 focus-visible:outline-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:shadow-sm dark:text-muted-foreground dark:data-[state=active]:border-input dark:data-[state=active]:bg-input/30 dark:data-[state=active]:text-foreground [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
-        className
-      )}
-      data-slot="tabs-trigger"
-      {...props}
-    />
-  );
-}
-
-function TabsContent({
-  className,
-  ...props
-}: React.ComponentProps<typeof TabsPrimitive.Content>) {
-  return (
-    <TabsPrimitive.Content
-      className={cn("flex-1 outline-none", className)}
-      data-slot="tabs-content"
-      {...props}
-    />
-  );
-}
-
-export { Tabs, TabsList, TabsTrigger, TabsContent };

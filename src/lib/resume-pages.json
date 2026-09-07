@@ -1,0 +1,26 @@
+{
+  "en": [
+    {
+      "src": "/resume/en-1.webp",
+      "width": 1488,
+      "height": 2105
+    },
+    {
+      "src": "/resume/en-2.webp",
+      "width": 1488,
+      "height": 2105
+    }
+  ],
+  "de": [
+    {
+      "src": "/resume/de-1.webp",
+      "width": 1488,
+      "height": 2105
+    },
+    {
+      "src": "/resume/de-2.webp",
+      "width": 1488,
+      "height": 2105
+    }
+  ]
+}
