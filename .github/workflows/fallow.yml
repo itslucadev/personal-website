@@ -1,0 +1,26 @@
+name: Fallow audit
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # audit diffs against the merge-base with the PR base branch
+          fetch-depth: 0
+      - uses: fallow-rs/fallow@v3
+        with:
+          command: audit
+          # Keep in step with the fallow on the local machine (brew) so the
+          # PR gate and the local hooks agree on findings.
+          version: 3.22.0
+          # Fail only on findings this PR introduces. Matches the CLI default
+          # and AGENTS.md; inherited complexity on touched files is reported,
+          # not gated.
+          gate: new-only
