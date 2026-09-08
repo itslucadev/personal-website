@@ -2,7 +2,7 @@ import "server-only";
 
 import { z } from "zod";
 
-export const GITHUB_LOGIN = "itslucadev";
+const GITHUB_LOGIN = "itslucadev";
 
 export interface ContributionDay {
   count: number;
