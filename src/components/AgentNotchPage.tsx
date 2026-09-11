@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   Download,
   Eye,
@@ -26,6 +26,11 @@ const meta = [
 
 const stack = ["Swift", "SwiftUI", "AppKit", "Sparkle"];
 
+const heroPoster = "/projects/agent-notch/hero-poster.webp";
+const heroVideo = "/projects/agent-notch/hero.mp4";
+const heroAlt =
+  "Agent Notch on the right edge of a Mac desktop: three usage rings with the Claude tooltip open, showing the current session, all models and Fable with their reset times";
+
 const features = [
   {
     icon: Eye,
@@ -50,6 +55,8 @@ const features = [
 ];
 
 export function AgentNotchPage() {
+  const reducedMotion = Boolean(useReducedMotion());
+
   return (
     <CaseStudyLayout
       backHref="/#projects"
@@ -99,19 +106,32 @@ export function AgentNotchPage() {
 
       <motion.figure
         animate={{ opacity: 1, y: 0 }}
-        className="relative mb-4 aspect-[16/10] overflow-hidden rounded-lg border border-border bg-gradient-to-br from-[#e6e9f2] via-[#d3d9e6] to-[#c1c8d8]"
+        className="relative mb-4 aspect-[16/10] overflow-hidden rounded-lg border border-border bg-muted"
         initial={{ opacity: 0, y: 20 }}
         transition={{ duration: 0.5, delay: 0.45, ease }}
       >
-        <Image
-          alt="Agent Notch on the right edge of a Mac display: three rings for Claude, Cursor and Codex, with the Claude tooltip open showing the current session at 41%, all models at 23%, and two running Claude Code sessions"
-          className="absolute top-1/2 right-0 h-[112%] w-auto -translate-y-1/2"
-          height={1365}
-          priority
-          sizes="(max-width: 768px) 70vw, 540px"
-          src="/projects/agent-notch/notch-hover.png"
-          width={1041}
-        />
+        {reducedMotion ? (
+          <Image
+            alt={heroAlt}
+            className="object-cover"
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 540px"
+            src={heroPoster}
+          />
+        ) : (
+          <video
+            aria-label={heroAlt}
+            autoPlay
+            className="absolute inset-0 h-full w-full object-cover"
+            loop
+            muted
+            playsInline
+            poster={heroPoster}
+            preload="metadata"
+            src={heroVideo}
+          />
+        )}
       </motion.figure>
       <motion.p
         animate={{ opacity: 1, y: 0 }}
@@ -119,7 +139,8 @@ export function AgentNotchPage() {
         initial={{ opacity: 0, y: 20 }}
         transition={{ duration: 0.5, delay: 0.5, ease }}
       >
-        Hovering the Claude ring. The tail points at the ring you are on.
+        Recorded on a Mac. The pill widens as the pointer comes close, then each
+        ring opens its windows and reset times.
       </motion.p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

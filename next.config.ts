@@ -3,6 +3,11 @@ import type { NextConfig } from "next";
 const isDev = process.env.NODE_ENV === "development";
 
 const nextConfig: NextConfig = {
+  images: {
+    // AVIF first, WebP for browsers without it; both fall back to the source.
+    formats: ["image/avif", "image/webp"],
+  },
+
   // biome-ignore lint/suspicious/useAwait: Next's headers() must return a Promise, so async is required even with nothing to await.
   async headers() {
     return [

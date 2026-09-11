@@ -144,7 +144,14 @@ function reveal(reduceMotion: boolean | null) {
   };
 }
 
-export function WorkEntry({ entry }: { entry: WorkEntryModel }) {
+/** `priority` marks the first entry's image, which is the homepage LCP candidate. */
+export function WorkEntry({
+  entry,
+  priority = false,
+}: {
+  entry: WorkEntryModel;
+  priority?: boolean;
+}) {
   const reduceMotion = useReducedMotion();
   const metaParts = [entry.year, ...entry.stack].filter(Boolean);
 
@@ -195,6 +202,7 @@ export function WorkEntry({ entry }: { entry: WorkEntryModel }) {
             alt={entry.image.alt}
             className="block h-auto w-full"
             height={entry.image.height}
+            priority={priority}
             sizes="(min-width: 1024px) 700px, 100vw"
             src={entry.image.src}
             width={entry.image.width}

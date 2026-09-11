@@ -15,7 +15,12 @@ export default function Home() {
         <Rail />
         <main className="flex min-w-0 flex-col gap-20 pb-24 lg:pt-10">
           <About />
-          <WorkStream entries={projects} heading="Projects" id="projects" />
+          <WorkStream
+            entries={projects}
+            heading="Projects"
+            id="projects"
+            priority
+          />
           <WorkStream
             entries={clientWork}
             heading="Client work"
