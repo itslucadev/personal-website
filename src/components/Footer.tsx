@@ -8,12 +8,12 @@ import { cn } from "@/lib/utils";
 
 /**
  * Each frame mirrors the content wrapper of its shell so the footer lines up
- * with the text above it: the homepage keeps its padding inside the 1200px cap,
+ * with the text above it: the homepage keeps its padding inside the shell cap,
  * the inner pages put it outside the `max-w-3xl` column. Without a frame the
  * footer is a flex item in `PageShell` and collapses to its content width.
  */
 const FRAME = {
-  wide: { outer: "mx-auto max-w-[1200px] px-6", inner: "" },
+  wide: { outer: "mx-auto max-w-shell px-6", inner: "" },
   narrow: { outer: "px-4 sm:px-6", inner: "mx-auto max-w-3xl" },
 } as const;
 

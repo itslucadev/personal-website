@@ -93,6 +93,10 @@ module.exports = {
           500: "#F59E0B",
         },
       },
+      maxWidth: {
+        // The site shell: the widest the page content ever gets.
+        shell: "85rem",
+      },
       borderRadius: {
         xl: "calc(var(--radius) + 4px)",
         lg: "var(--radius)",
