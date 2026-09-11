@@ -1,17 +1,33 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { GitHubContribution } from "./GitHubContribution";
+import { GitHubActivity } from "./GitHubActivity";
 
-const FOCUS =
-  "rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2";
+const HREF = {
+  x: "https://x.com/itslucadev",
+  github: "https://www.github.com/itslucadev",
+  instagram: "https://www.instagram.com/itslucadev",
+  email: "mailto:luca.dev@outlook.de",
+  call: "https://cal.eu/lucabecker",
+} as const;
 
-function Ext({ href, children }: { href: string; children: ReactNode }) {
+// Resolved once at module scope: the class list is static, so there is no
+// reason to re-run tailwind-merge on every render.
+const LINK_CLASS = cn(
+  "inline-block font-medium text-foreground underline decoration-border",
+  "transition-[color,text-decoration-color,transform] duration-200",
+  "hover:-translate-y-0.5 hover:decoration-foreground",
+  "rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2"
+);
+
+function TextLink({ href, children }: { href: string; children: ReactNode }) {
+  const isExternal = href.startsWith("https://");
+
   return (
     <a
-      className={cn("font-medium text-foreground hover:underline", FOCUS)}
+      className={LINK_CLASS}
       href={href}
-      rel="noopener noreferrer"
-      target="_blank"
+      rel={isExternal ? "noopener noreferrer" : undefined}
+      target={isExternal ? "_blank" : undefined}
     >
       {children}
     </a>
@@ -35,45 +51,29 @@ export function About() {
       >
         About
       </h2>
+
       <div className="max-w-[62ch] space-y-5 font-sans text-[17px] text-muted-foreground leading-relaxed">
         <p>
-          I&apos;m a <Strong>mobile developer</Strong> based in{" "}
-          <Strong>Nuremberg</Strong>, with enough fullstack experience to ship
-          the whole thing: the app, the backend behind it, and the website that
-          sells it. Most of my work is <Strong>React Native</Strong> and{" "}
-          <Strong>Swift</Strong>, with <Strong>Next.js</Strong> when a project
-          needs a web side.
+          I&apos;m a <Strong>mobile developer / fullstack developer</Strong>.
+          Most of my work is <Strong>React Native</Strong> and{" "}
+          <Strong>Next.js</Strong>.
         </p>
+
         <p>
-          Before going freelance in 2025 I spent four years at{" "}
-          <Ext href="https://www.datev.de">DATEV</Ext> as a working student,
-          building mobile apps in React Native and Swift, alongside a computer
-          science degree at{" "}
-          <Ext href="https://www.fau.de">FAU Erlangen-Nürnberg</Ext> that I
-          finished in February 2026.
+          You can find me at <TextLink href={HREF.x}>@itslucadev</TextLink>, on{" "}
+          <TextLink href={HREF.github}>Github</TextLink>,{" "}
+          <TextLink href={HREF.instagram}>Instagram</TextLink> or contact me via{" "}
+          <TextLink href={HREF.email}>email</TextLink>.
         </p>
+
         <p>
-          Right now that means{" "}
-          <a
-            className={cn("font-medium text-foreground hover:underline", FOCUS)}
-            href="#agent-notch"
-          >
-            Agent Notch
-          </a>
-          , a macOS app that shows your Claude, Cursor and Codex limits in the
-          notch,{" "}
-          <a
-            className={cn("font-medium text-foreground hover:underline", FOCUS)}
-            href="#minimafinance"
-          >
-            MinimaFinance
-          </a>{" "}
-          on the App Store, and client work for businesses around Nuremberg. If
-          you have a product that needs building properly,{" "}
-          <Ext href="https://cal.eu/lucabecker">book a call</Ext>.
+          I am also available for freelance work. If you want to discuss a
+          project, feel free to{" "}
+          <TextLink href={HREF.call}>book a call</TextLink>.
         </p>
       </div>
-      <GitHubContribution />
+
+      <GitHubActivity />
     </section>
   );
 }

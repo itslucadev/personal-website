@@ -7,10 +7,13 @@ export function WorkStream({
   entries,
   heading,
   id,
+  priority = false,
 }: {
   entries: WorkEntryModel[];
   heading: string;
   id: string;
+  /** Eager-loads the first entry's image; set on the section above the fold. */
+  priority?: boolean;
 }) {
   return (
     <section aria-labelledby={`${id}-heading`} className="scroll-mt-24" id={id}>
@@ -21,9 +24,9 @@ export function WorkStream({
         {heading}
       </h2>
       <div className="divide-y divide-[#DCE2EA]">
-        {entries.map((entry) => (
+        {entries.map((entry, index) => (
           <div className="py-10 first:pt-0 last:pb-0" key={entry.slug}>
-            <WorkEntry entry={entry} />
+            <WorkEntry entry={entry} priority={priority && index === 0} />
           </div>
         ))}
       </div>

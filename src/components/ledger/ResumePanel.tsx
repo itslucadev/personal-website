@@ -3,8 +3,9 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronDown, Download } from "lucide-react";
 import Image from "next/image";
-import { useId, useState } from "react";
+import { type ReactNode, useId, useState } from "react";
 import { Tabs } from "@/components/ui/tabs";
+import { ease } from "@/lib/motion";
 import pages from "@/lib/resume-pages.json";
 import { cn } from "@/lib/utils";
 
@@ -26,8 +27,6 @@ const RESUMES: Record<Lang, { file: string; label: string; download: string }> =
 
 const FOCUS =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2";
-
-const EASE = [0.25, 0.46, 0.45, 0.94] as const;
 
 function ResumeSheet({ lang }: { lang: Lang }) {
   const resume = RESUMES[lang];
@@ -60,6 +59,30 @@ const TABS = (["en", "de"] as Lang[]).map((lang) => ({
   value: lang,
   content: <ResumeSheet lang={lang} />,
 }));
+
+/** Height-reveal for the resume sheet; instant under reduced motion. */
+function Expand({
+  id,
+  reducedMotion,
+  children,
+}: {
+  id: string;
+  reducedMotion: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <motion.div
+      animate={{ height: "auto", opacity: 1 }}
+      className="overflow-hidden"
+      exit={{ height: 0, opacity: 0 }}
+      id={id}
+      initial={reducedMotion ? false : { height: 0, opacity: 0 }}
+      transition={reducedMotion ? { duration: 0 } : { duration: 0.45, ease }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export function ResumePanel() {
   const [open, setOpen] = useState(false);
@@ -104,16 +127,7 @@ export function ResumePanel() {
 
       <AnimatePresence initial={false}>
         {open ? (
-          <motion.div
-            animate={{ height: "auto", opacity: 1 }}
-            className="overflow-hidden"
-            exit={{ height: 0, opacity: 0 }}
-            id={panelId}
-            initial={reducedMotion ? false : { height: 0, opacity: 0 }}
-            transition={
-              reducedMotion ? { duration: 0 } : { duration: 0.45, ease: EASE }
-            }
-          >
+          <Expand id={panelId} reducedMotion={reducedMotion}>
             <div className="pt-6">
               <Tabs
                 activeTabClassName="bg-amber-600"
@@ -129,7 +143,7 @@ export function ResumePanel() {
                 value={lang}
               />
             </div>
-          </motion.div>
+          </Expand>
         ) : null}
       </AnimatePresence>
     </div>

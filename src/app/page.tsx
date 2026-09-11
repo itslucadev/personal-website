@@ -11,11 +11,16 @@ export default function Home() {
   return (
     <div className="relative min-h-screen bg-background">
       <DotField />
-      <div className="relative z-10 mx-auto grid max-w-[1200px] px-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-12">
+      <div className="relative z-10 mx-auto grid max-w-shell px-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-12">
         <Rail />
         <main className="flex min-w-0 flex-col gap-20 pb-24 lg:pt-10">
           <About />
-          <WorkStream entries={projects} heading="Projects" id="projects" />
+          <WorkStream
+            entries={projects}
+            heading="Projects"
+            id="projects"
+            priority
+          />
           <WorkStream
             entries={clientWork}
             heading="Client work"

@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { ease } from "@/lib/motion";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
@@ -17,10 +18,37 @@ const contactSchema = z.object({
   message: z.string().min(10, "Message must be at least 10 characters."),
 });
 
-const ease = [0.25, 0.46, 0.45, 0.94] as const;
-
 interface ContactFormProps {
   animationDelay?: number;
+}
+
+interface FailureToast {
+  description: string;
+  title: string;
+}
+
+/** Statuses the API returns before reading the body, with fixed copy. */
+const BLOCKED_TOASTS: Record<number, FailureToast> = {
+  403: {
+    description: "This request was not allowed.",
+    title: "Request blocked",
+  },
+  429: {
+    description: "Please wait a moment before trying again.",
+    title: "Too many requests",
+  },
+};
+
+async function describeFailure(res: Response): Promise<FailureToast> {
+  const blocked = BLOCKED_TOASTS[res.status];
+  if (blocked) {
+    return blocked;
+  }
+  const data = await res.json().catch(() => null);
+  return {
+    description: data?.error || "Please try again later.",
+    title: "Failed to send",
+  };
 }
 
 export function ContactForm({ animationDelay = 0.2 }: ContactFormProps) {
@@ -42,20 +70,8 @@ export function ContactForm({ animationDelay = 0.2 }: ContactFormProps) {
       });
 
       if (!res.ok) {
-        if (res.status === 429) {
-          gooeyToast.error("Too many requests", {
-            description: "Please wait a moment before trying again.",
-          });
-        } else if (res.status === 403) {
-          gooeyToast.error("Request blocked", {
-            description: "This request was not allowed.",
-          });
-        } else {
-          const data = await res.json().catch(() => null);
-          gooeyToast.error("Failed to send", {
-            description: data?.error || "Please try again later.",
-          });
-        }
+        const { title, description } = await describeFailure(res);
+        gooeyToast.error(title, { description });
         return;
       }
 

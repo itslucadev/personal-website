@@ -35,10 +35,10 @@ export const projects: WorkEntry[] = [
     stack: ["Swift", "AppKit", "Sparkle"],
     dek: "A usage meter that lives where the notch already is. Claude, Cursor and Codex limits as rings, with reset times on hover.",
     image: {
-      src: "/projects/agent-notch/og.png",
-      alt: "Agent Notch showing Claude, Cursor and Codex usage rings on the edge of a Mac display",
-      width: 1200,
-      height: 630,
+      src: "/projects/agent-notch/desktop.webp",
+      alt: "Agent Notch on the right edge of a Mac desktop, showing Claude, Cursor and Codex usage rings at 0%, 52% and 1%",
+      width: 1600,
+      height: 1000,
     },
     actions: [
       {
@@ -58,7 +58,7 @@ export const projects: WorkEntry[] = [
     dek: "Track daily spending in a grid, with custom categories and bill reminders. Everything stays on the device.",
     logo: "/projects/logo-minimafinance.svg",
     image: {
-      src: "/projects/minimafinance-og.png",
+      src: "/projects/minimafinance-og.webp",
       alt: "Minima Finance, simple expense tracking app for iPhone",
       width: 1200,
       height: 630,
@@ -71,23 +71,6 @@ export const projects: WorkEntry[] = [
         external: true,
       },
     ],
-  },
-  {
-    slug: "billiardrank",
-    title: "BilliardRank",
-    kind: "in-development",
-    stack: [],
-    dek: "Ranking and competition management for billiard players and clubs.",
-    logo: "/projects/logo-billiardrank.png",
-    actions: [],
-  },
-  {
-    slug: "gridvote-f1",
-    title: "GridVote F1",
-    kind: "in-development",
-    stack: [],
-    dek: "Social Formula 1 prediction game built around seasons and friends.",
-    actions: [],
   },
 ];
 
