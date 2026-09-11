@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { ease } from "@/lib/motion";
 
 export function Logo() {
   return (
@@ -11,7 +12,7 @@ export function Logo() {
       initial={{ opacity: 0, y: -10 }}
       transition={{
         duration: 0.5,
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease,
       }}
     >
       <Link

@@ -47,32 +47,42 @@ function parse(date: string) {
   return parsed;
 }
 
+interface MonthLabel {
+  text: string;
+  x: number;
+}
+
+/**
+ * A label that would collide with the previous one replaces it: the earlier
+ * month only had a week or two in view, like GitHub does it.
+ */
+function pushMonthLabel(labels: MonthLabel[], label: MonthLabel) {
+  const last = labels.at(-1);
+  if (last && label.x - last.x < STEP * 3) {
+    labels.pop();
+  }
+  labels.push(label);
+}
+
+function weekStart(week: ContributionCalendar["weeks"][number]) {
+  const first = week[0];
+  return first ? parse(first.date) : null;
+}
+
 function monthLabels(weeks: ContributionCalendar["weeks"]) {
-  const labels: { x: number; text: string }[] = [];
+  const labels: MonthLabel[] = [];
   let previous = -1;
   weeks.forEach((week, index) => {
-    const first = week[0];
-    if (!first) {
-      return;
-    }
-    const date = parse(first.date);
+    const date = weekStart(week);
     if (!date) {
       return;
     }
     const month = date.getUTCMonth();
-    if (month !== previous) {
-      // A label that would collide with the previous one replaces it: the
-      // earlier month only had a week or two in view, like GitHub does it.
-      const last = labels.at(-1);
-      if (last && index * STEP - last.x < STEP * 3) {
-        labels.pop();
-      }
-      labels.push({
-        x: index * STEP,
-        text: monthOf.format(date),
-      });
-      previous = month;
+    if (month === previous) {
+      return;
     }
+    previous = month;
+    pushMonthLabel(labels, { x: index * STEP, text: monthOf.format(date) });
   });
   return labels;
 }

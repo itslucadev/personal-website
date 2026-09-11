@@ -35,3 +35,6 @@ next-env.d.ts
 
 # design review scratch
 .lavish/
+
+# fallow machine-local cache
+.fallow/

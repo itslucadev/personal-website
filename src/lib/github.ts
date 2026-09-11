@@ -60,6 +60,11 @@ const calendarResponseSchema = z.object({
 
 type CalendarResponse = z.infer<typeof calendarResponseSchema>;
 
+/** GraphQL reports failures as a non-empty top-level `errors` array. */
+const graphqlErrorsSchema = z.object({
+  errors: z.array(z.unknown()).min(1),
+});
+
 const QUERY = `
   query($login: String!) {
     user(login: $login) {
@@ -90,6 +95,42 @@ function mapCalendar(payload: CalendarResponse): ContributionCalendar {
   };
 }
 
+async function requestCalendar(token: string): Promise<unknown> {
+  const response = await fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: QUERY,
+      variables: { login: GITHUB_LOGIN },
+    }),
+    next: { revalidate: 60 * 60 * 6 },
+  });
+  if (!response.ok) {
+    throw new Error(`GitHub GraphQL responded ${response.status}`);
+  }
+  return response.json();
+}
+
+function parseCalendar(json: unknown): ContributionCalendar | null {
+  const errors = graphqlErrorsSchema.safeParse(json);
+  if (errors.success) {
+    console.error(
+      "GitHub contributions GraphQL errors",
+      errors.data.errors.length
+    );
+    return null;
+  }
+  const parsed = calendarResponseSchema.safeParse(json);
+  if (!parsed.success) {
+    console.error("GitHub contributions payload invalid");
+    return null;
+  }
+  return mapCalendar(parsed.data);
+}
+
 /**
  * Last year of contributions from GitHub's GraphQL API. Needs `GITHUB_TOKEN`
  * (any token works, the calendar is public data). Returns null when the token
@@ -101,39 +142,7 @@ export async function fetchContributionCalendar(): Promise<ContributionCalendar 
     return null;
   }
   try {
-    const response = await fetch("https://api.github.com/graphql", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        query: QUERY,
-        variables: { login: GITHUB_LOGIN },
-      }),
-      next: { revalidate: 60 * 60 * 6 },
-    });
-    if (!response.ok) {
-      console.error("GitHub contributions request failed", response.status);
-      return null;
-    }
-    const json: unknown = await response.json();
-    if (
-      typeof json === "object" &&
-      json !== null &&
-      "errors" in json &&
-      Array.isArray(json.errors) &&
-      json.errors.length > 0
-    ) {
-      console.error("GitHub contributions GraphQL errors", json.errors.length);
-      return null;
-    }
-    const parsed = calendarResponseSchema.safeParse(json);
-    if (!parsed.success) {
-      console.error("GitHub contributions payload invalid");
-      return null;
-    }
-    return mapCalendar(parsed.data);
+    return parseCalendar(await requestCalendar(token));
   } catch (error) {
     console.error("GitHub contributions request failed", error);
     return null;

@@ -95,8 +95,39 @@ export function Rail() {
       </h1>
 
       <p className="mt-4 font-medium font-sans text-foreground">
-        Mobile developer, Nuremberg
+        Mobile developer
       </p>
+
+      <div className="flex flex-col gap-3">
+        <p className="font-mono text-muted-foreground text-xs">
+          <a
+            className={cn("transition-colors hover:text-foreground", FOCUS)}
+            href="https://github.com/itslucadev"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            GitHub
+          </a>
+          {" · "}
+          <a
+            className={cn("transition-colors hover:text-foreground", FOCUS)}
+            href="https://x.com/itslucadev"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            X
+          </a>
+          {" · "}
+          <a
+            className={cn("transition-colors hover:text-foreground", FOCUS)}
+            href="https://www.linkedin.com/in/luca-becker-10a736231/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            LinkedIn
+          </a>
+        </p>
+      </div>
 
       <p className="mt-3 max-w-[30ch] font-sans text-muted-foreground">
         <TextGenerateEffect enabled={introEnabled} words={ONE_LINER} />
@@ -144,59 +175,6 @@ export function Rail() {
           })}
         </ul>
       </nav>
-
-      <div className="mt-8 flex flex-col gap-3 lg:mt-auto lg:pb-2">
-        <div className="flex flex-wrap gap-x-4 gap-y-1 font-sans text-sm">
-          <a
-            className={cn(
-              "text-foreground transition-colors hover:text-amber-600",
-              FOCUS
-            )}
-            href="https://cal.eu/lucabecker"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Book a call
-          </a>
-          <Link
-            className={cn(
-              "text-foreground transition-colors hover:text-amber-600",
-              FOCUS
-            )}
-            href="/contact"
-          >
-            Email
-          </Link>
-        </div>
-        <p className="font-mono text-muted-foreground text-xs">
-          <a
-            className={cn("transition-colors hover:text-foreground", FOCUS)}
-            href="https://github.com/itslucadev"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            GitHub
-          </a>
-          {" · "}
-          <a
-            className={cn("transition-colors hover:text-foreground", FOCUS)}
-            href="https://x.com/itslucadev"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            X
-          </a>
-          {" · "}
-          <a
-            className={cn("transition-colors hover:text-foreground", FOCUS)}
-            href="https://www.linkedin.com/in/luca-becker-10a736231/"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            LinkedIn
-          </a>
-        </p>
-      </div>
     </aside>
   );
 }

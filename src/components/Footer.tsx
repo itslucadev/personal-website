@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import Link from "next/link";
+import { ease } from "@/lib/motion";
 
 export function Footer() {
   return (
@@ -13,7 +14,7 @@ export function Footer() {
       transition={{
         duration: 0.5,
         delay: 1.1,
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease,
       }}
     >
       <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">

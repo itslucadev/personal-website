@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { ease } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { WorkEntry as WorkEntryModel, WorkKind } from "@/lib/work";
 
@@ -96,18 +97,24 @@ function AppStoreBadge({ href, title }: { href: string; title: string }) {
   );
 }
 
+function PrivateNote({ kind }: { kind: WorkKind }) {
+  if (kind !== "private") {
+    return null;
+  }
+  return (
+    <p className="mt-5 font-mono text-[11px] text-muted-foreground">
+      Private client work, no public link.
+    </p>
+  );
+}
+
 function Actions({ entry }: { entry: WorkEntryModel }) {
+  if (!entry.appStore && entry.actions.length === 0) {
+    return <PrivateNote kind={entry.kind} />;
+  }
+
   const primary = entry.actions.filter((action) => action.primary);
   const secondary = entry.actions.filter((action) => !action.primary);
-  const hasButtons = Boolean(entry.appStore) || primary.length > 0;
-
-  if (!(hasButtons || secondary.length > 0)) {
-    return entry.kind === "private" ? (
-      <p className="mt-5 font-mono text-[11px] text-muted-foreground">
-        Private client work, no public link.
-      </p>
-    ) : null;
-  }
 
   return (
     <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
@@ -126,6 +133,17 @@ function Actions({ entry }: { entry: WorkEntryModel }) {
   );
 }
 
+/** Scroll-triggered fade-up, skipped entirely under reduced motion. */
+function reveal(reduceMotion: boolean | null) {
+  if (reduceMotion) {
+    return { initial: false as const };
+  }
+  return {
+    initial: { opacity: 0, y: 24 },
+    whileInView: { opacity: 1, y: 0 },
+  };
+}
+
 export function WorkEntry({ entry }: { entry: WorkEntryModel }) {
   const reduceMotion = useReducedMotion();
   const metaParts = [entry.year, ...entry.stack].filter(Boolean);
@@ -134,10 +152,9 @@ export function WorkEntry({ entry }: { entry: WorkEntryModel }) {
     <motion.article
       className="scroll-mt-24"
       id={entry.slug}
-      initial={reduceMotion ? false : { opacity: 0, y: 24 }}
-      transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+      transition={{ duration: 0.5, ease }}
       viewport={{ once: true, amount: 0.2 }}
-      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+      {...reveal(reduceMotion)}
     >
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
         <span
