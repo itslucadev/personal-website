@@ -1,14 +1,16 @@
-"use client";
+'use client';
 
-import { Home } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Terminal, TypingAnimation } from "@/components/ui/terminal";
+import { Home } from 'lucide-react';
+import Link from 'next/link';
+
+import { Button } from '@/components/ui/button';
+import { Terminal, TypingAnimation } from '@/components/ui/terminal';
 
 export default function NotFound() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
       <div className="mb-8 text-center">
-        <h1 className="mb-2 font-bold text-4xl text-foreground">404</h1>
+        <h1 className="mb-2 text-4xl font-bold text-foreground">404</h1>
         <p className="text-muted-foreground">Page not found</p>
       </div>
 
@@ -27,10 +29,10 @@ export default function NotFound() {
         className="mt-16 flex items-center gap-2 border-zinc-300 bg-white text-zinc-900 hover:bg-zinc-100 hover:text-zinc-950"
         variant="outline"
       >
-        <a href="/">
+        <Link href="/">
           <Home className="h-4 w-4" />
           Go home
-        </a>
+        </Link>
       </Button>
     </div>
   );

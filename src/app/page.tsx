@@ -1,11 +1,11 @@
-import { Footer } from "@/components/Footer";
-import { About } from "@/components/ledger/About";
-import { Contact } from "@/components/ledger/Contact";
-import { DotField } from "@/components/ledger/DotField";
-import { ExperienceTable } from "@/components/ledger/ExperienceTable";
-import { Rail } from "@/components/ledger/Rail";
-import { WorkStream } from "@/components/ledger/WorkStream";
-import { clientWork, projects } from "@/lib/work";
+import { Footer } from '@/components/Footer';
+import { About } from '@/components/ledger/About';
+import { Contact } from '@/components/ledger/Contact';
+import { DotField } from '@/components/ledger/DotField';
+import { ExperienceTable } from '@/components/ledger/ExperienceTable';
+import { Rail } from '@/components/ledger/Rail';
+import { WorkStream } from '@/components/ledger/WorkStream';
+import { clientWork, projects } from '@/lib/work';
 
 export default function Home() {
   return (
@@ -15,17 +15,8 @@ export default function Home() {
         <Rail />
         <main className="flex min-w-0 flex-col gap-20 pb-24 lg:pt-10">
           <About />
-          <WorkStream
-            entries={projects}
-            heading="Projects"
-            id="projects"
-            priority
-          />
-          <WorkStream
-            entries={clientWork}
-            heading="Client work"
-            id="client-work"
-          />
+          <WorkStream entries={projects} heading="Projects" id="projects" priority />
+          <WorkStream entries={clientWork} heading="Client work" id="client-work" />
           <ExperienceTable />
           <Contact />
         </main>

@@ -1,8 +1,9 @@
-"use client";
+'use client';
 
-import { motion, useReducedMotion } from "framer-motion";
-import { type ReactNode, useId, useState } from "react";
-import { cn } from "@/lib/utils";
+import { motion, useReducedMotion } from 'framer-motion';
+import { type ReactNode, useId, useState } from 'react';
+
+import { cn } from '@/lib/utils';
 
 export interface TabItem {
   content: ReactNode;
@@ -45,10 +46,7 @@ export function Tabs({
     <>
       <div
         aria-label={label}
-        className={cn(
-          "relative flex flex-row items-center [perspective:1000px]",
-          containerClassName
-        )}
+        className={cn('relative flex flex-row items-center [perspective:1000px]', containerClassName)}
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
         role="tablist"
@@ -58,10 +56,7 @@ export function Tabs({
           return (
             <button
               aria-selected={selected}
-              className={cn(
-                "relative rounded-full px-4 py-2 [transform-style:preserve-3d]",
-                tabClassName
-              )}
+              className={cn('relative rounded-full px-4 py-2 [transform-style:preserve-3d]', tabClassName)}
               key={tab.value}
               onClick={() => onChange(tab.value)}
               role="tab"
@@ -69,16 +64,9 @@ export function Tabs({
             >
               {selected ? (
                 <motion.div
-                  className={cn(
-                    "absolute inset-0 rounded-full bg-gray-200",
-                    activeTabClassName
-                  )}
+                  className={cn('absolute inset-0 rounded-full bg-gray-200', activeTabClassName)}
                   layoutId={pillId}
-                  transition={
-                    reducedMotion
-                      ? { duration: 0 }
-                      : { type: "spring", bounce: 0.3, duration: 0.6 }
-                  }
+                  transition={reducedMotion ? { duration: 0 } : { type: 'spring', bounce: 0.3, duration: 0.6 }}
                 />
               ) : null}
               <span className="relative block">{tab.title}</span>
@@ -86,7 +74,7 @@ export function Tabs({
           );
         })}
       </div>
-      <div className={cn("relative h-full w-full", contentClassName)}>
+      <div className={cn('relative h-full w-full', contentClassName)}>
         {ordered.map((tab, idx) => {
           const front = idx === 0;
           return (
@@ -98,7 +86,7 @@ export function Tabs({
                 opacity: 1 - idx * 0.1,
               }}
               aria-hidden={!front}
-              className="absolute top-0 left-0 h-full w-full"
+              className="absolute left-0 top-0 h-full w-full"
               key={tab.value}
               layoutId={`${pillId}-${tab.value}`}
               style={{ zIndex: tabs.length - idx }}

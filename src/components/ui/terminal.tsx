@@ -1,8 +1,9 @@
-"use client";
+'use client';
 
-import { type MotionProps, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/utils";
+import { type MotionProps, motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+
+import { cn } from '@/lib/utils';
 
 interface AnimatedSpanProps extends MotionProps {
   children: React.ReactNode;
@@ -10,15 +11,10 @@ interface AnimatedSpanProps extends MotionProps {
   delay?: number;
 }
 
-export const AnimatedSpan = ({
-  children,
-  delay = 0,
-  className,
-  ...props
-}: AnimatedSpanProps) => (
+export const AnimatedSpan = ({ children, delay = 0, className, ...props }: AnimatedSpanProps) => (
   <motion.div
     animate={{ opacity: 1, y: 0 }}
-    className={cn("grid font-normal text-sm tracking-tight", className)}
+    className={cn('grid text-sm font-normal tracking-tight', className)}
     initial={{ opacity: 0, y: -5 }}
     transition={{ duration: 0.6, delay: delay / 1000 }}
     {...(props as any)}
@@ -40,18 +36,18 @@ export const TypingAnimation = ({
   className,
   duration = 60,
   delay = 0,
-  as: Component = "span",
+  as: Component = 'span',
   ...props
 }: TypingAnimationProps) => {
-  if (typeof children !== "string") {
-    throw new Error("TypingAnimation: children must be a string.");
+  if (typeof children !== 'string') {
+    throw new Error('TypingAnimation: children must be a string.');
   }
 
   const MotionComponent = motion.create(Component, {
     forwardMotionProps: true,
   });
 
-  const [displayedText, setDisplayedText] = useState<string>("");
+  const [displayedText, setDisplayedText] = useState<string>('');
   const [started, setStarted] = useState(false);
   const elementRef = useRef<HTMLElement | null>(null);
 
@@ -84,7 +80,7 @@ export const TypingAnimation = ({
 
   return (
     <MotionComponent
-      className={cn("font-normal text-sm tracking-tight", className)}
+      className={cn('text-sm font-normal tracking-tight', className)}
       ref={elementRef}
       {...(props as any)}
     >
@@ -102,11 +98,11 @@ export const Terminal = ({ children, className }: TerminalProps) => {
   return (
     <div
       className={cn(
-        "z-0 h-full max-h-[500px] w-full max-w-2xl rounded-xl border border-border bg-background",
-        className
+        'z-0 h-full max-h-[500px] w-full max-w-2xl rounded-xl border border-border bg-background',
+        className,
       )}
     >
-      <div className="flex flex-col gap-y-2 border-border border-b p-4">
+      <div className="flex flex-col gap-y-2 border-b border-border p-4">
         <div className="flex flex-row gap-x-2">
           <div className="h-3 w-3 rounded-full bg-red-500" />
           <div className="h-3 w-3 rounded-full bg-yellow-500" />

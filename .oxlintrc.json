@@ -1,0 +1,40 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["eslint", "typescript", "unicorn", "oxc", "react", "nextjs", "jsx-a11y", "import"],
+  "categories": {
+    "correctness": "error"
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2024": true
+  },
+  "settings": {
+    "react": {
+      "version": "19.2.8"
+    },
+    "next": {
+      "rootDir": "."
+    }
+  },
+  "rules": {
+    "react/no-danger": "error",
+    // React Compiler rules ship in the correctness category once the react
+    // plugin is on. This app is not compiled with the React Compiler, and
+    // these flag ordinary patterns (copyright year, mount effects, motion.create).
+    "react/purity": "off",
+    "react/set-state-in-effect": "off",
+    "react/static-components": "off"
+  },
+  "ignorePatterns": ["/.next/", "/out/", "/build", "/coverage", "next-env.d.ts"],
+  "overrides": [
+    {
+      "files": ["src/components/ui/**", "src/hooks/use-mobile.ts"],
+      "rules": {
+        "jsx-a11y/interactive-supports-focus": "off",
+        "jsx-a11y/no-noninteractive-element-interactions": "off",
+        "jsx-a11y/prefer-tag-over-role": "off"
+      }
+    }
+  ]
+}

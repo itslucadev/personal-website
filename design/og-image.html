@@ -1,152 +1,148 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>OG Image - Luca Becker</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    >
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <style>
-    * {
-      box-sizing: border-box;
-      padding: 0;
-      margin: 0;
-    }
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
 
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      font-family:
-        "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-        sans-serif;
-      color: #fafafa;
-      background: #09090b;
-    }
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        font-family:
+          'Inter',
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          sans-serif;
+        color: #fafafa;
+        background: #09090b;
+      }
 
-    .og-container {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 1200px;
-      height: 630px;
-      padding: 60px;
-      overflow: hidden;
-      background: #09090b;
-    }
+      .og-container {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 1200px;
+        height: 630px;
+        padding: 60px;
+        overflow: hidden;
+        background: #09090b;
+      }
 
-    /* Subtle gradient background */
-    .og-container::before {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      pointer-events: none;
-      content: "";
-      background: radial-gradient(
-        ellipse at 50% 0%,
-        rgba(245, 158, 11, 0.08) 0%,
-        transparent 60%
-      );
-    }
+      /* Subtle gradient background */
+      .og-container::before {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        pointer-events: none;
+        content: '';
+        background: radial-gradient(ellipse at 50% 0%, rgba(245, 158, 11, 0.08) 0%, transparent 60%);
+      }
 
-    .content {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      align-items: center;
-      text-align: center;
-    }
+      .content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        align-items: center;
+        text-align: center;
+      }
 
-    .avatar {
-      width: 120px;
-      height: 120px;
-      object-fit: cover;
-      border: 3px solid rgba(245, 158, 11, 0.3);
-      border-radius: 50%;
-    }
+      .avatar {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border: 3px solid rgba(245, 158, 11, 0.3);
+        border-radius: 50%;
+      }
 
-    h1 {
-      font-size: 56px;
-      font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-    }
+      h1 {
+        font-size: 56px;
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+      }
 
-    .name {
-      color: #f59e0b;
-    }
+      .name {
+        color: #f59e0b;
+      }
 
-    .tagline {
-      max-width: 700px;
-      font-size: 24px;
-      line-height: 1.5;
-      color: #a1a1aa;
-    }
+      .tagline {
+        max-width: 700px;
+        font-size: 24px;
+        line-height: 1.5;
+        color: #a1a1aa;
+      }
 
-    .availability {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      margin-top: 8px;
-    }
+      .availability {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-top: 8px;
+      }
 
-    .dot-container {
-      position: relative;
-      width: 12px;
-      height: 12px;
-    }
+      .dot-container {
+        position: relative;
+        width: 12px;
+        height: 12px;
+      }
 
-    .dot-glow {
-      position: absolute;
-      inset: -4px;
-      background: rgba(34, 197, 94, 0.3);
-      border-radius: 50%;
-      filter: blur(4px);
-    }
+      .dot-glow {
+        position: absolute;
+        inset: -4px;
+        background: rgba(34, 197, 94, 0.3);
+        border-radius: 50%;
+        filter: blur(4px);
+      }
 
-    .dot {
-      position: relative;
-      width: 12px;
-      height: 12px;
-      background: #22c55e;
-      border-radius: 50%;
-    }
+      .dot {
+        position: relative;
+        width: 12px;
+        height: 12px;
+        background: #22c55e;
+        border-radius: 50%;
+      }
 
-    .availability-text {
-      font-size: 18px;
-      color: #71717a;
-    }
+      .availability-text {
+        font-size: 18px;
+        color: #71717a;
+      }
 
-    .domain {
-      position: absolute;
-      bottom: 40px;
-      font-size: 20px;
-      color: #52525b;
-      letter-spacing: 0.05em;
-    }
+      .domain {
+        position: absolute;
+        bottom: 40px;
+        font-size: 20px;
+        color: #52525b;
+        letter-spacing: 0.05em;
+      }
     </style>
   </head>
   <body>
     <div class="og-container">
       <div class="content">
-        <img src="avatar.png" alt="Luca Becker" class="avatar">
+        <img src="avatar.png" alt="Luca Becker" class="avatar" />
 
         <h1>Hey, I'm <span class="name">Luca Becker</span>!</h1>
 
         <p class="tagline">
-          React Native developer from Germany building modern mobile and web
-          apps with a focus on clean design.
+          React Native developer from Germany building modern mobile and web apps with a focus on clean design.
         </p>
 
         <div class="availability">
@@ -154,9 +150,7 @@
             <div class="dot-glow"></div>
             <div class="dot"></div>
           </div>
-          <span class="availability-text"
-            >Available for freelance projects</span
-          >
+          <span class="availability-text">Available for freelance projects</span>
         </div>
       </div>
 

@@ -1,32 +1,32 @@
-"use client";
+'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ChevronDown, Download } from "lucide-react";
-import Image from "next/image";
-import { type ReactNode, useId, useState } from "react";
-import { Tabs } from "@/components/ui/tabs";
-import { ease } from "@/lib/motion";
-import pages from "@/lib/resume-pages.json";
-import { cn } from "@/lib/utils";
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { ChevronDown, Download } from 'lucide-react';
+import Image from 'next/image';
+import { type ReactNode, useId, useState } from 'react';
 
-type Lang = "en" | "de";
+import { Tabs } from '@/components/ui/tabs';
+import { ease } from '@/lib/motion';
+import pages from '@/lib/resume-pages.json';
+import { cn } from '@/lib/utils';
 
-const RESUMES: Record<Lang, { file: string; label: string; download: string }> =
-  {
-    en: {
-      file: "/main_en.pdf",
-      label: "English",
-      download: "Luca Becker - Resume.pdf",
-    },
-    de: {
-      file: "/main_de.pdf",
-      label: "German",
-      download: "Luca Becker - Lebenslauf.pdf",
-    },
-  };
+type Lang = 'en' | 'de';
+
+const RESUMES: Record<Lang, { file: string; label: string; download: string }> = {
+  en: {
+    file: '/main_en.pdf',
+    label: 'English',
+    download: 'Luca Becker - Resume.pdf',
+  },
+  de: {
+    file: '/main_de.pdf',
+    label: 'German',
+    download: 'Luca Becker - Lebenslauf.pdf',
+  },
+};
 
 const FOCUS =
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2";
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2';
 
 function ResumeSheet({ lang }: { lang: Lang }) {
   const resume = RESUMES[lang];
@@ -39,10 +39,7 @@ function ResumeSheet({ lang }: { lang: Lang }) {
       {pages[lang].map((page, index) => (
         <Image
           alt={`${resume.label} resume, page ${index + 1}`}
-          className={cn(
-            "block h-auto w-full",
-            index > 0 && "border-[#DCE2EA] border-t"
-          )}
+          className={cn('block h-auto w-full', index > 0 && 'border-t border-[#DCE2EA]')}
           height={page.height}
           key={page.src}
           sizes="(min-width: 1024px) 700px, 100vw"
@@ -54,25 +51,17 @@ function ResumeSheet({ lang }: { lang: Lang }) {
   );
 }
 
-const TABS = (["en", "de"] as Lang[]).map((lang) => ({
+const TABS = (['en', 'de'] as Lang[]).map((lang) => ({
   title: lang.toUpperCase(),
   value: lang,
   content: <ResumeSheet lang={lang} />,
 }));
 
 /** Height-reveal for the resume sheet; instant under reduced motion. */
-function Expand({
-  id,
-  reducedMotion,
-  children,
-}: {
-  id: string;
-  reducedMotion: boolean;
-  children: ReactNode;
-}) {
+function Expand({ id, reducedMotion, children }: { id: string; reducedMotion: boolean; children: ReactNode }) {
   return (
     <motion.div
-      animate={{ height: "auto", opacity: 1 }}
+      animate={{ height: 'auto', opacity: 1 }}
       className="overflow-hidden"
       exit={{ height: 0, opacity: 0 }}
       id={id}
@@ -86,19 +75,19 @@ function Expand({
 
 export function ResumePanel() {
   const [open, setOpen] = useState(false);
-  const [lang, setLang] = useState<Lang>("en");
+  const [lang, setLang] = useState<Lang>('en');
   const reducedMotion = Boolean(useReducedMotion());
   const panelId = useId();
 
   return (
-    <div className="mt-8 border-[#DCE2EA] border-t pt-6">
+    <div className="mt-8 border-t border-[#DCE2EA] pt-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <button
           aria-controls={panelId}
           aria-expanded={open}
           className={cn(
-            "group inline-flex items-center gap-2 rounded-sm font-medium font-sans text-base text-foreground transition-colors hover:text-amber-600",
-            FOCUS
+            'group inline-flex items-center gap-2 rounded-sm font-sans text-base font-medium text-foreground transition-colors hover:text-amber-600',
+            FOCUS,
           )}
           onClick={() => setOpen((value) => !value)}
           type="button"
@@ -107,15 +96,15 @@ export function ResumePanel() {
           <ChevronDown
             aria-hidden
             className={cn(
-              "size-4 transition-transform duration-300 motion-reduce:transition-none",
-              open ? "rotate-180" : "group-hover:translate-y-0.5"
+              'size-4 transition-transform duration-300 motion-reduce:transition-none',
+              open ? 'rotate-180' : 'group-hover:translate-y-0.5',
             )}
           />
         </button>
         <a
           className={cn(
-            "inline-flex items-center gap-1.5 rounded-sm font-mono text-[11px] text-amber-600 uppercase tracking-[0.1em] transition-colors hover:text-amber-700",
-            FOCUS
+            'inline-flex items-center gap-1.5 rounded-sm font-mono text-[11px] uppercase tracking-[0.1em] text-amber-600 transition-colors hover:text-amber-700',
+            FOCUS,
           )}
           download={RESUMES[lang].download}
           href={RESUMES[lang].file}
@@ -136,8 +125,8 @@ export function ResumePanel() {
                 label="Resume language"
                 onChange={(value) => setLang(value as Lang)}
                 tabClassName={cn(
-                  "w-14 px-0 py-1.5 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.12em] transition-colors duration-300 hover:text-foreground aria-selected:text-white",
-                  FOCUS
+                  'w-14 px-0 py-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground transition-colors duration-300 hover:text-foreground aria-selected:text-white',
+                  FOCUS,
                 )}
                 tabs={TABS}
                 value={lang}

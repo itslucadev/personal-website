@@ -1,42 +1,41 @@
-"use client";
+'use client';
 
-import { motion, useReducedMotion } from "framer-motion";
-import Image from "next/image";
-import Link from "next/link";
-import { ease } from "@/lib/motion";
-import { cn } from "@/lib/utils";
-import type { WorkEntry as WorkEntryModel, WorkKind } from "@/lib/work";
+import { motion, useReducedMotion } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
+
+import { ease } from '@/lib/motion';
+import { cn } from '@/lib/utils';
+import type { WorkEntry as WorkEntryModel, WorkKind } from '@/lib/work';
 
 const FOCUS =
-  "rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2";
+  'rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2';
 
 const KIND_LABEL: Record<WorkKind, string> = {
-  product: "Product",
-  client: "Client",
-  "in-development": "In development",
-  private: "Private",
+  product: 'Product',
+  client: 'Client',
+  'in-development': 'In development',
+  private: 'Private',
 };
 
 const KIND_CHIP: Record<WorkKind, string> = {
-  product: "bg-[#DBEAFE] text-[#1E40AF]",
-  client: "bg-[#DCFCE7] text-[#166534]",
-  "in-development": "bg-[#FEF3C7] text-[#92400E]",
-  private: "bg-[#EEF0F3] text-[#5F6B7A]",
+  product: 'bg-[#DBEAFE] text-[#1E40AF]',
+  client: 'bg-[#DCFCE7] text-[#166534]',
+  'in-development': 'bg-[#FEF3C7] text-[#92400E]',
+  private: 'bg-[#EEF0F3] text-[#5F6B7A]',
 };
 
-type Action = WorkEntryModel["actions"][number];
+type Action = WorkEntryModel['actions'][number];
 
 function anchorProps(action: Action) {
-  return action.external
-    ? { rel: "noopener noreferrer", target: "_blank" }
-    : {};
+  return action.external ? { rel: 'noopener noreferrer', target: '_blank' } : {};
 }
 
 /** Filled pill, sized to sit beside Apple's 40px badge. */
 function PrimaryAction({ action }: { action: Action }) {
   const className = cn(
-    "inline-flex h-10 items-center rounded-full bg-foreground px-5 font-medium font-sans text-background text-sm transition-colors hover:bg-amber-600",
-    FOCUS
+    'inline-flex h-10 items-center rounded-full bg-foreground px-5 font-sans text-sm font-medium text-background transition-colors hover:bg-amber-600',
+    FOCUS,
   );
   if (action.external) {
     return (
@@ -54,8 +53,8 @@ function PrimaryAction({ action }: { action: Action }) {
 
 function TextAction({ action }: { action: Action }) {
   const className = cn(
-    "font-mono text-[11px] text-amber-600 uppercase tracking-[0.1em] transition-colors hover:text-amber-700",
-    FOCUS
+    'font-mono text-[11px] uppercase tracking-[0.1em] text-amber-600 transition-colors hover:text-amber-700',
+    FOCUS,
   );
   const label = `${action.label} →`;
   if (action.external) {
@@ -81,31 +80,21 @@ function AppStoreBadge({ href, title }: { href: string; title: string }) {
   return (
     <a
       aria-label={`Download ${title} on the App Store`}
-      className={cn("inline-flex p-2.5", FOCUS)}
+      className={cn('inline-flex p-2.5', FOCUS)}
       href={href}
       rel="noopener noreferrer"
       target="_blank"
     >
-      <Image
-        alt=""
-        height={40}
-        src="/badges/app-store-badge.svg"
-        unoptimized
-        width={120}
-      />
+      <Image alt="" height={40} src="/badges/app-store-badge.svg" unoptimized width={120} />
     </a>
   );
 }
 
 function PrivateNote({ kind }: { kind: WorkKind }) {
-  if (kind !== "private") {
+  if (kind !== 'private') {
     return null;
   }
-  return (
-    <p className="mt-5 font-mono text-[11px] text-muted-foreground">
-      Private client work, no public link.
-    </p>
-  );
+  return <p className="mt-5 font-mono text-[11px] text-muted-foreground">Private client work, no public link.</p>;
 }
 
 function Actions({ entry }: { entry: WorkEntryModel }) {
@@ -145,13 +134,7 @@ function reveal(reduceMotion: boolean | null) {
 }
 
 /** `priority` marks the first entry's image, which is the homepage LCP candidate. */
-export function WorkEntry({
-  entry,
-  priority = false,
-}: {
-  entry: WorkEntryModel;
-  priority?: boolean;
-}) {
+export function WorkEntry({ entry, priority = false }: { entry: WorkEntryModel; priority?: boolean }) {
   const reduceMotion = useReducedMotion();
   const metaParts = [entry.year, ...entry.stack].filter(Boolean);
 
@@ -166,20 +149,18 @@ export function WorkEntry({
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
         <span
           className={cn(
-            "inline-flex items-center rounded-[2px] px-1.5 py-0.5 font-mono text-[11px]",
-            KIND_CHIP[entry.kind]
+            'inline-flex items-center rounded-[2px] px-1.5 py-0.5 font-mono text-[11px]',
+            KIND_CHIP[entry.kind],
           )}
         >
           {KIND_LABEL[entry.kind]}
         </span>
         {metaParts.length > 0 ? (
-          <span className="font-mono text-[11px] text-muted-foreground">
-            {metaParts.join(" · ")}
-          </span>
+          <span className="font-mono text-[11px] text-muted-foreground">{metaParts.join(' · ')}</span>
         ) : null}
       </div>
 
-      <h3 className="mt-3 flex items-center gap-3 font-serif text-[30px] text-foreground leading-tight">
+      <h3 className="mt-3 flex items-center gap-3 font-serif text-[30px] leading-tight text-foreground">
         {entry.logo ? (
           <Image
             alt=""
@@ -192,9 +173,7 @@ export function WorkEntry({
         {entry.title}
       </h3>
 
-      <p className="mt-3 max-w-[48ch] font-serif text-[17px] text-muted-foreground italic">
-        {entry.dek}
-      </p>
+      <p className="mt-3 max-w-[48ch] font-serif text-[17px] italic text-muted-foreground">{entry.dek}</p>
 
       {entry.image ? (
         <div className="mt-6 overflow-hidden rounded-[8px] border border-[#DCE2EA] bg-[#F3F5F8]">

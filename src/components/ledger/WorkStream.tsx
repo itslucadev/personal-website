@@ -1,7 +1,8 @@
-"use client";
+'use client';
 
-import type { WorkEntry as WorkEntryModel } from "@/lib/work";
-import { WorkEntry } from "./WorkEntry";
+import type { WorkEntry as WorkEntryModel } from '@/lib/work';
+
+import { WorkEntry } from './WorkEntry';
 
 export function WorkStream({
   entries,
@@ -17,10 +18,7 @@ export function WorkStream({
 }) {
   return (
     <section aria-labelledby={`${id}-heading`} className="scroll-mt-24" id={id}>
-      <h2
-        className="mb-8 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.12em]"
-        id={`${id}-heading`}
-      >
+      <h2 className="mb-8 font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground" id={`${id}-heading`}>
         {heading}
       </h2>
       <div className="divide-y divide-[#DCE2EA]">

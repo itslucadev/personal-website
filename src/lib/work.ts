@@ -1,9 +1,6 @@
-import {
-  agentNotchDownloadUrl,
-  agentNotchRepoUrl,
-} from "@/components/AgentNotchPage";
+import { agentNotchDownloadUrl, agentNotchRepoUrl } from '@/components/AgentNotchPage';
 
-export type WorkKind = "product" | "client" | "in-development" | "private";
+export type WorkKind = 'product' | 'client' | 'in-development' | 'private';
 
 export interface WorkEntry {
   actions: {
@@ -28,46 +25,46 @@ export interface WorkEntry {
 
 export const projects: WorkEntry[] = [
   {
-    slug: "agent-notch",
-    title: "Agent Notch",
-    kind: "product",
-    year: "2026",
-    stack: ["Swift", "AppKit", "Sparkle"],
-    dek: "A usage meter that lives where the notch already is. Claude, Cursor and Codex limits as rings, with reset times on hover.",
+    slug: 'agent-notch',
+    title: 'Agent Notch',
+    kind: 'product',
+    year: '2026',
+    stack: ['Swift', 'AppKit', 'Sparkle'],
+    dek: 'A usage meter that lives where the notch already is. Claude, Cursor and Codex limits as rings, with reset times on hover.',
     image: {
-      src: "/projects/agent-notch/desktop.webp",
-      alt: "Agent Notch on the right edge of a Mac desktop, showing Claude, Cursor and Codex usage rings at 0%, 52% and 1%",
+      src: '/projects/agent-notch/desktop.webp',
+      alt: 'Agent Notch on the right edge of a Mac desktop, showing Claude, Cursor and Codex usage rings at 0%, 52% and 1%',
       width: 1600,
       height: 1000,
     },
     actions: [
       {
-        label: "Download for macOS",
+        label: 'Download for macOS',
         href: agentNotchDownloadUrl,
         primary: true,
       },
-      { label: "About the app", href: "/agent-notch" },
-      { label: "GitHub", href: agentNotchRepoUrl, external: true },
+      { label: 'About the app', href: '/agent-notch' },
+      { label: 'GitHub', href: agentNotchRepoUrl, external: true },
     ],
   },
   {
-    slug: "minimafinance",
-    title: "MinimaFinance",
-    kind: "product",
-    stack: ["React Native", "Expo"],
-    dek: "Track daily spending in a grid, with custom categories and bill reminders. Everything stays on the device.",
-    logo: "/projects/logo-minimafinance.svg",
+    slug: 'minimafinance',
+    title: 'MinimaFinance',
+    kind: 'product',
+    stack: ['React Native', 'Expo'],
+    dek: 'Track daily spending in a grid, with custom categories and bill reminders. Everything stays on the device.',
+    logo: '/projects/logo-minimafinance.svg',
     image: {
-      src: "/projects/minimafinance-og.webp",
-      alt: "Minima Finance, simple expense tracking app for iPhone",
+      src: '/projects/minimafinance-og.webp',
+      alt: 'Minima Finance, simple expense tracking app for iPhone',
       width: 1200,
       height: 630,
     },
-    appStore: "https://apps.apple.com/app/minima-finance/id6504699094",
+    appStore: 'https://apps.apple.com/app/minima-finance/id6504699094',
     actions: [
       {
-        label: "minimafinance.app",
-        href: "https://minimafinance.app",
+        label: 'minimafinance.app',
+        href: 'https://minimafinance.app',
         external: true,
       },
     ],
@@ -76,35 +73,35 @@ export const projects: WorkEntry[] = [
 
 export const clientWork: WorkEntry[] = [
   {
-    slug: "bv-q-club",
-    title: "BV Q-Club e.V.",
-    kind: "client",
-    year: "2026",
-    stack: ["Next.js", "Sanity CMS", "Cuescore API"],
+    slug: 'bv-q-club',
+    title: 'BV Q-Club e.V.',
+    kind: 'client',
+    year: '2026',
+    stack: ['Next.js', 'Sanity CMS', 'Cuescore API'],
     dek: "The website and CMS for Fürth's pool billiard club. The board publishes updates itself, and tournament results sync in from Cuescore.",
-    logo: "/clients/logo-bv-q-club.png",
+    logo: '/clients/logo-bv-q-club.png',
     image: {
-      src: "/clients/bv-q-club-hero.webp",
-      alt: "Homepage hero of bv-q-club.de: the words Q-CLUB FÜRTH set in a large display serif behind a rendered black 8-ball",
+      src: '/clients/bv-q-club-hero.webp',
+      alt: 'Homepage hero of bv-q-club.de: the words Q-CLUB FÜRTH set in a large display serif behind a rendered black 8-ball',
       width: 1440,
       height: 900,
     },
     actions: [
       {
-        label: "Visit bv-q-club.de",
-        href: "https://bv-q-club.de",
+        label: 'Visit bv-q-club.de',
+        href: 'https://bv-q-club.de',
         primary: true,
         external: true,
       },
-      { label: "Project notes", href: "/work/bv-q-club" },
+      { label: 'Project notes', href: '/work/bv-q-club' },
     ],
   },
   {
-    slug: "zeiterfassung",
-    title: "Zeiterfassung",
-    kind: "private",
-    stack: ["React Native", "Expo", "TypeScript"],
-    dek: "Internal time-tracking app for the on-site teams of a local cleaning business.",
+    slug: 'zeiterfassung',
+    title: 'Zeiterfassung',
+    kind: 'private',
+    stack: ['React Native', 'Expo', 'TypeScript'],
+    dek: 'Internal time-tracking app for the on-site teams of a local cleaning business.',
     actions: [],
   },
 ];
