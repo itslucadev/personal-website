@@ -21,6 +21,7 @@ const SECTIONS = [
   { id: 'projects', label: 'Projects' },
   { id: 'client-work', label: 'Client work' },
   { id: 'experience', label: 'Experience' },
+  { id: 'resume', label: 'Resume' },
   { id: 'contact', label: 'Contact' },
 ] as const;
 
