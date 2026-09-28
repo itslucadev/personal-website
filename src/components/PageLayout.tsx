@@ -1,14 +1,15 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { ArrowLeft, type LucideIcon } from "lucide-react";
-import Link from "next/link";
-import type { ReactNode } from "react";
-import { Footer } from "@/components/Footer";
-import { Logo } from "@/components/Logo";
-import { Badge } from "@/components/ui/badge";
-import { ease } from "@/lib/motion";
-import { cn } from "@/lib/utils";
+import { motion } from 'framer-motion';
+import { ArrowLeft, type LucideIcon } from 'lucide-react';
+import Link from 'next/link';
+import type { ReactNode } from 'react';
+
+import { Footer } from '@/components/Footer';
+import { Logo } from '@/components/Logo';
+import { Badge } from '@/components/ui/badge';
+import { ease } from '@/lib/motion';
+import { cn } from '@/lib/utils';
 
 const fadeMotion = {
   animate: { opacity: 1, y: 0 },
@@ -16,12 +17,12 @@ const fadeMotion = {
 } as const;
 
 function FadeIn({
-  as: Tag = "div",
+  as: Tag = 'div',
   children,
   className,
   delay = 0,
 }: {
-  as?: "div" | "p" | "h1" | "h2";
+  as?: 'div' | 'p' | 'h1' | 'h2';
   children: ReactNode;
   className?: string;
   delay?: number;
@@ -50,26 +51,20 @@ export function PageShell({ children }: { children: ReactNode }) {
   );
 }
 
-export function PageHero({
-  description,
-  title,
-}: {
-  description: ReactNode;
-  title: ReactNode;
-}) {
+export function PageHero({ description, title }: { description: ReactNode; title: ReactNode }) {
   return (
-    <section className="px-4 pt-20 pb-12 sm:px-6">
+    <section className="px-4 pb-12 pt-20 sm:px-6">
       <div className="mx-auto max-w-3xl">
         <FadeIn
           as="h1"
-          className="mb-4 text-center font-bold text-2xl leading-tight tracking-tight sm:text-[28px]"
+          className="mb-4 text-center text-2xl font-bold leading-tight tracking-tight sm:text-[28px]"
           delay={0.2}
         >
           {title}
         </FadeIn>
         <FadeIn
           as="p"
-          className="mx-auto mb-6 max-w-lg text-center text-muted-foreground text-sm leading-relaxed"
+          className="mx-auto mb-6 max-w-lg text-center text-sm leading-relaxed text-muted-foreground"
           delay={0.3}
         >
           {description}
@@ -95,16 +90,12 @@ export function PageSection({
       <div className="mx-auto max-w-3xl">
         <FadeIn
           as="h2"
-          className="mb-2 font-medium text-muted-foreground text-xs uppercase tracking-wider"
+          className="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground"
           delay={delay}
         >
           {title}
         </FadeIn>
-        <FadeIn
-          as="p"
-          className="mb-5 text-foreground text-sm"
-          delay={delay + 0.03}
-        >
+        <FadeIn as="p" className="mb-5 text-sm text-foreground" delay={delay + 0.03}>
           {description}
         </FadeIn>
         {children}
@@ -139,11 +130,11 @@ export function CaseStudyLayout({
 }) {
   return (
     <PageShell>
-      <section className="px-4 pt-20 pb-16 sm:px-6">
+      <section className="px-4 pb-16 pt-20 sm:px-6">
         <div className="mx-auto max-w-3xl">
           <FadeIn delay={0.15}>
             <Link
-              className="group mb-6 inline-flex items-center gap-1.5 text-muted-foreground text-xs transition-colors duration-200 hover:text-foreground"
+              className="group mb-6 inline-flex items-center gap-1.5 text-xs text-muted-foreground transition-colors duration-200 hover:text-foreground"
               href={backHref}
             >
               <ArrowLeft className="h-3 w-3 transition-transform duration-200 group-hover:-translate-x-0.5" />
@@ -151,12 +142,12 @@ export function CaseStudyLayout({
             </Link>
           </FadeIn>
 
-          <FadeIn className={cn("mb-3", headerClassName)} delay={0.2}>
+          <FadeIn className={cn('mb-3', headerClassName)} delay={0.2}>
             {header}
           </FadeIn>
 
           <FadeIn
-            className="mb-5 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-muted-foreground text-xs"
+            className="mb-5 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-muted-foreground"
             delay={0.25}
           >
             {meta.map(({ icon: Icon, label }) => (
@@ -167,21 +158,13 @@ export function CaseStudyLayout({
             ))}
           </FadeIn>
 
-          <FadeIn
-            as="p"
-            className="mb-5 text-foreground text-sm leading-relaxed"
-            delay={0.3}
-          >
+          <FadeIn as="p" className="mb-5 text-sm leading-relaxed text-foreground" delay={0.3}>
             {description}
           </FadeIn>
 
           <FadeIn className="mb-6 flex flex-wrap gap-1.5" delay={0.35}>
             {stack.map((tech) => (
-              <Badge
-                className="h-6 bg-secondary/50 px-2 py-0 font-normal text-[11px]"
-                key={tech}
-                variant="secondary"
-              >
+              <Badge className="h-6 bg-secondary/50 px-2 py-0 text-[11px] font-normal" key={tech} variant="secondary">
                 {tech}
               </Badge>
             ))}

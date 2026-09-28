@@ -8,7 +8,6 @@
   },
   "ignorePatterns": ["src/components/ui/**", "src/hooks/**"],
   "ignoreDependencies": [
-    "ultracite",
     "@hookform/resolvers",
     "@radix-ui/react-accordion",
     "@radix-ui/react-alert-dialog",

@@ -1,5 +1,5 @@
-import { ContactForm } from "@/components/ContactForm";
-import { PageHero, PageSection, PageShell } from "@/components/PageLayout";
+import { ContactForm } from '@/components/ContactForm';
+import { PageHero, PageSection, PageShell } from '@/components/PageLayout';
 
 export function ContactContent() {
   return (

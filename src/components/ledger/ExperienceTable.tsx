@@ -1,22 +1,23 @@
-import { cn } from "@/lib/utils";
-import { ResumePanel } from "./ResumePanel";
+import { cn } from '@/lib/utils';
+
+import { ResumePanel } from './ResumePanel';
 
 const FOCUS =
-  "rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2";
+  'rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2';
 
 const rows = [
   {
-    period: "Apr 2025 – now",
-    role: "Freelance software engineer",
-    place: "Remote",
+    period: 'Apr 2025 – now',
+    role: 'Freelance software engineer',
+    place: 'Remote',
   },
   {
-    period: "Jun 2021 – Apr 2025",
+    period: 'Jun 2021 – Apr 2025',
     role: (
       <>
-        Werkstudent,{" "}
+        Werkstudent,{' '}
         <a
-          className={cn("hover:underline", FOCUS)}
+          className={cn('hover:underline', FOCUS)}
           href="https://www.datev.de"
           rel="noopener noreferrer"
           target="_blank"
@@ -25,36 +26,27 @@ const rows = [
         </a>
       </>
     ),
-    place: "Nuremberg",
+    place: 'Nuremberg',
   },
   {
-    period: "Feb 2026",
+    period: 'Feb 2026',
     role: (
       <>
-        B.Sc. Computer Science,{" "}
-        <a
-          className={cn("hover:underline", FOCUS)}
-          href="https://www.fau.de"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
+        B.Sc. Computer Science,{' '}
+        <a className={cn('hover:underline', FOCUS)} href="https://www.fau.de" rel="noopener noreferrer" target="_blank">
           FAU Erlangen-Nürnberg
         </a>
       </>
     ),
-    place: "Erlangen",
+    place: 'Erlangen',
   },
 ];
 
 export function ExperienceTable() {
   return (
-    <section
-      aria-labelledby="experience-heading"
-      className="scroll-mt-24"
-      id="experience"
-    >
+    <section aria-labelledby="experience-heading" className="scroll-mt-24" id="experience">
       <h2
-        className="mb-6 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.12em]"
+        className="mb-6 font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground"
         id="experience-heading"
       >
         Experience
@@ -70,16 +62,11 @@ export function ExperienceTable() {
         </thead>
         <tbody>
           {rows.map((row) => (
-            <tr
-              className="border-[#DCE2EA] border-b last:border-b-0"
-              key={row.period}
-            >
-              <td className="w-[7.5rem] py-4 pr-4 align-top font-mono text-muted-foreground text-sm sm:w-auto sm:whitespace-nowrap sm:pr-6">
+            <tr className="border-b border-[#DCE2EA] last:border-b-0" key={row.period}>
+              <td className="w-[7.5rem] py-4 pr-4 align-top font-mono text-sm text-muted-foreground sm:w-auto sm:whitespace-nowrap sm:pr-6">
                 {row.period}
               </td>
-              <td className="py-4 pr-4 align-top font-sans text-base text-foreground sm:pr-6">
-                {row.role}
-              </td>
+              <td className="py-4 pr-4 align-top font-sans text-base text-foreground sm:pr-6">{row.role}</td>
               <td className="w-[5.5rem] py-4 align-top font-sans text-base text-muted-foreground sm:w-auto">
                 {row.place}
               </td>

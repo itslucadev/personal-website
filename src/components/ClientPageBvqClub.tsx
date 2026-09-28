@@ -1,37 +1,30 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { Briefcase, Calendar, ExternalLink, MapPin } from "lucide-react";
-import Image from "next/image";
-import { CaseStudyLayout } from "@/components/PageLayout";
-import { ease } from "@/lib/motion";
+import { motion } from 'framer-motion';
+import { Briefcase, Calendar, ExternalLink, MapPin } from 'lucide-react';
+import Image from 'next/image';
+
+import { CaseStudyLayout } from '@/components/PageLayout';
+import { ease } from '@/lib/motion';
 
 const meta = [
-  { icon: Briefcase, label: "Design & Development" },
-  { icon: Calendar, label: "2026" },
-  { icon: MapPin, label: "Fürth, Germany" },
+  { icon: Briefcase, label: 'Design & Development' },
+  { icon: Calendar, label: '2026' },
+  { icon: MapPin, label: 'Fürth, Germany' },
 ];
 
-const stack = [
-  "Next.js",
-  "TypeScript",
-  "Sanity CMS",
-  "Tailwind CSS",
-  "Framer Motion",
-  "Vercel",
-  "Cuescore API",
-];
+const stack = ['Next.js', 'TypeScript', 'Sanity CMS', 'Tailwind CSS', 'Framer Motion', 'Vercel', 'Cuescore API'];
 
 const shots = [
   {
-    src: "/clients/bv-q-club-tournaments.webp",
-    alt: "Tournament results section of bv-q-club.de, listing recent tournaments with podium placements pulled from Cuescore",
-    caption: "Results sync from Cuescore - no manual entry.",
+    src: '/clients/bv-q-club-tournaments.webp',
+    alt: 'Tournament results section of bv-q-club.de, listing recent tournaments with podium placements pulled from Cuescore',
+    caption: 'Results sync from Cuescore - no manual entry.',
   },
   {
-    src: "/clients/bv-q-club-membership.webp",
-    alt: "Membership section of bv-q-club.de showing four pricing tiers on a light background",
-    caption: "Membership tiers the board edits in Sanity.",
+    src: '/clients/bv-q-club-membership.webp',
+    alt: 'Membership section of bv-q-club.de showing four pricing tiers on a light background',
+    caption: 'Membership tiers the board edits in Sanity.',
   },
 ];
 
@@ -51,12 +44,10 @@ export function ClientPageBvqClub() {
             width={40}
           />
           <div>
-            <h1 className="font-bold text-2xl leading-tight tracking-tight sm:text-[28px]">
+            <h1 className="text-2xl font-bold leading-tight tracking-tight sm:text-[28px]">
               BV Q-Club <span className="text-amber-600">e.V.</span>
             </h1>
-            <p className="text-muted-foreground text-xs">
-              Poolbillard-Verein Fürth
-            </p>
+            <p className="text-xs text-muted-foreground">Poolbillard-Verein Fürth</p>
           </div>
         </>
       }
@@ -66,7 +57,7 @@ export function ClientPageBvqClub() {
     >
       <motion.a
         animate={{ opacity: 1, y: 0 }}
-        className="group mb-10 inline-flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-2 font-medium text-sm transition-colors duration-200 hover:border-foreground/20 hover:bg-accent/50"
+        className="group mb-10 inline-flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-2 text-sm font-medium transition-colors duration-200 hover:border-foreground/20 hover:bg-accent/50"
         href="https://bv-q-club.de"
         initial={{ opacity: 0, y: 20 }}
         rel="noopener noreferrer"
@@ -116,9 +107,7 @@ export function ClientPageBvqClub() {
                 width={1440}
               />
             </div>
-            <figcaption className="mt-2 text-muted-foreground text-xs">
-              {shot.caption}
-            </figcaption>
+            <figcaption className="mt-2 text-xs text-muted-foreground">{shot.caption}</figcaption>
           </motion.figure>
         ))}
       </div>

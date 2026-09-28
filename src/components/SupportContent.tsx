@@ -1,42 +1,38 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { HelpCircle } from "lucide-react";
-import { ContactForm } from "@/components/ContactForm";
-import { PageHero, PageSection, PageShell } from "@/components/PageLayout";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { ease } from "@/lib/motion";
+import { motion } from 'framer-motion';
+import { HelpCircle } from 'lucide-react';
+
+import { ContactForm } from '@/components/ContactForm';
+import { PageHero, PageSection, PageShell } from '@/components/PageLayout';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { ease } from '@/lib/motion';
 
 const faqs = [
   {
-    question: "What services do you offer?",
+    question: 'What services do you offer?',
     answer:
-      "I specialize in building modern mobile and web applications using React Native, Expo, TypeScript, and Next.js. I offer freelance development, consulting, and technical support for existing projects.",
+      'I specialize in building modern mobile and web applications using React Native, Expo, TypeScript, and Next.js. I offer freelance development, consulting, and technical support for existing projects.',
   },
   {
-    question: "How can I request a project or collaboration?",
+    question: 'How can I request a project or collaboration?',
     answer:
       "You can reach out via the contact form below or send me an email directly at luca.dev@outlook.de. I'm also available for a quick call — you can book one through my calendar link on the home page.",
   },
   {
-    question: "What is your typical response time?",
+    question: 'What is your typical response time?',
     answer:
       "I usually respond within 24–48 hours on business days. For urgent matters, please mention it in the subject line and I'll do my best to get back to you sooner.",
   },
   {
-    question: "Do you provide support for your apps?",
+    question: 'Do you provide support for your apps?',
     answer:
       "Yes! If you're experiencing issues with one of my apps, please describe the problem in the contact form below and I'll get back to you as soon as possible.",
   },
   {
-    question: "Are your apps open source?",
+    question: 'Are your apps open source?',
     answer:
-      "Some of my projects are open source and available on GitHub. Check the projects section on the home page for links and details on each project.",
+      'Some of my projects are open source and available on GitHub. Check the projects section on the home page for links and details on each project.',
   },
 ];
 
@@ -72,9 +68,7 @@ export function SupportContent() {
                     {faq.question}
                   </span>
                 </AccordionTrigger>
-                <AccordionContent className="pl-5.5 text-muted-foreground">
-                  {faq.answer}
-                </AccordionContent>
+                <AccordionContent className="pl-5.5 text-muted-foreground">{faq.answer}</AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>

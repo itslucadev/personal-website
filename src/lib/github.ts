@@ -1,8 +1,7 @@
-import "server-only";
+import 'server-only';
+import { z } from 'zod';
 
-import { z } from "zod";
-
-export const GITHUB_LOGIN = "itslucadev";
+export const GITHUB_LOGIN = 'itslucadev';
 
 export interface ContributionDay {
   count: number;
@@ -18,11 +17,11 @@ export interface ContributionCalendar {
 }
 
 const contributionLevelSchema = z.enum([
-  "NONE",
-  "FIRST_QUARTILE",
-  "SECOND_QUARTILE",
-  "THIRD_QUARTILE",
-  "FOURTH_QUARTILE",
+  'NONE',
+  'FIRST_QUARTILE',
+  'SECOND_QUARTILE',
+  'THIRD_QUARTILE',
+  'FOURTH_QUARTILE',
 ]);
 
 type ContributionLevel = z.infer<typeof contributionLevelSchema>;
@@ -48,9 +47,9 @@ const calendarResponseSchema = z.object({
                   contributionCount: z.number().int().nonnegative(),
                   contributionLevel: contributionLevelSchema,
                   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
-                })
+                }),
               ),
-            })
+            }),
           ),
         }),
       }),
@@ -81,8 +80,7 @@ const QUERY = `
 `;
 
 function mapCalendar(payload: CalendarResponse): ContributionCalendar {
-  const calendar =
-    payload.data.user.contributionsCollection.contributionCalendar;
+  const calendar = payload.data.user.contributionsCollection.contributionCalendar;
   return {
     total: calendar.totalContributions,
     weeks: calendar.weeks.map((week) =>
@@ -90,17 +88,17 @@ function mapCalendar(payload: CalendarResponse): ContributionCalendar {
         count: day.contributionCount,
         date: day.date,
         level: LEVELS[day.contributionLevel],
-      }))
+      })),
     ),
   };
 }
 
 async function requestCalendar(token: string): Promise<unknown> {
-  const response = await fetch("https://api.github.com/graphql", {
-    method: "POST",
+  const response = await fetch('https://api.github.com/graphql', {
+    method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       query: QUERY,
@@ -117,15 +115,12 @@ async function requestCalendar(token: string): Promise<unknown> {
 function parseCalendar(json: unknown): ContributionCalendar | null {
   const errors = graphqlErrorsSchema.safeParse(json);
   if (errors.success) {
-    console.error(
-      "GitHub contributions GraphQL errors",
-      errors.data.errors.length
-    );
+    console.error('GitHub contributions GraphQL errors', errors.data.errors.length);
     return null;
   }
   const parsed = calendarResponseSchema.safeParse(json);
   if (!parsed.success) {
-    console.error("GitHub contributions payload invalid");
+    console.error('GitHub contributions payload invalid');
     return null;
   }
   return mapCalendar(parsed.data);
@@ -144,7 +139,7 @@ export async function fetchContributionCalendar(): Promise<ContributionCalendar 
   try {
     return parseCalendar(await requestCalendar(token));
   } catch (error) {
-    console.error("GitHub contributions request failed", error);
+    console.error('GitHub contributions request failed', error);
     return null;
   }
 }

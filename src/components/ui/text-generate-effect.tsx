@@ -1,8 +1,9 @@
-"use client";
+'use client';
 
-import { motion, stagger, useAnimate, useReducedMotion } from "framer-motion";
-import { useEffect } from "react";
-import { cn } from "@/lib/utils";
+import { motion, stagger, useAnimate, useReducedMotion } from 'framer-motion';
+import { useEffect } from 'react';
+
+import { cn } from '@/lib/utils';
 
 export type TextGenerateEffectProps = {
   words: string;
@@ -21,7 +22,7 @@ export function TextGenerateEffect({
 }: TextGenerateEffectProps) {
   const reducedMotion = Boolean(useReducedMotion());
   const [scope, animate] = useAnimate();
-  const wordsArray = words.split(" ");
+  const wordsArray = words.split(' ');
   const skipMotion = !enabled || reducedMotion;
 
   useEffect(() => {
@@ -29,15 +30,15 @@ export function TextGenerateEffect({
       return;
     }
     animate(
-      "span",
+      'span',
       {
         opacity: 1,
-        filter: filter ? "blur(0px)" : "none",
+        filter: filter ? 'blur(0px)' : 'none',
       },
       {
         duration: duration ? duration : 1,
         delay: stagger(0.2),
-      }
+      },
     );
   }, [animate, duration, filter, skipMotion, words]);
 
@@ -52,10 +53,10 @@ export function TextGenerateEffect({
           className="opacity-0"
           key={word + idx}
           style={{
-            filter: filter ? "blur(10px)" : "none",
+            filter: filter ? 'blur(10px)' : 'none',
           }}
         >
-          {word}{" "}
+          {word}{' '}
         </motion.span>
       ))}
     </motion.span>

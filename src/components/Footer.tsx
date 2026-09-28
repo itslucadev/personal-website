@@ -1,10 +1,11 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { Heart } from "lucide-react";
-import Link from "next/link";
-import { ease } from "@/lib/motion";
-import { cn } from "@/lib/utils";
+import { motion } from 'framer-motion';
+import { Heart } from 'lucide-react';
+import Link from 'next/link';
+
+import { ease } from '@/lib/motion';
+import { cn } from '@/lib/utils';
 
 /**
  * Each frame mirrors the content wrapper of its shell so the footer lines up
@@ -13,17 +14,17 @@ import { cn } from "@/lib/utils";
  * footer is a flex item in `PageShell` and collapses to its content width.
  */
 const FRAME = {
-  wide: { outer: "mx-auto max-w-shell px-6", inner: "" },
-  narrow: { outer: "px-4 sm:px-6", inner: "mx-auto max-w-3xl" },
+  wide: { outer: 'mx-auto max-w-shell px-6', inner: '' },
+  narrow: { outer: 'px-4 sm:px-6', inner: 'mx-auto max-w-3xl' },
 } as const;
 
-export function Footer({ width = "wide" }: { width?: keyof typeof FRAME }) {
+export function Footer({ width = 'wide' }: { width?: keyof typeof FRAME }) {
   const frame = FRAME[width];
 
   return (
     <motion.footer
       animate={{ opacity: 1 }}
-      className={cn("w-full py-8", frame.outer)}
+      className={cn('w-full py-8', frame.outer)}
       initial={{ opacity: 0 }}
       transition={{
         duration: 0.5,
@@ -34,12 +35,11 @@ export function Footer({ width = "wide" }: { width?: keyof typeof FRAME }) {
       <div className={frame.inner}>
         <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
           <div className="flex flex-col gap-1">
-            <p className="flex items-center gap-1 text-muted-foreground text-xs">
-              © {new Date().getFullYear()} Built with{" "}
-              <Heart className="h-3 w-3 fill-red-500 text-red-500" /> by Luca
+            <p className="flex items-center gap-1 text-xs text-muted-foreground">
+              © {new Date().getFullYear()} Built with <Heart className="h-3 w-3 fill-red-500 text-red-500" /> by Luca
             </p>
             <a
-              className="text-muted-foreground text-xs transition-colors duration-200 hover:text-foreground"
+              className="text-xs text-muted-foreground transition-colors duration-200 hover:text-foreground"
               href="https://github.com/itslucadev/personal-website"
               rel="noopener noreferrer"
               target="_blank"
@@ -50,13 +50,13 @@ export function Footer({ width = "wide" }: { width?: keyof typeof FRAME }) {
 
           <div className="flex items-center gap-3">
             <Link
-              className="text-muted-foreground text-xs transition-colors duration-200 hover:text-foreground"
+              className="text-xs text-muted-foreground transition-colors duration-200 hover:text-foreground"
               href="/contact"
             >
               Contact
             </Link>
             <Link
-              className="text-muted-foreground text-xs transition-colors duration-200 hover:text-foreground"
+              className="text-xs text-muted-foreground transition-colors duration-200 hover:text-foreground"
               href="/support"
             >
               Support
