@@ -26,6 +26,8 @@ const RESUMES: Record<Lang, { file: string; label: string; download: string }> =
 const FOCUS =
   "rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2";
 
+/** The folder's own design size. It stays an object, not a full-column panel. */
+const FOLDER_WIDTH = 280;
 const FOLDER_RATIO = 400 / 320;
 
 function ResumeSheets({ lang }: { lang: Lang }) {
@@ -42,7 +44,7 @@ function ResumeSheets({ lang }: { lang: Lang }) {
           )}
           height={page.height}
           key={page.src}
-          sizes="(min-width: 1024px) 640px, 100vw"
+          sizes="280px"
           src={page.src}
           width={page.width}
         />
@@ -64,7 +66,7 @@ export function Resume() {
     }
 
     const measure = () => {
-      const next = Math.round(frame.clientWidth);
+      const next = Math.min(FOLDER_WIDTH, Math.round(frame.clientWidth));
       if (next > 0) {
         setWidth(next);
       }
@@ -124,7 +126,7 @@ export function Resume() {
           Download PDF
         </a>
       </div>
-      <div className="mt-8 w-full" ref={frameRef}>
+      <div className="mt-8 w-full max-w-[280px]" ref={frameRef}>
         <ConfidentialFolder
           badge={lang.toUpperCase()}
           className="w-full items-start"
