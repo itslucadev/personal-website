@@ -34,7 +34,7 @@ function ResumeSheets({ lang }: { lang: Lang }) {
   const resume = RESUMES[lang];
 
   return (
-    <div className="h-full overflow-y-auto overscroll-contain">
+    <div className="h-full overflow-y-auto overscroll-contain [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {pages[lang].map((page, index) => (
         <Image
           alt={`${resume.label} resume, page ${index + 1} of ${pages[lang].length}`}
@@ -44,6 +44,7 @@ function ResumeSheets({ lang }: { lang: Lang }) {
           )}
           height={page.height}
           key={page.src}
+          loading="eager"
           sizes="280px"
           src={page.src}
           width={page.width}
@@ -85,15 +86,12 @@ export function Resume() {
       id="resume"
     >
       <h2
-        className="mb-4 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.12em]"
+        className="mb-6 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.12em]"
         id="resume-heading"
       >
         Resume
       </h2>
-      <p className="max-w-[62ch] font-sans text-base text-muted-foreground">
-        Open the folder to read it here.
-      </p>
-      <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
         {(Object.keys(RESUMES) as Lang[]).map((value) => {
           const selected = value === lang;
           return (
