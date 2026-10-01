@@ -1,6 +1,5 @@
 import { Footer } from '@/components/Footer';
 import { About } from '@/components/ledger/About';
-import { Contact } from '@/components/ledger/Contact';
 import { DotField } from '@/components/ledger/DotField';
 import { ExperienceTable } from '@/components/ledger/ExperienceTable';
 import { Rail } from '@/components/ledger/Rail';
@@ -20,7 +19,6 @@ export default function Home() {
           <WorkStream entries={clientWork} heading="Client work" id="client-work" />
           <ExperienceTable />
           <Resume />
-          <Contact />
         </main>
       </div>
       <div className="relative z-10">
