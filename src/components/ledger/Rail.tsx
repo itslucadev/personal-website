@@ -21,7 +21,7 @@ const SECTIONS = [
   { id: 'projects', label: 'Projects' },
   { id: 'client-work', label: 'Client work' },
   { id: 'experience', label: 'Experience' },
-  { id: 'contact', label: 'Contact' },
+  { id: 'resume', label: 'Resume' },
 ] as const;
 
 const RAIL_INTRO_KEY = 'lb:rail-intro';

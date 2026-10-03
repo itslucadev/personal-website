@@ -1,9 +1,9 @@
 import { Footer } from '@/components/Footer';
 import { About } from '@/components/ledger/About';
-import { Contact } from '@/components/ledger/Contact';
 import { DotField } from '@/components/ledger/DotField';
 import { ExperienceTable } from '@/components/ledger/ExperienceTable';
 import { Rail } from '@/components/ledger/Rail';
+import { Resume } from '@/components/ledger/Resume';
 import { WorkStream } from '@/components/ledger/WorkStream';
 import { clientWork, projects } from '@/lib/work';
 
@@ -18,7 +18,7 @@ export default function Home() {
           <WorkStream entries={projects} heading="Projects" id="projects" priority />
           <WorkStream entries={clientWork} heading="Client work" id="client-work" />
           <ExperienceTable />
-          <Contact />
+          <Resume />
         </main>
       </div>
       <div className="relative z-10">
