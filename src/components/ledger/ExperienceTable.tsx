@@ -54,7 +54,7 @@ const groups: Group[] = [
     label: 'Education',
     rows: [
       {
-        period: 'Feb 2026',
+        period: 'Mar 2026',
         role: (
           <>
             B.Sc. Computer Science,{' '}
