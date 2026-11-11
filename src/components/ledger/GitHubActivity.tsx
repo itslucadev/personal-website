@@ -1,3 +1,7 @@
+import type { Locale } from '@/i18n/config';
+import { getDictionary, getLocale } from '@/i18n/dictionaries';
+import type { Dictionary } from '@/i18n/dictionaries/en';
+import { format } from '@/i18n/format';
 import { type ContributionCalendar, fetchContributionCalendar, GITHUB_LOGIN } from '@/lib/github';
 import { cn } from '@/lib/utils';
 
@@ -16,21 +20,23 @@ const FILL: Record<ContributionCalendar['weeks'][number][number]['level'], strin
   4: '#216E39',
 };
 
-const DAY_LABELS: Record<number, string> = { 1: 'Mon', 3: 'Wed', 5: 'Fri' };
+const DAY_LABELS = { 1: 'mon', 3: 'wed', 5: 'fri' } as const;
+
+const INTL_LOCALE: Record<Locale, string> = { en: 'en-US', de: 'de-DE' };
 
 const FOCUS =
   'rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2';
 
-const monthOf = new Intl.DateTimeFormat('en-US', {
-  month: 'short',
-  timeZone: 'UTC',
-});
-const longDate = new Intl.DateTimeFormat('en-US', {
-  month: 'long',
-  day: 'numeric',
-  year: 'numeric',
-  timeZone: 'UTC',
-});
+function formatters(lang: Locale) {
+  const locale = INTL_LOCALE[lang];
+  return {
+    month: new Intl.DateTimeFormat(locale, { month: 'short', timeZone: 'UTC' }),
+    longDate: new Intl.DateTimeFormat(locale, { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }),
+    number: new Intl.NumberFormat(locale),
+  };
+}
+
+type Formatters = ReturnType<typeof formatters>;
 
 function parse(date: string) {
   const parsed = new Date(`${date}T00:00:00Z`);
@@ -62,7 +68,7 @@ function weekStart(week: ContributionCalendar['weeks'][number]) {
   return first ? parse(first.date) : null;
 }
 
-function monthLabels(weeks: ContributionCalendar['weeks']) {
+function monthLabels(weeks: ContributionCalendar['weeks'], monthOf: Intl.DateTimeFormat) {
   const labels: MonthLabel[] = [];
   let previous = -1;
   weeks.forEach((week, index) => {
@@ -80,34 +86,44 @@ function monthLabels(weeks: ContributionCalendar['weeks']) {
   return labels;
 }
 
-function Calendar({ weeks }: { weeks: ContributionCalendar['weeks'] }) {
+function Calendar({
+  weeks,
+  t,
+  fmt,
+}: {
+  weeks: ContributionCalendar['weeks'];
+  t: Dictionary['github'];
+  fmt: Formatters;
+}) {
   const width = LABEL_W + weeks.length * STEP - GAP;
   const height = LABEL_H + 7 * STEP - GAP;
   return (
     <svg
-      aria-label="Contribution calendar, one square per day"
+      aria-label={t.calendarLabel}
       className="block w-full font-sans"
       // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- inline SVG graphic, not a replaced image
       role="img"
       viewBox={`0 0 ${width} ${height}`}
     >
-      {monthLabels(weeks).map((label) => (
+      {monthLabels(weeks, fmt.month).map((label) => (
         <text className="fill-muted-foreground text-[10px]" key={label.x} x={LABEL_W + label.x} y={10}>
           {label.text}
         </text>
       ))}
-      {Object.entries(DAY_LABELS).map(([day, text]) => (
+      {Object.entries(DAY_LABELS).map(([day, key]) => (
         <text className="fill-muted-foreground text-[10px]" key={day} x={0} y={LABEL_H + Number(day) * STEP + CELL - 1}>
-          {text}
+          {t[key]}
         </text>
       ))}
       {weeks.map((week, w) =>
         week.map((day) => {
           const date = parse(day.date);
           const weekday = date ? date.getUTCDay() : 0;
-          const suffix = day.count === 1 ? '' : 's';
-          const countLabel = `${day.count} contribution${suffix}`;
-          const title = date ? `${countLabel} on ${longDate.format(date)}` : countLabel;
+          const template = day.count === 1 ? t.dayOne : t.dayOther;
+          const title = format(template, {
+            count: fmt.number.format(day.count),
+            date: date ? fmt.longDate.format(date) : '',
+          }).trim();
           return (
             <rect
               fill={FILL[day.level]}
@@ -128,12 +144,14 @@ function Calendar({ weeks }: { weeks: ContributionCalendar['weeks'] }) {
 }
 
 export async function GitHubActivity() {
-  const calendar = await fetchContributionCalendar();
+  const [calendar, dict, lang] = await Promise.all([fetchContributionCalendar(), getDictionary(), getLocale()]);
+  const t = dict.github;
+  const fmt = formatters(lang);
 
   return (
     <div className="mt-10 max-w-[720px]">
       <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-        <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">GitHub activity</p>
+        <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">{t.heading}</p>
         <a
           className={cn(
             'font-mono text-[11px] tracking-[0.04em] text-amber-600 transition-colors hover:text-amber-700',
@@ -148,14 +166,13 @@ export async function GitHubActivity() {
       </div>
       {calendar ? (
         <div className="rounded-[8px] border border-[#DCE2EA] bg-white p-4">
-          <Calendar weeks={calendar.weeks} />
+          <Calendar fmt={fmt} t={t} weeks={calendar.weeks} />
           <div className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 font-sans text-xs text-muted-foreground">
             <p>
-              <span className="font-medium text-foreground">{calendar.total.toLocaleString('en-US')}</span>{' '}
-              contributions in the last year
+              <span className="font-medium text-foreground">{fmt.number.format(calendar.total)}</span> {t.total}
             </p>
             <p aria-hidden className="flex items-center gap-1">
-              Less
+              {t.less}
               {([0, 1, 2, 3, 4] as const).map((level) => (
                 <span
                   className="inline-block size-[10px] rounded-[2px]"
@@ -163,14 +180,12 @@ export async function GitHubActivity() {
                   style={{ backgroundColor: FILL[level] }}
                 />
               ))}
-              More
+              {t.more}
             </p>
           </div>
         </div>
       ) : (
-        <p className="font-sans text-sm text-muted-foreground">
-          Contribution graph unavailable right now. See the profile on GitHub.
-        </p>
+        <p className="font-sans text-sm text-muted-foreground">{t.unavailable}</p>
       )}
     </div>
   );
