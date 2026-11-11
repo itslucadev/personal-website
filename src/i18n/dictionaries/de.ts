@@ -57,8 +57,8 @@ export const de: Dictionary = {
     period: 'Zeitraum',
     role: 'Rolle',
     place: 'Ort',
-    work: 'Beruf',
-    education: 'Ausbildung',
+    work: 'Praktische Erfahrung',
+    education: 'Bildungsweg',
   },
   footer: {
     builtWith: 'Gebaut mit',
