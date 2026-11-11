@@ -4,19 +4,15 @@ import { motion, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { type Locale, localePath } from '@/i18n/config';
+import { format } from '@/i18n/format';
+import { useI18n } from '@/i18n/I18nProvider';
 import { ease } from '@/lib/motion';
 import { cn } from '@/lib/utils';
 import type { WorkEntry as WorkEntryModel, WorkKind } from '@/lib/work';
 
 const FOCUS =
   'rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2';
-
-const KIND_LABEL: Record<WorkKind, string> = {
-  product: 'Product',
-  client: 'Client',
-  'in-development': 'In development',
-  private: 'Private',
-};
 
 const KIND_CHIP: Record<WorkKind, string> = {
   product: 'bg-[#DBEAFE] text-[#1E40AF]',
@@ -31,41 +27,48 @@ function anchorProps(action: Action) {
   return action.external ? { rel: 'noopener noreferrer', target: '_blank' } : {};
 }
 
+/** Internal paths get the locale prefix; absolute URLs pass through. */
+function actionHref(action: Action, lang: Locale) {
+  return action.href.startsWith('/') ? localePath(lang, action.href) : action.href;
+}
+
 /** Filled pill, sized to sit beside Apple's 40px badge. */
 function PrimaryAction({ action }: { action: Action }) {
+  const { lang } = useI18n();
   const className = cn(
     'inline-flex h-10 items-center rounded-full bg-foreground px-5 font-sans text-sm font-medium text-background transition-colors hover:bg-amber-600',
     FOCUS,
   );
   if (action.external) {
     return (
-      <a className={className} href={action.href} {...anchorProps(action)}>
-        {action.label}
+      <a className={className} href={actionHref(action, lang)} {...anchorProps(action)}>
+        {action.label[lang]}
       </a>
     );
   }
   return (
-    <Link className={className} href={action.href}>
-      {action.label}
+    <Link className={className} href={actionHref(action, lang)}>
+      {action.label[lang]}
     </Link>
   );
 }
 
 function TextAction({ action }: { action: Action }) {
+  const { lang } = useI18n();
   const className = cn(
     'font-mono text-[11px] uppercase tracking-[0.1em] text-amber-600 transition-colors hover:text-amber-700',
     FOCUS,
   );
-  const label = `${action.label} →`;
+  const label = `${action.label[lang]} →`;
   if (action.external) {
     return (
-      <a className={className} href={action.href} {...anchorProps(action)}>
+      <a className={className} href={actionHref(action, lang)} {...anchorProps(action)}>
         {label}
       </a>
     );
   }
   return (
-    <Link className={className} href={action.href}>
+    <Link className={className} href={actionHref(action, lang)}>
       {label}
     </Link>
   );
@@ -77,9 +80,10 @@ function TextAction({ action }: { action: Action }) {
  * for. Never animated.
  */
 function AppStoreBadge({ href, title }: { href: string; title: string }) {
+  const { dict } = useI18n();
   return (
     <a
-      aria-label={`Download ${title} on the App Store`}
+      aria-label={format(dict.work.appStore, { title })}
       className={cn('inline-flex p-2.5', FOCUS)}
       href={href}
       rel="noopener noreferrer"
@@ -91,10 +95,11 @@ function AppStoreBadge({ href, title }: { href: string; title: string }) {
 }
 
 function PrivateNote({ kind }: { kind: WorkKind }) {
+  const { dict } = useI18n();
   if (kind !== 'private') {
     return null;
   }
-  return <p className="mt-5 font-mono text-[11px] text-muted-foreground">Private client work, no public link.</p>;
+  return <p className="mt-5 font-mono text-[11px] text-muted-foreground">{dict.work.privateNote}</p>;
 }
 
 function Actions({ entry }: { entry: WorkEntryModel }) {
@@ -113,10 +118,10 @@ function Actions({ entry }: { entry: WorkEntryModel }) {
         </span>
       ) : null}
       {primary.map((action) => (
-        <PrimaryAction action={action} key={action.label} />
+        <PrimaryAction action={action} key={action.href} />
       ))}
       {secondary.map((action) => (
-        <TextAction action={action} key={action.label} />
+        <TextAction action={action} key={action.href} />
       ))}
     </div>
   );
@@ -136,6 +141,7 @@ function reveal(reduceMotion: boolean | null) {
 /** `priority` marks the first entry's image, which is the homepage LCP candidate. */
 export function WorkEntry({ entry, priority = false }: { entry: WorkEntryModel; priority?: boolean }) {
   const reduceMotion = useReducedMotion();
+  const { dict, lang } = useI18n();
   const metaParts = [entry.year, ...entry.stack].filter(Boolean);
 
   return (
@@ -153,7 +159,7 @@ export function WorkEntry({ entry, priority = false }: { entry: WorkEntryModel; 
             KIND_CHIP[entry.kind],
           )}
         >
-          {KIND_LABEL[entry.kind]}
+          {dict.work.kinds[entry.kind]}
         </span>
         {metaParts.length > 0 ? (
           <span className="font-mono text-[11px] text-muted-foreground">{metaParts.join(' · ')}</span>
@@ -173,12 +179,12 @@ export function WorkEntry({ entry, priority = false }: { entry: WorkEntryModel; 
         {entry.title}
       </h3>
 
-      <p className="mt-3 max-w-[48ch] font-serif text-[17px] italic text-muted-foreground">{entry.dek}</p>
+      <p className="mt-3 max-w-[48ch] font-serif text-[17px] italic text-muted-foreground">{entry.dek[lang]}</p>
 
       {entry.image ? (
         <div className="mt-6 overflow-hidden rounded-[8px] border border-[#DCE2EA] bg-[#F3F5F8]">
           <Image
-            alt={entry.image.alt}
+            alt={entry.image.alt[lang]}
             className="block h-auto w-full"
             height={entry.image.height}
             priority={priority}

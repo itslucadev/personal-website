@@ -6,60 +6,43 @@ import Image from 'next/image';
 
 import { CaseStudyLayout } from '@/components/PageLayout';
 import { Button } from '@/components/ui/button';
+import { useI18n } from '@/i18n/I18nProvider';
 import { ease } from '@/lib/motion';
 
 export const agentNotchDownloadUrl = 'https://lucabecker.dev/agent-notch/AgentNotch.zip';
 export const agentNotchRepoUrl = 'https://github.com/itslucadev/AgentNotch';
 
-const meta = [
-  { icon: Laptop, label: 'macOS 26 or later' },
-  { icon: KeyRound, label: 'Free, no account' },
-];
-
 const stack = ['Swift', 'SwiftUI', 'AppKit', 'Sparkle'];
 
 const heroPoster = '/projects/agent-notch/hero-poster.webp';
 const heroVideo = '/projects/agent-notch/hero.mp4';
-const heroAlt =
-  'Agent Notch on the right edge of a Mac desktop: three usage rings with the Claude tooltip open, showing the current session, all models and Fable with their reset times';
-
 const features = [
-  {
-    icon: Eye,
-    title: 'Three rings, one glance',
-    body: 'Claude, Cursor and Codex limits as rings on the edge of your screen. Green, yellow and red tell you how close you are before a session stalls.',
-  },
-  {
-    icon: MousePointerClick,
-    title: 'Hover for the full picture',
-    body: 'Every window with its reset time, plus the Claude Code sessions running right now. Click a ring to refresh it.',
-  },
-  {
-    icon: KeyRound,
-    title: 'Never signs in',
-    body: 'Reads the credentials Claude Code, Cursor and Codex already keep on your Mac. Switch accounts in the tool and the notch follows.',
-  },
-  {
-    icon: Move,
-    title: 'Lives where you want it',
-    body: 'Right, left, top or bottom edge. Keep it open, collapse it to a pill that opens on hover, or hide it completely.',
-  },
-];
+  { key: 'rings', icon: Eye },
+  { key: 'hover', icon: MousePointerClick },
+  { key: 'signIn', icon: KeyRound },
+  { key: 'position', icon: Move },
+] as const;
 
 export function AgentNotchPage() {
   const reducedMotion = Boolean(useReducedMotion());
+  const { dict, lang } = useI18n();
+  const t = dict.agentNotch;
+  const meta = [
+    { icon: Laptop, label: t.requirement },
+    { icon: KeyRound, label: t.free },
+  ];
 
   return (
     <CaseStudyLayout
-      backHref="/#projects"
-      backLabel="Back to projects"
-      description="A native side notch that shows how much of your Claude, Cursor and Codex limits you have used, so you find out before the rate limit does. It reads the sign-ins those tools already keep on your Mac and never asks for one of its own."
+      backHref={`/${lang}#projects`}
+      backLabel={dict.caseStudy.backToProjects}
+      description={t.description}
       header={
         <>
           <h1 className="text-2xl font-bold leading-tight tracking-tight sm:text-[28px]">
             Agent <span className="text-amber-600">Notch</span>
           </h1>
-          <p className="text-xs text-muted-foreground">LLM usage, in your Mac&apos;s notch</p>
+          <p className="text-xs text-muted-foreground">{t.tagline}</p>
         </>
       }
       meta={meta}
@@ -74,13 +57,13 @@ export function AgentNotchPage() {
         <Button asChild>
           <a href={agentNotchDownloadUrl}>
             <Download />
-            Download for macOS
+            {t.download}
           </a>
         </Button>
         <Button asChild variant="outline">
           <a href={agentNotchRepoUrl} rel="noopener noreferrer" target="_blank">
             <Github />
-            View on GitHub
+            {t.github}
           </a>
         </Button>
       </motion.div>
@@ -91,7 +74,7 @@ export function AgentNotchPage() {
         initial={{ opacity: 0, y: 20 }}
         transition={{ duration: 0.5, delay: 0.42, ease }}
       >
-        Notarized by Apple. Updates itself.
+        {t.notarized}
       </motion.p>
 
       <motion.figure
@@ -102,7 +85,7 @@ export function AgentNotchPage() {
       >
         {reducedMotion ? (
           <Image
-            alt={heroAlt}
+            alt={t.heroAlt}
             className="object-cover"
             fill
             priority
@@ -111,7 +94,7 @@ export function AgentNotchPage() {
           />
         ) : (
           <video
-            aria-label={heroAlt}
+            aria-label={t.heroAlt}
             autoPlay
             className="absolute inset-0 h-full w-full object-cover"
             loop
@@ -129,16 +112,16 @@ export function AgentNotchPage() {
         initial={{ opacity: 0, y: 20 }}
         transition={{ duration: 0.5, delay: 0.5, ease }}
       >
-        Recorded on a Mac. The pill widens as the pointer comes close, then each ring opens its windows and reset times.
+        {t.heroCaption}
       </motion.p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {features.map(({ icon: Icon, title, body }, index) => (
+        {features.map(({ key, icon: Icon }, index) => (
           <motion.div
             animate={{ opacity: 1, y: 0 }}
             className="rounded-lg border border-border bg-card p-4"
             initial={{ opacity: 0, y: 20 }}
-            key={title}
+            key={key}
             transition={{
               duration: 0.5,
               delay: 0.55 + index * 0.05,
@@ -147,9 +130,9 @@ export function AgentNotchPage() {
           >
             <div className="mb-2 flex items-center gap-2">
               <Icon className="h-3.5 w-3.5 text-amber-600" />
-              <h2 className="text-sm font-medium">{title}</h2>
+              <h2 className="text-sm font-medium">{t.features[key].title}</h2>
             </div>
-            <p className="text-xs leading-relaxed text-muted-foreground">{body}</p>
+            <p className="text-xs leading-relaxed text-muted-foreground">{t.features[key].body}</p>
           </motion.div>
         ))}
       </div>
@@ -160,8 +143,7 @@ export function AgentNotchPage() {
         initial={{ opacity: 0, y: 20 }}
         transition={{ duration: 0.5, delay: 0.8, ease }}
       >
-        Requires Claude Code, Cursor or Codex to be signed in on this Mac. macOS will ask once whether Agent Notch may
-        read Claude Code&apos;s keychain item; choose Always Allow and it stays quiet. Rebuilt from{' '}
+        {t.note}{' '}
         <a
           className="link-underline text-foreground"
           href="https://x.com/hivinz_"
@@ -170,7 +152,7 @@ export function AgentNotchPage() {
         >
           Codenotch
         </a>{' '}
-        by Vinz, whose idea this is.
+        {t.credit}
       </motion.p>
     </CaseStudyLayout>
   );

@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
 
+import type { Localized } from '@/i18n/config';
+import { getDictionary, getLocale } from '@/i18n/dictionaries';
 import { cn } from '@/lib/utils';
 
 import { GitHubActivity } from './GitHubActivity';
@@ -8,7 +10,7 @@ const HREF = {
   x: 'https://x.com/itslucadev',
   github: 'https://www.github.com/itslucadev',
   instagram: 'https://www.instagram.com/itslucadev',
-  email: 'mailto:luca.dev@outlook.de',
+  email: 'mailto:mail@lucabecker.dev',
   call: 'https://cal.eu/lucabecker',
 } as const;
 
@@ -40,29 +42,59 @@ function Strong({ children }: { children: ReactNode }) {
   return <span className="font-medium text-foreground">{children}</span>;
 }
 
-export function About() {
+/** Prose with inline links reads differently per language, so each locale gets its own paragraphs. */
+const COPY: Localized<ReactNode> = {
+  en: (
+    <>
+      <p>
+        I&apos;m a <Strong>mobile developer / fullstack developer</Strong>. Most of my work is{' '}
+        <Strong>React Native</Strong> and <Strong>Next.js</Strong>.
+      </p>
+
+      <p>
+        You can find me at <TextLink href={HREF.x}>@itslucadev</TextLink>, on{' '}
+        <TextLink href={HREF.github}>GitHub</TextLink>, <TextLink href={HREF.instagram}>Instagram</TextLink> or contact
+        me via <TextLink href={HREF.email}>email</TextLink>.
+      </p>
+
+      <p>
+        I am also available for freelance work. If you want to discuss a project, feel free to{' '}
+        <TextLink href={HREF.call}>book a call</TextLink>.
+      </p>
+    </>
+  ),
+  de: (
+    <>
+      <p>
+        Ich bin <Strong>Mobile-Entwickler / Fullstack-Entwickler</Strong>. Die meiste Zeit arbeite ich mit{' '}
+        <Strong>React Native</Strong> und <Strong>Next.js</Strong>.
+      </p>
+
+      <p>
+        Du findest mich als <TextLink href={HREF.x}>@itslucadev</TextLink>, auf{' '}
+        <TextLink href={HREF.github}>GitHub</TextLink> und <TextLink href={HREF.instagram}>Instagram</TextLink>, oder
+        schreib mir eine <TextLink href={HREF.email}>E-Mail</TextLink>.
+      </p>
+
+      <p>
+        Ich bin auch für Freelance-Projekte verfügbar. Wenn du über ein Projekt sprechen willst,{' '}
+        <TextLink href={HREF.call}>buch dir einfach einen Termin</TextLink>.
+      </p>
+    </>
+  ),
+};
+
+export async function About() {
+  const [dict, lang] = await Promise.all([getDictionary(), getLocale()]);
+
   return (
     <section aria-labelledby="about-heading" className="scroll-mt-24" id="about">
       <h2 className="mb-6 font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground" id="about-heading">
-        About
+        {dict.rail.sections.about}
       </h2>
 
       <div className="max-w-[62ch] space-y-5 font-sans text-[17px] leading-relaxed text-muted-foreground">
-        <p>
-          I&apos;m a <Strong>mobile developer / fullstack developer</Strong>. Most of my work is{' '}
-          <Strong>React Native</Strong> and <Strong>Next.js</Strong>.
-        </p>
-
-        <p>
-          You can find me at <TextLink href={HREF.x}>@itslucadev</TextLink>, on{' '}
-          <TextLink href={HREF.github}>Github</TextLink>, <TextLink href={HREF.instagram}>Instagram</TextLink> or
-          contact me via <TextLink href={HREF.email}>email</TextLink>.
-        </p>
-
-        <p>
-          I am also available for freelance work. If you want to discuss a project, feel free to{' '}
-          <TextLink href={HREF.call}>book a call</TextLink>.
-        </p>
+        {COPY[lang]}
       </div>
 
       <GitHubActivity />

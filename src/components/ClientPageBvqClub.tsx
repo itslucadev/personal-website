@@ -5,39 +5,34 @@ import { Briefcase, Calendar, ExternalLink, MapPin } from 'lucide-react';
 import Image from 'next/image';
 
 import { CaseStudyLayout } from '@/components/PageLayout';
+import { useI18n } from '@/i18n/I18nProvider';
 import { ease } from '@/lib/motion';
-
-const meta = [
-  { icon: Briefcase, label: 'Design & Development' },
-  { icon: Calendar, label: '2026' },
-  { icon: MapPin, label: 'Fürth, Germany' },
-];
 
 const stack = ['Next.js', 'TypeScript', 'Sanity CMS', 'Tailwind CSS', 'Framer Motion', 'Vercel', 'Cuescore API'];
 
 const shots = [
-  {
-    src: '/clients/bv-q-club-tournaments.webp',
-    alt: 'Tournament results section of bv-q-club.de, listing recent tournaments with podium placements pulled from Cuescore',
-    caption: 'Results sync from Cuescore - no manual entry.',
-  },
-  {
-    src: '/clients/bv-q-club-membership.webp',
-    alt: 'Membership section of bv-q-club.de showing four pricing tiers on a light background',
-    caption: 'Membership tiers the board edits in Sanity.',
-  },
-];
+  { src: '/clients/bv-q-club-tournaments.webp', alt: 'tournamentsAlt', caption: 'tournamentsCaption' },
+  { src: '/clients/bv-q-club-membership.webp', alt: 'membershipAlt', caption: 'membershipCaption' },
+] as const;
 
 export function ClientPageBvqClub() {
+  const { dict, lang } = useI18n();
+  const t = dict.bvq;
+  const meta = [
+    { icon: Briefcase, label: t.role },
+    { icon: Calendar, label: '2026' },
+    { icon: MapPin, label: t.location },
+  ];
+
   return (
     <CaseStudyLayout
-      backHref="/#client-work"
-      backLabel="Back to client work"
-      description="Designed and built the website and Sanity CMS for Fürth's pool billiard club - the board publishes updates itself, and tournament results sync in from Cuescore."
+      backHref={`/${lang}#client-work`}
+      backLabel={dict.caseStudy.backToClientWork}
+      description={t.description}
       header={
         <>
           <Image
-            alt="BV Q-Club e.V. crest"
+            alt={t.crestAlt}
             className="h-10 w-10 rounded-md object-contain"
             height={40}
             src="/clients/logo-bv-q-club.png"
@@ -64,7 +59,7 @@ export function ClientPageBvqClub() {
         target="_blank"
         transition={{ duration: 0.5, delay: 0.4, ease }}
       >
-        Visit bv-q-club.de
+        {t.visit}
         <ExternalLink className="h-3.5 w-3.5 text-muted-foreground transition-colors duration-200 group-hover:text-foreground" />
       </motion.a>
 
@@ -75,7 +70,7 @@ export function ClientPageBvqClub() {
         transition={{ duration: 0.5, delay: 0.45, ease }}
       >
         <Image
-          alt="Homepage hero of bv-q-club.de: the words Q-CLUB FÜRTH set in a large display serif behind a rendered black 8-ball"
+          alt={t.heroAlt}
           className="h-auto w-full"
           height={900}
           priority
@@ -99,7 +94,7 @@ export function ClientPageBvqClub() {
           >
             <div className="overflow-hidden rounded-lg border border-border">
               <Image
-                alt={shot.alt}
+                alt={t[shot.alt]}
                 className="h-auto w-full"
                 height={900}
                 sizes="(max-width: 640px) 100vw, 376px"
@@ -107,7 +102,7 @@ export function ClientPageBvqClub() {
                 width={1440}
               />
             </div>
-            <figcaption className="mt-2 text-xs text-muted-foreground">{shot.caption}</figcaption>
+            <figcaption className="mt-2 text-xs text-muted-foreground">{t[shot.caption]}</figcaption>
           </motion.figure>
         ))}
       </div>

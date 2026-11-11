@@ -1,30 +1,25 @@
 import type { MetadataRoute } from 'next';
 
+import { locales, localePath } from '@/i18n/config';
+
+const SITE = 'https://lucabecker.dev';
+
+const PAGES: { path: string; changeFrequency: 'monthly' | 'yearly'; priority: number }[] = [
+  { path: '/', changeFrequency: 'monthly', priority: 1 },
+  { path: '/work/bv-q-club', changeFrequency: 'yearly', priority: 0.7 },
+  { path: '/agent-notch', changeFrequency: 'monthly', priority: 0.8 },
+];
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: 'https://lucabecker.dev',
+  return PAGES.flatMap(({ path, changeFrequency, priority }) =>
+    locales.map((lang) => ({
+      url: `${SITE}${localePath(lang, path)}`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 1,
-    },
-    {
-      url: 'https://lucabecker.dev/contact',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://lucabecker.dev/work/bv-q-club',
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.7,
-    },
-    {
-      url: 'https://lucabecker.dev/agent-notch',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-  ];
+      changeFrequency,
+      priority,
+      alternates: {
+        languages: Object.fromEntries(locales.map((other) => [other, `${SITE}${localePath(other, path)}`])),
+      },
+    })),
+  );
 }
