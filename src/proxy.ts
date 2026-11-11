@@ -9,6 +9,13 @@ const GERMAN_SPEAKING_COUNTRIES = new Set(['DE', 'AT', 'CH', 'LI']);
 
 const ONE_YEAR = 60 * 60 * 24 * 365;
 
+/**
+ * Shareable resume URLs: `/resume.pdf` follows the visitor's locale, `/en/resume.pdf` and `/de/resume.pdf` are
+ * fixed, and `/lebenslauf.pdf` is always German.
+ */
+const RESUME_PATH = /^\/(?:(en|de)\/)?resume\.pdf$/;
+const RESUME_FILE: Record<Locale, string> = { en: '/main_en.pdf', de: '/main_de.pdf' };
+
 function preferredLocale(request: NextRequest): Locale {
   const saved = request.cookies.get(LOCALE_COOKIE)?.value;
   if (saved && isLocale(saved)) {
@@ -31,6 +38,21 @@ function preferredLocale(request: NextRequest): Locale {
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  if (pathname === '/lebenslauf.pdf') {
+    return NextResponse.rewrite(new URL(RESUME_FILE.de, request.url));
+  }
+
+  const resume = RESUME_PATH.exec(pathname);
+  if (resume) {
+    const lang = resume[1] && isLocale(resume[1]) ? resume[1] : preferredLocale(request);
+    const response = NextResponse.rewrite(new URL(RESUME_FILE[lang], request.url));
+    if (!resume[1]) {
+      response.headers.set('Vary', 'Accept-Language, Cookie');
+    }
+    return response;
+  }
+
   const segment = pathname.split('/')[1] ?? '';
 
   if (isLocale(segment)) {
@@ -50,6 +72,6 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   // Everything except Next internals and files with an extension (public assets,
-  // icons, sitemap.xml, robots.txt, the Agent Notch zip).
-  matcher: ['/((?!_next/|.*\\..*).*)'],
+  // icons, sitemap.xml, robots.txt, the Agent Notch zip), plus the resume URLs.
+  matcher: ['/((?!_next/|.*\\..*).*)', '/resume.pdf', '/lebenslauf.pdf', '/:lang(en|de)/resume.pdf'],
 };

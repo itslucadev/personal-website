@@ -34,6 +34,7 @@ Linting is Oxlint (`.oxlintrc.json`) and formatting is Oxfmt (`.oxfmtrc.json`).
 Every page lives under a locale segment, `/en` or `/de` (`src/app/[lang]`).
 `src/proxy.ts` redirects unprefixed URLs such as `/` or `/agent-notch` to the visitor's locale: a saved `NEXT_LOCALE` cookie first, then the browser's `Accept-Language`, then Vercel's IP country (German for DE, AT, CH, LI), otherwise English.
 Visiting a locale-prefixed page saves that locale in the cookie.
+`/resume.pdf` serves the resume in the same negotiated locale; `/en/resume.pdf` and `/de/resume.pdf` are fixed to one language, and `/lebenslauf.pdf` is always German.
 
 | Route                    | Contents                                                                |
 | ------------------------ | ----------------------------------------------------------------------- |
